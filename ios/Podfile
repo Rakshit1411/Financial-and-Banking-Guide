@@ -31,3 +31,4 @@ target 'SampleProject-tvOS' do
     # Pods for testing
   end
 end
+# Add new pods below this line
