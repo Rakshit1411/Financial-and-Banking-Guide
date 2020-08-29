@@ -2,6 +2,7 @@ import { Text, Button, ScrollView, View, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
 import { Icon, Container, Header, Content, Left } from 'native-base'
 import { Dimensions } from 'react-native';
+import Headbar from './Components/Headbar';
 import {
   LineChart,
   BarChart,
@@ -39,14 +40,17 @@ const screenWidth = Dimensions.get("window").width;
 class DashboardScreen extends Component
 {
 	render(){
+    const navigate = this.props.navigation;
+    const title='Dashboard';
 		return (
 
 			<Container>
+      <Headbar navigation={ navigate } title={title}/>
 				<Content contentContainerStyle = {{
 					flex: 1,
 					alignItems: 'center',
 					justifyContent: 'center',
-					backgroundColor: 'lightblue'
+					backgroundColor: 'white'
 				}}>
 					<Text>Dashboard</Text>
 
