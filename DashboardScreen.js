@@ -4,7 +4,6 @@ import { Icon, Container, Header, Content, Left } from 'native-base'
 import { Dimensions } from 'react-native';
 import Headbar from './Components/Headbar';
 import Area from './charts/Area';
-import { Text } from 'galio-framework'
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 
 import {
@@ -95,13 +94,17 @@ class DashboardScreen extends Component
       </Card>
       </ScrollView>
       <Card
-        style={{}}
+        style={{shadowColor: '#000',
+   shadowOffset: { width: 0, height: 2 },
+   shadowOpacity: 2,
+   shadowRadius: 2,
+   elevation: 2,}}
       ><Area />
       </Card>
       <Card
         style={{shadowColor: '#000',
    shadowOffset: { width: 0, height: 2 },
-   shadowOpacity: 0.5,
+   shadowOpacity: 2,
    shadowRadius: 2,
    elevation: 2,}}
       ><Area />
@@ -121,13 +124,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     backgroundColor: '#ecf0f1',
   },
-  card: {
-     shadowColor: '#000',
-     shadowOffset: { width: 0, height: 2 },
-     shadowOpacity: 0.5,
-     shadowRadius: 2,
-     elevation: 2
-  }
   Purple: {
 
     // Define your HEX color code here.
