@@ -5,61 +5,14 @@ import { Dimensions } from 'react-native';
 import Headbar from './Components/Headbar';
 import Area from './charts/Area';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import FusionCharts from "react-native-fusioncharts";
+import { chartData } from './Components/chart_components/DATA'
+import LineChart from './charts/LineChart'
+import Column2dChart from './charts/Column2dChart'
+import SimpleGauge from './charts/SimpleGauge'
+// Preparing the chart data
 
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  StackedBarChart,
-  ContributionGraph
-} from 'react-native-chart-kit';
-import { NavigationContainer } from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
-
-const barData = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-    },
-  ],
-};
-const ChartPoints = ({ x, y, color }) =>
-  data.map((item, index) => (
-   <Circle
-     key={index}
-     cx={x(moment(item.date))}
-     cy={y(item.score)}
-     r={6}
-     stroke={color}
-     fill="white"
-     onPress={() =>
-       this.setState({
-         tooltipX: moment(item.date),
-         tooltipY: item.score,
-         tooltipIndex: index,
-       })
-     }
-  />
-));
-const chartConfig = {
-  backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "white",
-  backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-  strokeWidth: 3, // optional, default 3
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false // optional
-};
-
-const screenWidth = Dimensions.get("window").width;
+// Create a JSON object to store the chart configurations
 
 class DashboardScreen extends Component
 {
@@ -94,20 +47,52 @@ class DashboardScreen extends Component
       </Card>
       </ScrollView>
       <Card
-        style={{shadowColor: '#000',
-   shadowOffset: { width: 0, height: 2 },
-   shadowOpacity: 0.5,
-   shadowRadius: 2,
-   elevation: 2,}}
-      ><Area />
+        style={styles.card}
+      >
+      <LineChart
+            width='100%'
+            height='350'
+            xAxisName='Date'
+            dataFormat='json'
+            yAxisName='Amount'
+            numberSuffix='k'
+            theme='fusion'
+            caption='Everyday Transactions'
+            subCaption='Testing'
+            data={chartData}
+          />
       </Card>
       <Card
-        style={{shadowColor: '#000',
-   shadowOffset: { width: 0, height: 2 },
-   shadowOpacity: 0.5,
-   shadowRadius: 2,
-   elevation: 2,}}
-      ><Area />
+        style={styles.card}
+      >
+      <Column2dChart
+            width='100%'
+            height='350'
+            xAxisName='x-axis'
+            dataFormat='json'
+            yAxisName='y-axis'
+            numberSuffix='k'
+            theme='fusion'
+            caption='Column2dChart Component'
+            subCaption='Testing'
+            data={chartData}
+          />
+
+          </Card>
+      <Card
+        style={styles.card}
+      >
+      <SimpleGauge width='100%'
+			height='350'
+			plottooltext='<b>$percentValue</b> of web servers run on $label servers'
+			dataFormat='json'
+			showlegend='1'
+			showpercentvalues='1'
+			theme='fusion'
+			caption='Transactions By Category'
+			legendposition='Bottom'
+			usedataplotcolorforlabels='1'
+			data={chartData}/>
       </Card>
       </ScrollView>
       </Container>
@@ -125,17 +110,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ecf0f1',
   },
   card: {
-     shadowColor: '#000',
-     shadowOffset: { width: 0, height: 2 },
-     shadowOpacity: 0.5,
-     shadowRadius: 2,
-     elevation: 2
-  },
-  Purple: {
-
-    // Define your HEX color code here.
-    color: '#ffffff',
-
+    shadowColor: '#000',
+    margin: 10,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2
   },
 });
 export default DashboardScreen;
