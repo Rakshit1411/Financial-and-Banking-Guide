@@ -1,8 +1,12 @@
-import { Text, Button, ScrollView, View, StyleSheet } from 'react-native'
+import { Button, ScrollView, View, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
 import { Icon, Container, Header, Content, Left } from 'native-base'
 import { Dimensions } from 'react-native';
 import Headbar from './Components/Headbar';
+import Area from './charts/Area';
+import { Text } from 'galio-framework'
+import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+
 import {
   LineChart,
   BarChart,
@@ -27,6 +31,24 @@ const barData = {
     },
   ],
 };
+const ChartPoints = ({ x, y, color }) =>
+  data.map((item, index) => (
+   <Circle
+     key={index}
+     cx={x(moment(item.date))}
+     cy={y(item.score)}
+     r={6}
+     stroke={color}
+     fill="white"
+     onPress={() =>
+       this.setState({
+         tooltipX: moment(item.date),
+         tooltipY: item.score,
+         tooltipIndex: index,
+       })
+     }
+  />
+));
 const chartConfig = {
   backgroundGradientFrom: "white",
   backgroundGradientFromOpacity: 0,
@@ -43,316 +65,50 @@ const screenWidth = Dimensions.get("window").width;
 class DashboardScreen extends Component
 {
 	render(){
+
     const navigate = this.props.navigation;
     const title='Dashboard';
 		return (
       <Container>
       <Headbar navigation={ navigate } title={ title }/>
       <ScrollView>
-        <View style={styles.container}>
+      <ScrollView horizontal={true}>
+      <Card style={{margin:5,backgroundColor: '#f44336',padding:5}}>
+      <Card.Content>
+        <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
+        <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
+      </Card.Content>
+      </Card>
+      <Card style={{margin:5,backgroundColor: 'green',padding:5}}>
 
-          <View>
-            {/*Example of Bezier LineChart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Bezier Line Chart
-            </Text>
-            <LineChart
-              data={{
-                labels: ['January', 'February', 'March', 'April'],
-                datasets: [
-                  {
-                    data: [
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                    ],
-                  },
-                ],
-              }}
-              width={Dimensions.get('window').width - 16} // from react-native
-              height={220}
-              yAxisLabel={'Rs'}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              bezier
-              style={{
-                marginVertical: 8,
-                borderRadius: 16,
-              }}
-            />
-            {/*Example of LineChart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Line Chart
-            </Text>
-            <LineChart
-              data={{
-                labels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                ],
-                datasets: [
-                  {
-                    data: [20, 45, 28, 80, 99, 43],
-                    strokeWidth: 2,
-                  },
-                ],
-              }}
-              width={Dimensions.get('window').width - 16}
-              height={220}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16,
-              }}
-            />
-            {/*Example of Progress Chart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Progress Chart
-            </Text>
-            <ProgressChart
-              data={[0.4, 0.6, 0.8]}
-              width={Dimensions.get('window').width - 16}
-              height={220}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16,
-              }}
-            />
-            {/*Example of Bar Chart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Bar Chart
-            </Text>
-            <BarChart
-              data={{
-                labels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                ],
-                datasets: [
-                  {
-                    data: [20, 45, 28, 80, 99, 43],
-                  },
-                ],
-              }}
-              width={Dimensions.get('window').width - 16}
-              height={220}
-              yAxisLabel={'Rs'}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16,
-              }}
-            />
-            {/*Example of StackedBar Chart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Stacked Bar Chart
-            </Text>
-            <StackedBarChart
-              data={{
-                labels: ['Test1', 'Test2'],
-                legend: ['L1', 'L2', 'L3'],
-                data: [[60, 60, 60], [30, 30, 60]],
-                barColors: ['#dfe4ea', '#ced6e0', '#a4b0be'],
-              }}
-              width={Dimensions.get('window').width - 16}
-              height={220}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16,
-              }}
-            />
-            {/*Example of Pie Chart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Pie Chart
-            </Text>
-            <PieChart
-              data={[
-                {
-                  name: 'Seoul',
-                  population: 21500000,
-                  color: 'rgba(131, 167, 234, 1)',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-                {
-                  name: 'Toronto',
-                  population: 2800000,
-                  color: '#F00',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-                {
-                  name: 'New York',
-                  population: 8538000,
-                  color: '#ffffff',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-                {
-                  name: 'Moscow',
-                  population: 11920000,
-                  color: 'rgb(0, 0, 255)',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-              ]}
-              width={Dimensions.get('window').width - 16}
-              height={220}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16,
-              }}
-              accessor="population"
-              backgroundColor="transparent"
-              paddingLeft="15"
-              absolute //for the absolute number remove if you want percentage
-            />
-            {/*Example of Contribution Chart*/}
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                padding: 16,
-                marginTop: 16,
-              }}>
-              Contribution Graph
-            </Text>
-            <ContributionGraph
-              values={[
-                { date: '2019-01-02', count: 1 },
-                { date: '2019-01-03', count: 2 },
-                { date: '2019-01-04', count: 3 },
-                { date: '2019-01-05', count: 4 },
-                { date: '2019-01-06', count: 5 },
-                { date: '2019-01-30', count: 2 },
-                { date: '2019-01-31', count: 3 },
-                { date: '2019-03-01', count: 2 },
-                { date: '2019-04-02', count: 4 },
-                { date: '2019-03-05', count: 2 },
-                { date: '2019-02-30', count: 4 },
-              ]}
-              endDate={new Date('2019-04-01')}
-              numDays={105}
-              width={Dimensions.get('window').width - 16}
-              height={220}
-              chartConfig={{
-                backgroundColor: '#1cc910',
-                backgroundGradientFrom: '#eff3ff',
-                backgroundGradientTo: '#efefef',
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-            />
-          </View>
-        </View>
+        <Card.Content>
+          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>My Budget Status</Paragraph>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
+        </Card.Content>
+      </Card>
+      <Card style={{margin:5,backgroundColor: '#ff1744',padding:5}}>
+
+        <Card.Content>
+          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
+        </Card.Content>
+      </Card>
+      </ScrollView>
+      <Card
+        style={{}}
+      ><Area />
+      </Card>
+      <Card
+        style={{shadowColor: '#000',
+   shadowOffset: { width: 0, height: 2 },
+   shadowOpacity: 0.5,
+   shadowRadius: 2,
+   elevation: 2,}}
+      ><Area />
+      </Card>
       </ScrollView>
       </Container>
+
 		);
 	}
 }
@@ -364,6 +120,19 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingTop: 30,
     backgroundColor: '#ecf0f1',
+  },
+  card: {
+     shadowColor: '#000',
+     shadowOffset: { width: 0, height: 2 },
+     shadowOpacity: 0.5,
+     shadowRadius: 2,
+     elevation: 2
+  }
+  Purple: {
+
+    // Define your HEX color code here.
+    color: '#ffffff',
+
   },
 });
 export default DashboardScreen;

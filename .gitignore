@@ -59,3 +59,4 @@ buck-out/
 /ios/Pods/
 android/settings.gradle
 android/settings.gradle
+ios/Podfile.lock
