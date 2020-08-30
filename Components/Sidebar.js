@@ -9,15 +9,10 @@ import DashboardScreen from '../DashboardScreen'
 import SettingsScreen from '../SettingsScreen'
 import LoginScreen from '../login'
 
-
-
-
-
 export default class Sidebar extends Component {
 
-
   render() {
-const Drawer = this.props.Drawer;
+    const Drawer = this.props.Drawer;
     return (
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Dashboard">
