@@ -60,3 +60,5 @@ buck-out/
 android/settings.gradle
 android/settings.gradle
 ios/Podfile.lock
+package-lock.json
+ios/SampleProject.xcworkspace/contents.xcworkspacedata
