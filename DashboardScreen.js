@@ -1,4 +1,4 @@
-import { Button, ScrollView, View, StyleSheet } from 'react-native'
+import { Button, ScrollView, View, StyleSheet, Text } from 'react-native'
 import React, { Component } from 'react'
 import { Icon, Container, Header, Content, Left } from 'native-base'
 import { Dimensions } from 'react-native';
@@ -10,16 +10,32 @@ import { chartData } from './Components/chart_components/DATA'
 import LineChart from './charts/LineChart'
 import Column2dChart from './charts/Column2dChart'
 import SimpleGauge from './charts/SimpleGauge'
+import DataTables from './Components/DataTables'
 // Preparing the chart data
 
 // Create a JSON object to store the chart configurations
 
 class DashboardScreen extends Component
 {
-	render(){
+	constructor(props) {
+		super(props);
+		this.state = {
+				modalVisible: false
+			};
+	}
+	setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+		console.log(visible);
+  };
+	loadModal=()=>{
+			this._table.setModalVisible(!this.state.modalVisible);
 
+	}
+
+	render(){
     const navigate = this.props.navigation;
     const title='Dashboard';
+		this.visible=true;
 		return (
       <Container>
       <Headbar navigation={ navigate } title={ title }/>
@@ -61,7 +77,9 @@ class DashboardScreen extends Component
             subCaption='Testing'
             data={chartData}
           />
-      </Card>
+						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={this.loadModal}>Show Raw Data</Text>
+
+			</Card>
       <Card
         style={styles.card}
       >
@@ -77,7 +95,7 @@ class DashboardScreen extends Component
             subCaption='Testing'
             data={chartData}
           />
-
+<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={this.loadModal}>Show Raw Data</Text>
           </Card>
       <Card
         style={styles.card}
@@ -93,8 +111,10 @@ class DashboardScreen extends Component
 			legendposition='Bottom'
 			usedataplotcolorforlabels='1'
 			data={chartData}/>
+			<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={this.loadModal}>Show Raw Data</Text>
       </Card>
-      </ScrollView>
+			<DataTables data={chartData} headers={['label','value']} visible={this.state.modalVisible} ref={ref => (this._table = ref)}/>
+			</ScrollView>
       </Container>
 
 		);
