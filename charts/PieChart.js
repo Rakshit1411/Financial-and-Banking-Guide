@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { AppRegistry, StyleSheet, Text, View, Platform } from "react-native";
 import FusionCharts from "react-native-fusioncharts";
 
-export default class SimpleGauge extends React.PureComponent {
+export default class PieChart extends React.PureComponent {
   constructor(props) {
     super(props);
     //STEP 3 - Chart Configurations

@@ -14,7 +14,8 @@ export default class DataTables extends Component {
     super(props);
     console.log('called again');
     console.log(props);
-    this.headers = props.headers;
+    this.headers = props.headersForTable;
+    this.keys = props.keysForTable;
     this.state = {
         modalVisible: props.visible
       };
@@ -23,7 +24,7 @@ export default class DataTables extends Component {
 
   setModalVisible = (visible) => {
     console.log('here now');
-    console.log(visible);
+    console.log(visible)
     this.setState({ modalVisible: visible });
   };
 
@@ -37,7 +38,7 @@ export default class DataTables extends Component {
   setRow(rowData){
     return (<DataTable.Row>
               {
-                this.headers.map((data,idx) => {
+                this.keys.map((data,idx) => {
                   return this.setColumn(rowData,data)
                 })
               }

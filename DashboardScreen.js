@@ -7,9 +7,11 @@ import Area from './charts/Area';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import FusionCharts from "react-native-fusioncharts";
 import { chartData } from './Components/chart_components/DATA'
+import { chartData1 } from './Components/chart_components/DATA1'
 import LineChart from './charts/LineChart'
 import Column2dChart from './charts/Column2dChart'
-import SimpleGauge from './charts/SimpleGauge'
+import PieChart from './charts/PieChart'
+import Gauge from './charts/Gauge'
 import DataTables from './Components/DataTables'
 // Preparing the chart data
 
@@ -27,8 +29,9 @@ class DashboardScreen extends Component
     this.setState({ modalVisible: visible });
 		console.log(visible);
   };
-	loadModal=()=>{
-			this._table.setModalVisible(!this.state.modalVisible);
+	loadModal=(name)=>{
+
+		console.log(name);
 
 	}
 
@@ -77,7 +80,8 @@ class DashboardScreen extends Component
             subCaption='Testing'
             data={chartData}
           />
-						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={this.loadModal}>Show Raw Data</Text>
+						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.lineTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
+						<DataTables data={chartData} headersForTable={['Country','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.lineTable = ref)}/>
 
 			</Card>
       <Card
@@ -86,23 +90,24 @@ class DashboardScreen extends Component
       <Column2dChart
             width='100%'
             height='350'
-            xAxisName='x-axis'
+            xAxisName='Category'
             dataFormat='json'
-            yAxisName='y-axis'
+            yAxisName='No. of transactions'
             numberSuffix='k'
             theme='fusion'
-            caption='Column2dChart Component'
+            caption='No. of transactions per category'
             subCaption='Testing'
             data={chartData}
           />
-<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={this.loadModal}>Show Raw Data</Text>
+<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
+<DataTables data={chartData} headersForTable={['Country','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
           </Card>
       <Card
         style={styles.card}
       >
-      <SimpleGauge width='100%'
+      <PieChart width='100%'
 			height='350'
-			plottooltext='<b>$percentValue</b> of web servers run on $label servers'
+			plottooltext='<b>$percentValue</b> of your total spendings were for $label'
 			dataFormat='json'
 			showlegend='1'
 			showpercentvalues='1'
@@ -110,10 +115,18 @@ class DashboardScreen extends Component
 			caption='Transactions By Category'
 			legendposition='Bottom'
 			usedataplotcolorforlabels='1'
-			data={chartData}/>
-			<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={this.loadModal}>Show Raw Data</Text>
-      </Card>
-			<DataTables data={chartData} headers={['label','value']} visible={this.state.modalVisible} ref={ref => (this._table = ref)}/>
+			data={chartData1}/>
+			<Text style={{marginLeft: "auto",padding:2,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
+			<DataTables data={chartData1} headersForTable={['details','Category','Amount']} keysForTable={['details','label','value']} visible={this.state.modalVisible} ref={ref => (this.pieTable = ref)}/>
+
+			</Card>
+
+			<Card
+				style={styles.card}
+			>
+			
+			</Card>
+
 			</ScrollView>
       </Container>
 
