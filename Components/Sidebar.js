@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DashboardScreen from '../DashboardScreen'
 import SettingsScreen from '../SettingsScreen'
 import LoginScreen from '../login'
+import BudgetScreen from '../BudgetScreen'
 
 export default class Sidebar extends Component {
 
@@ -17,6 +18,7 @@ export default class Sidebar extends Component {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Dashboard">
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
+          <Drawer.Screen name="My Budget Plan" component={BudgetScreen} />
           <Drawer.Screen name="Settings" component={SettingsScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
         </Drawer.Navigator>

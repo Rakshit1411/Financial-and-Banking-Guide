@@ -13,6 +13,7 @@ import Column2dChart from './charts/Column2dChart'
 import PieChart from './charts/PieChart'
 import Gauge from './charts/Gauge'
 import DataTables from './Components/DataTables'
+import CustomList from './Components/CustomList';
 // Preparing the chart data
 
 // Create a JSON object to store the chart configurations
@@ -99,8 +100,8 @@ class DashboardScreen extends Component
             subCaption='Testing'
             data={chartData}
           />
-<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-<DataTables data={chartData} headersForTable={['Country','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
+						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
+						<DataTables data={chartData} headersForTable={['Country','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
           </Card>
       <Card
         style={styles.card}
@@ -116,15 +117,16 @@ class DashboardScreen extends Component
 			legendposition='Bottom'
 			usedataplotcolorforlabels='1'
 			data={chartData1}/>
-			<Text style={{marginLeft: "auto",padding:2,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-			<DataTables data={chartData1} headersForTable={['details','Category','Amount']} keysForTable={['details','label','value']} visible={this.state.modalVisible} ref={ref => (this.pieTable = ref)}/>
+						<Text style={{marginLeft: "auto",padding:2,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
+						<DataTables data={chartData1} headersForTable={['details','Category','Amount']} keysForTable={['details','label','value']} visible={this.state.modalVisible} ref={ref => (this.pieTable = ref)}/>
 
 			</Card>
 
 			<Card
-				style={styles.card}
+				style={{...styles.card,backgroundColor: '#37474F'}}
 			>
-			
+			<Text style={styles.cardTitle}>Upcoming Transactions</Text>
+			<CustomList />
 			</Card>
 
 			</ScrollView>
@@ -149,6 +151,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 2
+  },
+	cardTitle: {
+    padding: 10,
+    marginVertical: 4,
+    marginHorizontal: 16,
+		fontSize:22,
+		color: 'white'
   },
 });
 export default DashboardScreen;
