@@ -51,6 +51,13 @@ class DashboardScreen extends Component
         <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
       </Card.Content>
       </Card>
+			<Card style={{margin:5,backgroundColor: 'brown',padding:5}}>
+
+        <Card.Content>
+          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
+        </Card.Content>
+      </Card>
       <Card style={{margin:5,backgroundColor: 'green',padding:5}}>
 
         <Card.Content>
