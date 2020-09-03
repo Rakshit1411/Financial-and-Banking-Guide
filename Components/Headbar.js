@@ -11,7 +11,7 @@ export default function Headbar({ navigation, title, openAddBudgetModal}){
 Icon.loadFont();
 let rightIcon;
 var modalVisible=true;
-if(title=='My Monthly Budget Plan'){
+if(title=='My Budget Plan'){
   rightIcon='plus'
 }
 else{
