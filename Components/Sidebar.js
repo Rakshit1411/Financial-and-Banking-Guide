@@ -18,7 +18,7 @@ export default class Sidebar extends Component {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Dashboard">
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
-          <Drawer.Screen name="My Budget Plan" component={BudgetScreen} />
+          <Drawer.Screen name="My Monthly Budget Plan" component={BudgetScreen} />
           <Drawer.Screen name="Settings" component={SettingsScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
         </Drawer.Navigator>
