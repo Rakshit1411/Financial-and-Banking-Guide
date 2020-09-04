@@ -9,6 +9,7 @@ import DashboardScreen from '../DashboardScreen'
 import SettingsScreen from '../SettingsScreen'
 import LoginScreen from '../login'
 import BudgetScreen from '../BudgetScreen'
+import NotificationCentreScreen from '../NotificationCentreScreen'
 
 export default class Sidebar extends Component {
 
@@ -19,6 +20,7 @@ export default class Sidebar extends Component {
         <Drawer.Navigator initialRouteName="Dashboard">
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
           <Drawer.Screen name="My Monthly Budget Plan" component={BudgetScreen} />
+          <Drawer.Screen name="Notification Centre" component={NotificationCentreScreen} />
           <Drawer.Screen name="Settings" component={SettingsScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
         </Drawer.Navigator>

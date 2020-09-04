@@ -22,7 +22,7 @@ const Item = ({ item, onPress, style }) => (
   </TouchableOpacity>
 );
 
-const CustomList = () => {
+const CustomList = ({data}) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -40,7 +40,7 @@ const CustomList = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
