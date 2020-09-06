@@ -18,6 +18,7 @@ const DATA = [
 
 const Item = ({ item, onPress, style }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+    <Text style={styles.title}>{item.category}</Text>
     <Text style={styles.title}>{item.title}</Text>
   </TouchableOpacity>
 );
@@ -26,7 +27,9 @@ const CustomList = ({data}) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#d32f2f" : "#ff6659";
+    const backgroundColorArray = ['#f77f00','#4ea8de','#b56576','#6c757d','#fff3b0'];
+
+    const backgroundColor = backgroundColorArray[Math.floor(Math.random() * 5) + 1  ];
 
     return (
       <Item
@@ -55,13 +58,15 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    padding: 10,
+    padding: 15,
     marginVertical: 4,
     marginHorizontal: 16,
-    borderRadius:10
+    borderRadius:40
   },
   title: {
     fontSize: 16,
+    marginLeft: 20,
+    color: 'white'
   },
 });
 export default CustomList;

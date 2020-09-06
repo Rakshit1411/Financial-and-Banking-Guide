@@ -40,6 +40,29 @@ class DashboardScreen extends Component
     const navigate = this.props.navigation;
     const title='Dashboard';
 		this.visible=true;
+		const recurring_transactions = [
+		  {
+		    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+		    title: "Vodafone Mobile",
+				category: "Mobile Payments",
+				last_payment_date: "2020-02-18",
+				amount:"-100.67"
+		  },
+			{
+		    id: "bd7acbea-c1b1-4622-aed5-3ad53abb28ba",
+		    title: "Apple Music",
+				category: "Music Subscriptions",
+				last_payment_date: "2020-02-03",
+				amount:"-134.91"
+		  },
+			{
+				id: "bd7acbea-c1b1-46c2-ae9d5-3ad53abb28ba",
+				title: "Greanpeace Energy",
+				category: "Electricity Bill",
+				last_payment_date: "2020-02-07",
+				amount:"-21.69"
+			},
+		];
 		return (
       <Container>
       <Headbar navigation={ navigate } title={ title }/>
@@ -130,10 +153,10 @@ class DashboardScreen extends Component
 			</Card>
 
 			<Card
-				style={{...styles.card,backgroundColor: '#37474F'}}
+				style={{...styles.card,backgroundColor: '#f8edeb'}}
 			>
-			<Text style={styles.cardTitle}>Upcoming Transactions</Text>
-			<CustomList />
+			<Text style={styles.cardTitle}>Recurring Transactions</Text>
+			<CustomList data={recurring_transactions}/>
 			</Card>
 
 			</ScrollView>
@@ -164,7 +187,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     marginHorizontal: 16,
 		fontSize:22,
-		color: 'white'
+		color: 'black'
   },
 });
 export default DashboardScreen;
