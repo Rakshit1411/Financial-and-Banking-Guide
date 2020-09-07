@@ -15,6 +15,7 @@ import {
   DrawerItem
 } from '@react-navigation/drawer';
 import BudgetScreen from '../BudgetScreen'
+import NotificationCentreScreen from '../NotificationCentreScreen'
 
 export default class Sidebar extends Component {
   constructor(props)
@@ -54,6 +55,7 @@ export default class Sidebar extends Component {
         }}>
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
           <Drawer.Screen name="My Monthly Budget Plan" component={BudgetScreen} />
+          <Drawer.Screen name="Notification Centre" component={NotificationCentreScreen} />
           <Drawer.Screen name="Settings" component={SettingsScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
