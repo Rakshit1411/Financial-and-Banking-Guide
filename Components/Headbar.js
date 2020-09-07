@@ -6,6 +6,8 @@ import Icon from "react-native-vector-icons/Octicons";
 import IconF from "react-native-vector-icons/FontAwesome";
 import { Container, Header, Content, Button, Text, Left, Body, Right, Title, Form, Item, Input, Label } from 'native-base';
 import BudgetScreen from '../BudgetScreen'
+import { LocalNotification } from '../src/services/LocalPushController';
+
 export default function Headbar({ navigation, title, openAddBudgetModal}){
 
 Icon.loadFont();
@@ -21,7 +23,7 @@ return (
   <View>
 <Header>
 <Left>
-<Button transparent onPress={() => navigation.openDrawer()}>
+<Button transparent onPress={() => { LocalNotification(); navigation.openDrawer();}}>
 <Icon
   name="three-bars"
   color="#aaa"
