@@ -57,8 +57,8 @@ class DashboardScreen extends Component
 		  },
 			{
 				id: "bd7acbea-c1b1-46c2-ae9d5-3ad53abb28ba",
-				title: "Greanpeace Energy",
-				category: "Electricity Bill",
+				title: "Spotify",
+				category: "Music Subscriptions",
 				last_payment_date: "2020-02-07",
 				amount:"-21.69"
 			},
@@ -121,13 +121,13 @@ class DashboardScreen extends Component
       <Column2dChart
             width='100%'
             height='350'
-            xAxisName='Category'
+            xAxisName='Transaction Mode'
             dataFormat='json'
             yAxisName='No. of transactions'
             numberSuffix='k'
-            theme='fusion'
-            caption='No. of transactions per category'
+            caption='No. of transactions - Transactions Mode'
             subCaption='Testing'
+            theme='fusion'
             data={chartData}
           />
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
-    elevation: 2
+    elevation: 2,backgroundColor: '#f8edeb'
   },
 	cardTitle: {
     padding: 10,

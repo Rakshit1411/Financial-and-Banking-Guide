@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity,View } from "react-native";
 
 const DATA = [
   {
@@ -18,19 +18,25 @@ const DATA = [
 
 const Item = ({ item, onPress, style }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-    <Text style={styles.title}>{item.category}</Text>
-    <Text style={styles.title}>{item.title}</Text>
+    <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection:'column'}}>
+        <Text style={styles.title}><Text style={{fontWeight: "bold",fontSize:20}}>{item.title}</Text></Text>
+        <Text style={styles.title}><Text style={{fontWeight: "bold"}}>Payment Date</Text>-{item.last_payment_date}</Text>
+      </View>
+    <Text style={{...styles.title,flexDirection: 'row',fontSize:20,marginLeft:40,marginRight:20}}> £{item.amount}</Text>
+
+    </View>
   </TouchableOpacity>
 );
 
 const CustomList = ({data}) => {
   const [selectedId, setSelectedId] = useState(null);
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item , index}) => {
     const backgroundColorArray = ['#f77f00','#4ea8de','#b56576','#6c757d','#fff3b0'];
 
-    const backgroundColor = backgroundColorArray[Math.floor(Math.random() * 5) + 1  ];
-
+    const backgroundColor = backgroundColorArray[index];
+    console.log(index)
     return (
       <Item
         item={item}
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius:40
   },
   title: {
-    fontSize: 16,
+    fontSize: 12,
     marginLeft: 20,
     color: 'white'
   },
