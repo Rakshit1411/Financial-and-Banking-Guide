@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Octicons";
 import IconF from "react-native-vector-icons/FontAwesome";
 import { Container, Header, Content, Button, Text, Left, Body, Right, Title, Form, Item, Input, Label } from 'native-base';
 import BudgetScreen from '../BudgetScreen'
-import { LocalNotification } from '../src/services/LocalPushController';
+import { LocalNotification } from '../src/services/LocalPushIOSController';
 
 export default function Headbar({ navigation, title, openAddBudgetModal}){
 
