@@ -6,12 +6,14 @@ import Icon from "react-native-vector-icons/Octicons";
 import IconF from "react-native-vector-icons/FontAwesome";
 import { Container, Header, Content, Button, Text, Left, Body, Right, Title, Form, Item, Input, Label } from 'native-base';
 import BudgetScreen from '../BudgetScreen'
-import { LocalNotification } from '../src/services/LocalPushIOSController';
+import {notificationManager} from '../src/services/LocalPushIOSController';
 
 export default function Headbar({ navigation, title, openAddBudgetModal}){
 
 Icon.loadFont();
 let rightIcon;
+let localNotify = notificationManager;
+localNotify.configure()
 var modalVisible=true;
 if(title=='My Budget Plan'){
   rightIcon='plus'
@@ -23,7 +25,7 @@ return (
   <View>
 <Header>
 <Left>
-<Button transparent onPress={() => { LocalNotification(); navigation.openDrawer();}}>
+<Button transparent onPress={() => { localNotify.showNotification(1,"Budget Updates","Your new Budget has been predicted for you",{},{}); navigation.openDrawer();}}>
 <Icon
   name="three-bars"
   color="#aaa"
