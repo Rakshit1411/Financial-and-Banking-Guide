@@ -93,6 +93,9 @@ export default class BudgetScreen extends Component {
     else{
       progressColor=Colors.red800;
     }
+    if(newBudgetdetails.category==='Shopping'){
+      progressValue=1
+    }
     budgetsList.push({category: newBudgetdetails.category,amount:newBudgetdetails.amount,progressValue:
     progressValue,progressColor:progressColor});
 

@@ -38,7 +38,7 @@ export default class LineChart extends React.PureComponent
   }
 	render(){
 		return (
-      <FusionCharts style={{backgroundColor:'grey'}}
+      <FusionCharts
             type='line'
             width={this.state.width}
             height={this.state.height}
