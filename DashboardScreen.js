@@ -8,6 +8,7 @@ import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import FusionCharts from "react-native-fusioncharts";
 import { chartData } from './Components/chart_components/DATA'
 import { chartData1 } from './Components/chart_components/DATA1'
+import { chartData2 } from './Components/chart_components/DATA2'
 import LineChart from './charts/LineChart'
 import Column2dChart from './charts/Column2dChart'
 import PieChart from './charts/PieChart'
@@ -104,11 +105,11 @@ class DashboardScreen extends Component
             height='350'
             xAxisName='Date'
             dataFormat='json'
-            yAxisName='Amount'
-            numberSuffix='k'
+            yAxisName='Amount (in rupees)'
+            numberPrefix='Rs.'
             theme='fusion'
-            caption='Everyday Transactions'
-            subCaption='Testing'
+            caption='Daily Transactions'
+            subCaption='Date vs Amount spent'
             data={chartData}
           />
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.lineTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
@@ -123,15 +124,14 @@ class DashboardScreen extends Component
             height='350'
             xAxisName='Transaction Mode'
             dataFormat='json'
-            yAxisName='No. of transactions'
-            numberSuffix='k'
-            caption='No. of transactions - Transactions Mode'
-            subCaption='Testing'
+            yAxisName='Amount'
+            caption='Transactions Mode'
+            subCaption='Transactions Mode vs amount'
             theme='fusion'
-            data={chartData}
+            data={chartData2}
           />
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-						<DataTables data={chartData} headersForTable={['Country','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
+						<DataTables data={chartData2} headersForTable={['Transaction Mode','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
           </Card>
       <Card
         style={styles.card}

@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DashboardScreen from '../DashboardScreen'
 import SettingsScreen from '../SettingsScreen'
 import LoginScreen from '../login'
+import SpendingsScreen from '../SpendingsScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   DrawerContentScrollView,
@@ -43,7 +44,7 @@ export default class Sidebar extends Component {
       console.log(error);
     }
   };
- 
+
   _logout = async() => {
     await AsyncStorage.clear();
     this.props.Navigation.navigate('AuthLoading');
@@ -76,13 +77,13 @@ export default class Sidebar extends Component {
                 <DrawerItemList {...props} />
               </View>
               <DrawerItem style={styles.bottomDrawerSection} label="Logout" onPress={this._logout} />
-            </DrawerContentScrollView>  
+            </DrawerContentScrollView>
             </View>
           )
         }}
           >
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
-          <Drawer.Screen name="My Monthly Budget Plan" component={BudgetScreen} />
+          <Drawer.Screen name="My Spendings" component={SpendingsScreen} />
           <Drawer.Screen name="Notification Centre" component={NotificationCentreScreen} />
           <Drawer.Screen name="Settings" component={SettingsScreen} />
         </Drawer.Navigator>
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 15
-  }, 
+  },
   paragraph: {
     fontWeight: 'bold',
     marginRight: 3
@@ -136,5 +137,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16
   }
 });
-
-  

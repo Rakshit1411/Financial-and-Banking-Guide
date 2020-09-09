@@ -1,34 +1,58 @@
 export const chartData = [
   {
-    label: "Venezuela",
+    label: "26-08-2020",
     value: "290"
   },
   {
-    label: "Saudi",
+    label: "27-08-2020",
     value: "260"
   },
   {
-    label: "Canada",
+    label: "28-08-2020",
     value: "180"
   },
   {
-    label: "Iran",
-    value: "140"
+    label: "29-08-2020",
+    value: "3000"
   },
   {
-    label: "Russia",
-    value: "115"
+    label: "30-08-2020",
+    value: "2000"
   },
   {
-    label: "UAE",
+    label: "31-08-2020",
     value: "100"
   },
   {
-    label: "US",
-    value: "30"
+    label: "01-09-2020",
+    value: "300"
   },
   {
-    label: "China",
-    value: "30"
+    label: "02-09-2020",
+    value: "290"
+  },
+  {
+    label: "03-09-2020",
+    value: "180"
+  },
+  {
+    label: "04-09-2020",
+    value: "1000"
+  },
+  {
+    label: "05-09-2020",
+    value: "150"
+  },
+  {
+    label: "06-09-2020",
+    value: "1500"
+  },
+  {
+    label: "07-09-2020",
+    value: "300"
+  },
+  {
+    label: "08-09-2020",
+    value: "250"
   }
 ];
