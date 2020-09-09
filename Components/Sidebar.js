@@ -16,6 +16,16 @@ import {
 } from '@react-navigation/drawer';
 import BudgetScreen from '../BudgetScreen'
 import NotificationCentreScreen from '../NotificationCentreScreen'
+import {
+  Avatar,
+  Title,
+  Caption,
+  Paragraph,
+  Drawer,
+  Text,
+  TouchableRipple,
+  Switch
+} from 'react-native-paper';
 
 export default class Sidebar extends Component {
   constructor(props)
@@ -46,13 +56,31 @@ export default class Sidebar extends Component {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Dashboard" drawerContent={props => {
           return (
+            <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
-             <DrawerItemList {...props} />
-             <DrawerItem label="Logout" onPress={this._logout} />
-             <DrawerItem label={this.state.user} />
-            </DrawerContentScrollView>
+              <View style={styles.drawerContent}>
+                <View style={styles.userInfoSelection}>
+                  <View style={{flexDirection: 'row', marginTop: 15}}>
+                    <Avatar.Image
+                      source = {{
+                        uri: '../images/profile.png'
+                      }}
+                      size={50}
+                    />
+                    <View style={{flexDirection: 'column', marginLeft: 15}}>
+                      <Title style={styles.title}>{this.state.user}</Title>
+                      <Caption style={styles.caption}>userid</Caption>
+                    </View>
+                  </View>
+                </View>
+                <DrawerItemList {...props} />
+              </View>
+              <DrawerItem style={styles.bottomDrawerSection} label="Logout" onPress={this._logout} />
+            </DrawerContentScrollView>  
+            </View>
           )
-        }}>
+        }}
+          >
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
           <Drawer.Screen name="My Monthly Budget Plan" component={BudgetScreen} />
           <Drawer.Screen name="Notification Centre" component={NotificationCentreScreen} />
@@ -62,5 +90,51 @@ export default class Sidebar extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  drawerContent: {
+    flex: 1
+  },
+  userInfoSelection: {
+    paddingLeft: 20
+  },
+  title: {
+    fontSize: 16,
+    marginTop: 3,
+    fontWeight: 'bold'
+  },
+  caption: {
+    fontSize: 14,
+    lineHeight: 14
+  },
+  row: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 15
+  }, 
+  paragraph: {
+    fontWeight: 'bold',
+    marginRight: 3
+  },
+  drawerSection: {
+    marginTop: 35
+  },
+  bottomDrawerSection: {
+    marginTop: 475,
+    borderTopColor: 'black',
+    borderTopWidth: 1
+  },
+  preference: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 16
+  }
+});
 
   
