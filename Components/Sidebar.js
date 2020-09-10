@@ -33,7 +33,8 @@ export default class Sidebar extends Component {
   {
     super(props);
     this.state={
-      user: ''
+      username: '',
+      fullname: ''
     };
     this._retrieveData();
   }
@@ -69,8 +70,8 @@ export default class Sidebar extends Component {
                       size={50}
                     />
                     <View style={{flexDirection: 'column', marginLeft: 15}}>
-                      <Title style={styles.title}>{this.state.user}</Title>
-                      <Caption style={styles.caption}>userid</Caption>
+                      <Title style={styles.title}>{this.state.fullname}</Title>
+                      <Caption style={styles.caption}>{this.state.username}</Caption>
                     </View>
                   </View>
                 </View>
