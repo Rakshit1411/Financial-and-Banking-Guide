@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, StyleSheet, View, Button, TextInput } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Button, TextInput, Image, Text, KeyboardAvoidingView } from 'react-native';
 import Headbar from './Components/Headbar';
 import DashboardScreen from './DashboardScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import Sidebar from './Components/Sidebar'
+import { Avatar } from 'react-native-paper'
 
-import { Container, Header, Content, Text, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
+import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 
-const userInfo = {username:'hackathon-user', password:'hackathonuser'};
+const userInfo = {fullname:'Anushka', username:'anushka', password:'anushka'};
 
 export default class LoginScreen extends Component {
 	constructor(props)
 	{
 		super(props);
 		this.state = {
+			fullname: '',
 			username: '',
 			password: ''
 		}
@@ -22,37 +24,56 @@ export default class LoginScreen extends Component {
 		const navigation = this.props.navigation;
 		const title = 'Login';
 		return (
-			<View style={styles.container}>
+			<KeyboardAvoidingView behavior="padding" style={styles.container1}>
+				<Text style={styles.title2}>Welcome to Wizely</Text>
+				<View style={styles.logoContainer}>
+					<Avatar.Image
+						style={styles.logo}
+                      	source={require('./images/logo.jpg')}
+                      size={150}
+                    />
+					<Text style={styles.title}>Becoming rich is hard. Staying broke is hard. Choose your hard.</Text>
+				</View>
 
+				<View style={styles.formContainer}>
+					<View style={styles.container2}>
 
-						<Text style={styles.welcome}>Welome to Wizely</Text>
 						<TextInput
-							style={styles.input}
+							style={styles.newinput}
 							placeholder="Username"
+							placeholderTextColor='rgba(255,255,255,0.7)'
+							returnKeyType = "next"
 							onChangeText = {(text)=>this.setState({username: text})}
+							onSubmitEditing={() => this.passwordInput.focus()}
 							value={this.state.username}
 							autoCapitalize="none"
 						/>
 						<TextInput
-							style={styles.input}
+							style={styles.newinput}
 							placeholder="Password"
+							placeholderTextColor='rgba(255,255,255,0.7)'
+							returnKeyType = "go"
 							onChangeText = {(text)=>this.setState({password: text})}
 							value={this.state.password}
+							ref={(input) => this.passwordInput = input}
 							secureTextEntry
 						/>
-						<View style={styles.btnContainer}>
-							<TouchableOpacity style={styles.userBtn}>
-								<Text style={styles.btnTxt} onPress={this._login}>Submit</Text>
-							</TouchableOpacity>
-						</View>
-			</View>
+						<TouchableOpacity style={styles.userBtn}>
+							<Text style={styles.btnTxt} onPress={this._login}>Submit</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+
+			</KeyboardAvoidingView>
 		);
 	}
 
 	_login = async() => {
 		if(userInfo.username === this.state.username && userInfo.password === this.state.password)
 		{
-			await AsyncStorage.setItem('isLoggedIn',this.state.username);
+			this.setState({fullname: userInfo.fullname});
+			await AsyncStorage.setItem('username',this.state.username);
+			await AsyncStorage.setItem('fullname',this.state.fullname);
 			this.props.navigation.navigate('DrawerNavigator');
 		}
 		else
@@ -64,11 +85,9 @@ export default class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-	container: {
+	container1: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: 'lightblue'
+		backgroundColor: '#3498db'
 	},
 	input: {
 		width: "90%",
@@ -81,19 +100,57 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	},
 	userBtn: {
-		backgroundColor: "pink",
-		padding: 15,
-		width: "35%"
+		backgroundColor: "#2980b9",
+		paddingVertical: 15,
+		height: 60
 	},
 	btnTxt: {
 		fontSize: 20,
 		textAlign: 'center',
-		color: "white"
+		color: "white",
+		fontWeight: '700'
 	},
 	welcome: {
 		fontSize: 30,
 		textAlign: 'center',
 		margin: 10,
 		color: 'white'
+	},
+	logo: {
+		width: 150,
+		height: 150
+	},
+	logoContainer: {
+		alignItems: 'center',
+		flexGrow: 1,
+		justifyContent: 'center'
+	},
+	formContainer: {
+
+	},
+	title: {
+		color: 'white',
+		marginTop: 10,
+		width: 160,
+		opacity: 0.9,
+		textAlign: 'center'
+	},
+	newinput: {
+		height: 50,
+		backgroundColor: 'rgba(255,255,255,0.2)',
+		marginBottom: 10,
+		color: 'white',
+		paddingHorizontal: 10
+	},
+	container2: {
+		padding: 25
+	},
+	title2: {
+		color: 'white',
+		marginTop: 20,
+		marginBottom: 10,
+		opacity: 0.9,
+		textAlign: 'center',
+		fontSize: 30
 	}
 });

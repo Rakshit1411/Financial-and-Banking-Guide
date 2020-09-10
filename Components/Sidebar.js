@@ -37,13 +37,15 @@ export default class Sidebar extends Component {
   {
     super(props);
     this.state={
-      user: ''
+      username: '',
+      fullname: ''
     };
     this._retrieveData();
   }
   _retrieveData = async () => {
     try {
-      this.setState({user: await AsyncStorage.getItem('isLoggedIn')});
+      this.setState({username: await AsyncStorage.getItem('username')});
+      this.setState({fullname: await AsyncStorage.getItem('fullname')});
     } catch (error) {
       console.log(error);
     }
@@ -73,8 +75,8 @@ export default class Sidebar extends Component {
                       size={50}
                     />
                     <View style={{flexDirection: 'column', marginLeft: 15}}>
-                      <Title style={styles.title}>{this.state.user}</Title>
-                      <Caption style={styles.caption}>userid</Caption>
+                      <Title style={styles.title}>{this.state.fullname}</Title>
+                      <Caption style={styles.caption}>{this.state.username}</Caption>
                     </View>
                   </View>
                 </View>
