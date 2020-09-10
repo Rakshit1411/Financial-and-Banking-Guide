@@ -7,7 +7,7 @@ import Sidebar from './Components/Sidebar'
 
 import { Container, Header, Content, Text, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 
-const userInfo = {username:'anushka', password:'anushka'};
+const userInfo = {username:'hackathon-user', password:'hackathonuser'};
 
 export default class LoginScreen extends Component {
 	constructor(props)
@@ -23,8 +23,8 @@ export default class LoginScreen extends Component {
 		const title = 'Login';
 		return (
 			<View style={styles.container}>
-			 
-				
+
+
 						<Text style={styles.welcome}>Welome to Wizely</Text>
 						<TextInput
 							style={styles.input}
