@@ -49,7 +49,7 @@ class NotificationManager{
       ...this._buildAndroidNotification(id,title,message,data,options),
 
       ...this._buildIOSNotification(id,title,message,data,options),
-      date: new Date(Date.now() + 15 * 1000),
+      date: new Date(Date.now() + 60 * 1000),
       title: title || "",
       message: message || "",
       playSound: options.playSound || false,

@@ -9,7 +9,11 @@ import DashboardScreen from '../DashboardScreen'
 import SettingsScreen from '../SettingsScreen'
 import LoginScreen from '../login'
 import SpendingsScreen from '../SpendingsScreen'
+import SavingsAndInvestmentsScreen from '../SavingsAndInvestmentsScreen'
 import AsyncStorage from '@react-native-community/async-storage';
+import InvestmentsNavigator from '../navigators/InvestmentsNavigator'
+
+
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -66,7 +70,7 @@ export default class Sidebar extends Component {
                   <View style={{flexDirection: 'row', marginTop: 15}}>
                     <Avatar.Image
                       source = {{
-                        uri: '../images/profile.png'
+                        uri: 'https://cdn.iconscout.com/icon/free/png-256/avatar-380-456332.png'
                       }}
                       size={50}
                     />
@@ -86,8 +90,8 @@ export default class Sidebar extends Component {
           >
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
           <Drawer.Screen name="My Spendings" component={SpendingsScreen} />
+          <Drawer.Screen name="Savings And Investments" component={InvestmentsNavigator} />
           <Drawer.Screen name="Notification Centre" component={NotificationCentreScreen} />
-          <Drawer.Screen name="Settings" component={SettingsScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     )

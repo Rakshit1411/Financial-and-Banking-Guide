@@ -28,8 +28,8 @@ export default class LoginScreen extends Component {
 				<Text style={styles.title2}>Welcome to Wizely</Text>
 				<View style={styles.logoContainer}>
 					<Avatar.Image
-						style={styles.logo} 
-                      	source={require('./images/logo.jpg')} 
+						style={styles.logo}
+                      	source={require('./images/logo.jpg')}
                       size={150}
                     />
 					<Text style={styles.title}>Becoming rich is hard. Staying broke is hard. Choose your hard.</Text>
@@ -37,7 +37,7 @@ export default class LoginScreen extends Component {
 
 				<View style={styles.formContainer}>
 					<View style={styles.container2}>
-						
+
 						<TextInput
 							style={styles.newinput}
 							placeholder="Username"
