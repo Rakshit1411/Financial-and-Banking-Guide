@@ -40,7 +40,8 @@ export default class Sidebar extends Component {
   }
   _retrieveData = async () => {
     try {
-      this.setState({user: await AsyncStorage.getItem('isLoggedIn')});
+      this.setState({username: await AsyncStorage.getItem('username')});
+      this.setState({fullname: await AsyncStorage.getItem('fullname')});
     } catch (error) {
       console.log(error);
     }
