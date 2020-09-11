@@ -6,11 +6,8 @@ import { Root } from "native-base";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import DashboardScreen from './DashboardScreen'
-import SettingsScreen from './SettingsScreen'
+
 import LoginScreen from './login'
-import Headbar from './Components/Headbar'
-import Sidebar from './Components/Sidebar'
 import DrawerNavigator from './DrawerNavigator'
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -48,7 +45,7 @@ class AuthLoadingScreen extends Component{
 
 
     const App = createSwitchNavigator(
-    { 
+    {
       AuthLoading: AuthLoadingScreen,
       LoginScreen: LoginScreen,
       DrawerNavigator: DrawerNavigator
