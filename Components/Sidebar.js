@@ -67,7 +67,7 @@ export default class Sidebar extends Component {
             <DrawerContentScrollView {...props}>
               <View style={styles.drawerContent}>
                 <View style={styles.userInfoSelection}>
-                  <View style={{flexDirection: 'row', marginTop: 15}}>
+                  <View style={{flexDirection: 'row', margin: 15}}>
                     <Avatar.Image
                       source = {{
                         uri: 'https://cdn.iconscout.com/icon/free/png-256/avatar-380-456332.png'

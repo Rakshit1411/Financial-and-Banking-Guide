@@ -6,6 +6,7 @@ import SavingsAndInvestmentsScreen from '../SavingsAndInvestmentsScreen'
 import SpendingsScreen from '../SpendingsScreen'
 import HelpfulArticles from '../HelpfulArticles'
 import HSBCProducts from '../HSBCProducts'
+import WebviewScreen from '../WebviewScreen'
 const Stack = createStackNavigator();
 
 function InvestmentsNavigator() {
@@ -16,6 +17,8 @@ function InvestmentsNavigator() {
         <Stack.Screen name="My Spendings" component={SpendingsScreen} />
         <Stack.Screen name="Helpful Articles" component={HelpfulArticles} />
         <Stack.Screen name="HSBC Products" component={HSBCProducts} />
+        <Stack.Screen name="Webview Screen" component={WebviewScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

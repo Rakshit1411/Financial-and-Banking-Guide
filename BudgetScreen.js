@@ -95,6 +95,7 @@ export default class BudgetScreen extends Component {
     }
     if(newBudgetdetails.category==='Shopping'){
       progressValue=1
+      progressColor=Colors.green800;
     }
     budgetsList.push({category: newBudgetdetails.category,amount:newBudgetdetails.amount,progressValue:
     progressValue,progressColor:progressColor});
@@ -127,8 +128,8 @@ render() {
     <Container>
     <Headbar navigation={ navigate } title={ title } openAddBudgetModal={this.setModalVisible.bind(this)}/>
         <ScrollView>
-    <View style={{backgroundColor:'#eeeeee'}}>
-      <Text style={{margin:0,color:'grey',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (October)</Text>
+    <View style={{backgroundColor:'#43658b'}}>
+      <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (October)</Text>
     </View>
     <Carousel layout={'tinder'}
       ref={(c) => { this._carousel = c; }}
@@ -137,7 +138,7 @@ render() {
       sliderWidth={410}
       itemWidth={410}
       windowSize={1}
-
+      style={{backgroundColor:'#43658b'}}
     />
 
 
@@ -145,8 +146,8 @@ render() {
       <FlatList
         data={this.state.budgetsList}
         renderItem={(item) => (
-          <View style={{backgroundColor:'#eeeeee'}}>
-            <Text style={{margin:0,color:'grey',alignSelf:'center',fontSize:16,padding:5}}>{item.item.category}</Text>
+          <View style={{backgroundColor:'#43658b'}}>
+            <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>{item.item.category}</Text>
             <View style={{backgroundColor:'white',padding:10}}>
               <View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{color:'black',marginBottom:10,paddingBottom:10,flex:1,fontSize:22}}>{item.item.category}</Text>

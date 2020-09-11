@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
 		const title = 'Login';
 		return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container1}>
-				<Text style={styles.title2}>Welcome to Wizely</Text>
+				<Text style={styles.title2}>Welcome to Financial Guru</Text>
 				<View style={styles.logoContainer}>
 					<Avatar.Image
 						style={styles.logo}
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 	},
 	title2: {
 		color: 'white',
-		marginTop: 20,
+		marginTop: '30%',
 		marginBottom: 10,
 		opacity: 0.9,
 		textAlign: 'center',

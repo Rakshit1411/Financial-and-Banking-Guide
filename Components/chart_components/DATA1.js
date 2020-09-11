@@ -1,7 +1,7 @@
 export const chartData1 = [
   {
     label: "Travel",
-    value: "15000",
+    value: "20000",
     details:"test"
   },
   {
@@ -22,6 +22,6 @@ export const chartData1 = [
   {
     label: "Rent",
     value: "12000",
-    details:"test"
+    details:"test",
   }
 ];
