@@ -25,7 +25,7 @@ return (
   <View>
 <Header  style={{backgroundColor:'#43658b'}}>
 <Left>
-<Button transparent onPress={() => { localNotify.showNotification(1,"Budget Updates","Your new Budget has been predicted for you",{},{}); navigation.openDrawer();}}>
+<Button transparent onPress={() => {  navigation.openDrawer();}}>
 <Icon
   name="three-bars"
   color="white"
@@ -41,7 +41,7 @@ return (
   name={rightIcon}
   color="white"
   size={25}
-  onPress={()=>{if(rightIcon=="plus"){openAddBudgetModal(true)}}}
+  onPress={()=>{if(rightIcon=="plus"){openAddBudgetModal(true)} else{localNotify.showNotification(1,"Budget Updates","Your new Budget has been predicted for you",{},{});}}}
 />
 </Right>
 </Header>

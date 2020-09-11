@@ -1,7 +1,6 @@
 import { Button, ScrollView, View, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
 import { Icon, Container, Header, Content, Left } from 'native-base'
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import FusionCharts from "react-native-fusioncharts";
 
 

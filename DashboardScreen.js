@@ -1,10 +1,8 @@
 import { Button, ScrollView, View, StyleSheet, Text } from 'react-native'
 import React, { Component } from 'react'
-import { Icon, Container, Header, Content, Left } from 'native-base'
-import { Dimensions } from 'react-native';
+import { Icon, Container, Header, Content } from 'native-base'
 import Headbar from './Components/Headbar';
-import Area from './charts/Area';
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import FusionCharts from "react-native-fusioncharts";
 import { chartData } from './Components/chart_components/DATA'
 import { chartData1 } from './Components/chart_components/DATA1'
@@ -12,7 +10,6 @@ import { chartData2 } from './Components/chart_components/DATA2'
 import LineChart from './charts/LineChart'
 import Column2dChart from './charts/Column2dChart'
 import PieChart from './charts/PieChart'
-import Gauge from './charts/Gauge'
 import DataTables from './Components/DataTables'
 import CustomList from './Components/CustomList';
 // Preparing the chart data
