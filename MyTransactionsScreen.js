@@ -33,14 +33,20 @@ render() {
 
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
-  <Content>
-  <SafeAreaView style={styles.container}>
+  <Content style={{backgroundColor:'#43658b'}}>
+  <SafeAreaView style={{...styles.container}}>
     <FlatList
       data={this.state.transactionsList}
       renderItem={(item) => (
-        <View style={{backgroundColor:'#eeeeee'}}>
+        <View style={{backgroundColor:'#43658b'}}>
           <Text style={{margin:0,color:'grey',alignSelf:'center',fontSize:16,height:7}}></Text>
-          <View style={{backgroundColor:'white',padding:5,flexDirection: 'row'}}>
+          <View style={{backgroundColor:'white',padding:5,flexDirection: 'row',marginLeft:5,marginRight:5,shadowColor: '#000',
+
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 2,
+      		borderRadius: 6,
+          elevation: 2}}>
           <Image source = {{uri:item.item.image}}
            style = {{ width: 40, height: 40,flexDirection: 'column' ,marginTop:10}}
            />

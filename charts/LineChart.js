@@ -22,7 +22,7 @@ export default class LineChart extends React.PureComponent
           xAxisName: props.xAxisName,
           yAxisName: props.yAxisName,
           numberSuffix: props.numberSuffix,
-          theme: props.theme
+          theme: props.theme,
         },
         data: props.data
       }
@@ -38,6 +38,7 @@ export default class LineChart extends React.PureComponent
   }
 	render(){
 		return (
+      <View style={{paddingTop:15}}>
       <FusionCharts
             type='line'
             width={this.state.width}
@@ -46,6 +47,7 @@ export default class LineChart extends React.PureComponent
             dataSource={this.state.dataSource}
             libraryPath={this.libraryPath} // set the libraryPath property
           />
+          </View>
 
 		);
 	}

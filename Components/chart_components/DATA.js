@@ -54,5 +54,9 @@ export const chartData = [
   {
     label: "08-09-2020",
     value: "250"
+  },
+  {
+    label: "10-09-2020",
+    value: "5000"
   }
 ];

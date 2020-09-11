@@ -23,7 +23,7 @@ const Item = ({ item, onPress, style }) => (
         <Text style={styles.title}><Text style={{fontWeight: "bold",fontSize:20}}>{item.title}</Text></Text>
         <Text style={styles.title}><Text style={{fontWeight: "bold"}}>Payment Date</Text>-{item.last_payment_date}</Text>
       </View>
-    <Text style={{...styles.title,flexDirection: 'row',fontSize:20,marginLeft:40,marginRight:20}}> £{item.amount}</Text>
+    <Text style={{...styles.title,flexDirection: 'row',fontSize:20,marginLeft:40,marginRight:20}}>{item.amount}</Text>
 
     </View>
   </TouchableOpacity>
@@ -41,7 +41,7 @@ const CustomList = ({data}) => {
       <Item
         item={item}
         onPress={() => setSelectedId(item.id)}
-        style={{ backgroundColor }}
+        style={{ backgroundColor:'#43658b' }}
       />
     );
   };
@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
   item: {
     padding: 15,
     marginVertical: 4,
-    marginHorizontal: 16,
-    borderRadius:40
+    marginHorizontal: 10,
+    borderRadius:10
   },
   title: {
     fontSize: 12,

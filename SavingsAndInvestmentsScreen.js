@@ -41,8 +41,8 @@ render() {
   return (
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
-<ScrollView>
-  <Content>
+<ScrollView style={{backgroundColor:'#43658b'}}>
+  <Content style={{backgroundColor:'#43658b'}}>
   <SafeAreaView style={styles.container}>
   <Card style={styles.card}>
     <CardImage style={styles.card}
@@ -60,13 +60,13 @@ render() {
       <CardButton
         onPress={() => {navigate.navigate('Helpful Articles',{articles:this.state.articles[0]})}}
         title="Helpful Articles"
-        color="red"
+        color="#43658b"
         titleStyle={{fontSize:10}}
       />
       <CardButton
         onPress={() => {navigate.navigate('My Spendings', { screen: 'My Budget' });}}
         title="Setup a new monthly budget"
-        color="blue"
+        color="#43658b"
         titleStyle={{fontSize:10}}
       />
     </CardAction>
@@ -86,13 +86,13 @@ render() {
       <CardButton
         onPress={() => {navigate.navigate('Helpful Articles',{articles:this.state.articles[1]})}}
         title="Helpful Articles"
-        color="red"
+        color="#43658b"
         titleStyle={{fontSize:10}}
       />
       <CardButton
         onPress={() => {navigate.navigate('HSBC Products')}}
         title="Explore HSBC products"
-        color="blue"
+        color="#43658b"
         titleStyle={{fontSize:10}}
       />
     </CardAction>
@@ -113,13 +113,13 @@ render() {
       <CardButton
         onPress={() => {navigate.navigate('Helpful Articles',{articles:this.state.articles[2]})}}
         title="Helpful Articles"
-        color="red"
+        color="#43658b"
         titleStyle={{fontSize:10}}
       />
       <CardButton
         onPress={this.setModalVisible.bind(this,true)}
         title="Set a goal or Event"
-        color="blue"
+        color="#43658b"
         titleStyle={{fontSize:10}}
       />
     </CardAction>
@@ -228,6 +228,9 @@ const styles = StyleSheet.create({
    shadowOpacity: 0.5,
    shadowRadius: 4,
    elevation: 5,
+   shadowOpacity: 0.5,
+   shadowRadius: 2,
+   borderRadius: 10,
  },
    centeredView: {
      flex: 1,

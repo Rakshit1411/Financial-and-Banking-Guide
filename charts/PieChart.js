@@ -19,7 +19,7 @@ export default class PieChart extends React.PureComponent {
           legendposition: props.legendposition,
           showpercentvalues: props.showpercentvalues,
           showlegend: props.showlegend,
-          theme: props.theme
+          theme: props.theme,
         },
         data: props.data
       }
@@ -36,6 +36,7 @@ export default class PieChart extends React.PureComponent {
 
   render() {
     return (
+      <View style={{paddingTop:15}}>
       <FusionCharts
             type='pie2d'
             width={this.state.width}
@@ -44,6 +45,7 @@ export default class PieChart extends React.PureComponent {
             dataSource={this.state.dataSource}
             libraryPath={this.libraryPath} // set the libraryPath property
           />
+          </View>
     );
   }
 }

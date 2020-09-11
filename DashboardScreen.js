@@ -47,49 +47,49 @@ class DashboardScreen extends Component
 		    title: "Vodafone Mobile",
 				category: "Mobile Payments",
 				last_payment_date: "2020-02-18",
-				amount:"-100.67"
+				amount:"Rs 450.00"
 		  },
 			{
 		    id: "bd7acbea-c1b1-4622-aed5-3ad53abb28ba",
 		    title: "Apple Music",
 				category: "Music Subscriptions",
 				last_payment_date: "2020-02-03",
-				amount:"-134.91"
+				amount:"Rs 99.00"
 		  },
 			{
 				id: "bd7acbea-c1b1-46c2-ae9d5-3ad53abb28ba",
 				title: "Spotify",
 				category: "Music Subscriptions",
 				last_payment_date: "2020-02-07",
-				amount:"-21.69"
+				amount:"Rs 79.00"
 			},
 		];
 		return (
-      <Container>
+      <Container style={{backgroundColor:'#43658b'}}>
       <Headbar navigation={ navigate } title={ title }/>
       <ScrollView>
       <ScrollView horizontal={true}>
-      <Card style={{margin:5,backgroundColor: '#f44336',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#f44336',padding:5}}>
       <Card.Content>
         <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
         <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
       </Card.Content>
       </Card>
-			<Card style={{margin:5,backgroundColor: 'brown',padding:5}}>
+			<Card style={{...styles.card,margin:5,backgroundColor: 'brown',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
           <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
         </Card.Content>
       </Card>
-      <Card style={{margin:5,backgroundColor: 'green',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: 'green',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>My Budget Status</Paragraph>
           <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
         </Card.Content>
       </Card>
-      <Card style={{margin:5,backgroundColor: '#ff1744',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#ff1744',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
@@ -98,7 +98,7 @@ class DashboardScreen extends Component
       </Card>
       </ScrollView>
       <Card
-        style={styles.card}
+        style={{...styles.card,backgroundColor: 'white'}}
       >
       <LineChart
             width='100%'
@@ -117,7 +117,7 @@ class DashboardScreen extends Component
 
 			</Card>
       <Card
-        style={styles.card}
+        style={{...styles.card,backgroundColor: 'white'}}
       >
       <Column2dChart
             width='100%'
@@ -134,7 +134,7 @@ class DashboardScreen extends Component
 						<DataTables data={chartData2} headersForTable={['Transaction Mode','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
           </Card>
       <Card
-        style={styles.card}
+        style={{...styles.card,backgroundColor: 'white'}}
       >
       <PieChart width='100%'
 			height='350'
@@ -147,13 +147,13 @@ class DashboardScreen extends Component
 			legendposition='Bottom'
 			usedataplotcolorforlabels='1'
 			data={chartData1}/>
-						<Text style={{marginLeft: "auto",padding:2,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
+						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
 						<DataTables data={chartData1} headersForTable={['details','Category','Amount']} keysForTable={['details','label','value']} visible={this.state.modalVisible} ref={ref => (this.pieTable = ref)}/>
 
 			</Card>
 
 			<Card
-				style={{...styles.card,backgroundColor: '#f8edeb'}}
+				style={{...styles.card,backgroundColor: 'white'}}
 			>
 			<Text style={styles.cardTitle}>Recurring Transactions</Text>
 			<CustomList data={recurring_transactions}/>
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
+		borderRadius: 10,
     elevation: 2,backgroundColor: '#f8edeb'
   },
 	cardTitle: {
