@@ -66,17 +66,17 @@ class DashboardScreen extends Component
       <Headbar navigation={ navigate } title={ title }/>
       <ScrollView>
       <ScrollView horizontal={true}>
-      <Card style={{...styles.card,margin:5,backgroundColor: '#f44336',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#FFE4F3',padding:5}}>
       <Card.Content>
-        <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
-        <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
+        <Paragraph style={{color:'black',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
+        <Title style={{color:'black',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
       </Card.Content>
       </Card>
-			<Card style={{...styles.card,margin:5,backgroundColor: 'brown',padding:5}}>
+			<Card style={{...styles.card,margin:5,backgroundColor: '#FFBA49',padding:5}}>
 
         <Card.Content>
-          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
+          <Paragraph style={{color:'black',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
+          <Title style={{color:'black',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
         </Card.Content>
       </Card>
       <Card style={{...styles.card,margin:5,backgroundColor: 'green',padding:5}}>
@@ -86,11 +86,11 @@ class DashboardScreen extends Component
           <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
         </Card.Content>
       </Card>
-      <Card style={{...styles.card,margin:5,backgroundColor: '#ff1744',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#BEE7B8',padding:5}}>
 
         <Card.Content>
-          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
+          <Paragraph style={{color:'black',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
+          <Title style={{color:'black',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
         </Card.Content>
       </Card>
       </ScrollView>

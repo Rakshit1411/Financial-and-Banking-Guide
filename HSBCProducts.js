@@ -48,7 +48,7 @@ render() {
       <CardAction
         separator={true}
         inColumn={false}/>
-        <Text style={{padding:10,paddingBottom:4,fontSize:10,backgroundColor:'#eeeeee',alignSelf:'stretch'}}>INSIGHTS</Text>
+        <Text style={{padding:10,paddingBottom:4,fontSize:14,backgroundColor:'#eeeeee',alignSelf:'stretch'}}>INSIGHTS</Text>
         <Text style={{padding:10,paddingTop:0,fontSize:12,color:'black',backgroundColor:'#eeeeee',alignSelf:'stretch'}}>With your Rs.1,50,000 savings amount, you can earn Rs.4650 at Interest Rate of 3.01%, instead of 2.5%.</Text>
     <CardAction
       separator={true}
