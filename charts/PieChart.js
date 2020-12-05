@@ -44,6 +44,7 @@ export default class PieChart extends React.PureComponent {
             dataFormat={this.state.dataFormat}
             dataSource={this.state.dataSource}
             libraryPath={this.libraryPath} // set the libraryPath property
+
           />
           </View>
     );

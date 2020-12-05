@@ -33,12 +33,12 @@ render() {
 
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
-  <Content style={{backgroundColor:'#43658b'}}>
+  <Content style={{backgroundColor:'#0A1045'}}>
   <SafeAreaView style={{...styles.container}}>
     <FlatList
       data={this.state.transactionsList}
       renderItem={(item) => (
-        <View style={{backgroundColor:'#43658b'}}>
+        <View style={{backgroundColor:'#0A1045'}}>
           <Text style={{margin:0,color:'grey',alignSelf:'center',fontSize:16,height:7}}></Text>
           <View style={{backgroundColor:'white',padding:5,flexDirection: 'row',marginLeft:5,marginRight:5,shadowColor: '#000',
 

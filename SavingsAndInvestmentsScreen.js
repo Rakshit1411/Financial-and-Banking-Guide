@@ -41,8 +41,8 @@ render() {
   return (
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
-<ScrollView style={{backgroundColor:'#43658b'}}>
-  <Content style={{backgroundColor:'#43658b'}}>
+<ScrollView style={{backgroundColor:'#0A1045'}}>
+  <Content style={{backgroundColor:'#0A1045'}}>
   <SafeAreaView style={styles.container}>
   <Card style={styles.card}>
     <CardImage style={styles.card}
@@ -60,13 +60,13 @@ render() {
       <CardButton
         onPress={() => {navigate.navigate('Helpful Articles',{articles:this.state.articles[0]})}}
         title="Helpful Articles"
-        color="#43658b"
+        color="#0A1045"
         titleStyle={{fontSize:10}}
       />
       <CardButton
         onPress={() => {navigate.navigate('My Spendings', { screen: 'My Budget' });}}
         title="Setup a new monthly budget"
-        color="#43658b"
+        color="#0A1045"
         titleStyle={{fontSize:10}}
       />
     </CardAction>
@@ -86,13 +86,13 @@ render() {
       <CardButton
         onPress={() => {navigate.navigate('Helpful Articles',{articles:this.state.articles[1]})}}
         title="Helpful Articles"
-        color="#43658b"
+        color="#0A1045"
         titleStyle={{fontSize:10}}
       />
       <CardButton
         onPress={() => {navigate.navigate('HSBC Products')}}
         title="Explore HSBC products"
-        color="#43658b"
+        color="#0A1045"
         titleStyle={{fontSize:10}}
       />
     </CardAction>
@@ -113,13 +113,13 @@ render() {
       <CardButton
         onPress={() => {navigate.navigate('Helpful Articles',{articles:this.state.articles[2]})}}
         title="Helpful Articles"
-        color="#43658b"
+        color="#0A1045"
         titleStyle={{fontSize:10}}
       />
       <CardButton
         onPress={this.setModalVisible.bind(this,true)}
         title="Set a goal or Event"
-        color="#43658b"
+        color="#0A1045"
         titleStyle={{fontSize:10}}
       />
     </CardAction>

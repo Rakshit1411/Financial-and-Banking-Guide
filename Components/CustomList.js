@@ -41,7 +41,7 @@ const CustomList = ({data}) => {
       <Item
         item={item}
         onPress={() => setSelectedId(item.id)}
-        style={{ backgroundColor:'#43658b' }}
+        style={{ backgroundColor:'#0A1045' }}
       />
     );
   };

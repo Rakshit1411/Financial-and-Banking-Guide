@@ -1,0 +1,12 @@
+export const dialogflowConfig = {
+  type: 'service_account',
+  project_id: 'central-shade-285805',
+  private_key_id: '928939c74ccf375937202d30af6f43bf05c0dba6',
+  private_key: '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCZNnej2qbakkhr\nDuf4dFMHp2JV1DmaL8vNM4HbMJkquzBJz4zDUA5w4X3nKWwiIxc9gOJQXZuAbmaK\nGphybY6jLoj31gwl/jG0U4EBzChQP7ELnwELNWhXVct/8nbD0PeRiciTcpq75k+R\nq6zQdLtx8H3x2LeLNB3eFgdGYBr8rKuclr4VmAFWKAOQDn7UPQv/i7Ndghwx3mV1\nTd0InGUYc8kPtSoY+bsxVClGT6H0w9me7y95oYPS9q6UwIRefRQomGz5NoGgQU35\nju7f3L4cMCJPh7E4IOU7Rb7Uu7CH2txbq4xJDUBzcEm2TEY850B5S+VP05dlkQfi\nLYeIuzO3AgMBAAECggEAS6xw3D/nUKaW2TX0Ei3WQr4EXlMjnknENhaeKVZwGIB7\nQcGfC2rzrwJY7r9xVs0RMgICBeKuJvmgcM7hBAejv2qBITQaLPvHrgLegbZGJRjI\nR+6hk9ktr5FDIW9vBJmmZb5xkI426d6/5zmtcgpt+MFpW3YIddtocyRbNIHMYobc\nzDv8C2ju4hxIFSgeKhBHMSZqg/wJfOa6eilvtWpZxO/DPllxwCccPKqj80N/0ppz\nG+2iEhxvJvZMjLrB4OchqXkaJSnN8F03lfafmBcoGpb5YQguEVsceqxWfakPItgX\nHVrIr2TvriADZrKaqzIi1JhK3ydcGgs5PUdy0+MfhQKBgQDK5zGUo5yPGL9z8gcQ\niLeM+7KpJOR2Ojs/+08xbH0t+eMwm7biQdy3YMTfbICd59FBBgMHxSUXklmeT2p0\nNG9ZBsmbU+sLDujd6i0FfAFVg3pWLh2AyWByz7Cbh+ZF3OPb717+ezL5Xw44tV2V\nSwxgaGLtD5Xoo9Et3CgTqSx/EwKBgQDBTnAP0mu7Oo5Z4dw1Fg0k0Crt1W/FMPg0\niBW1mIHXzkB+t6WHVJTpTnqOEWEfwP2TWthoOd6snC8/W+CgVZM0i5eglQPhgfEr\nqRL6iM3vQnYf9mUjgnJnyOcI8MW0J/Kn+g0SFVGHMNtTd22XSV+8pi91xiMTaU7b\nrSlurLN5TQKBgQCuT7wKhByF2q7vfueOzsVRexJbuXQEFba9GrtILHnGO71wDvYo\nnohtidbYUrCT94mPoQiNblKVU4dmN7euqTVXeDtPE+MDFwX7T6jp40SKIG/DBc8W\nyunu+Hoyw6eSMVgXpCcp3NFH5t+i3DzPey/gywzht9gDimi0S0Sqz1WIvQKBgFnx\nw1a5VANUJbRQ0YOp9QeyDKeJbm5UcMkQoPlUMuZVQ9EyZkTn6Dn+mCvOjmCWDeco\nmBU3CBNMwPc8KvKvnsUORskjTSD6s1rbWsdULG4tgIUywrCZG96KrmWMkpFXHSNn\nx/koDj1XUFYv9cA1FeTTdrXYMa3wjA7PLb4fgYrpAoGAWbnU2ayAQnKRTeNovnDf\nyIeVOwSNf57ORlafipnWZ3tFqG6/sqFCt0yE5eyKsleOkDq1f4Xv7pjS2eNoILmo\nWygbkKWn1xJxrIpfAXki7OLDHUxmt/FU1jce6jAE4Jgyb68D37dsd/YximLM8qGz\n1RLuSGUTi29sn3Bf8ToRqpc=\n-----END PRIVATE KEY-----\n',
+  client_email: 'dialogflow-istyhg@central-shade-285805.iam.gserviceaccount.com',
+  client_id: '105397544947809872843',
+  auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+  token_uri: 'https://oauth2.googleapis.com/token',
+  auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+  client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-istyhg%40central-shade-285805.iam.gserviceaccount.com'
+}

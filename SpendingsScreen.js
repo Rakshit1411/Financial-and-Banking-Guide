@@ -47,7 +47,7 @@ export default function SpendingsScreen({navigation}) {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#43658b',
+        activeTintColor: '#0A1045',
         inactiveTintColor: 'gray',
       }}
     >

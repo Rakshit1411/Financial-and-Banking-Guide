@@ -12,6 +12,7 @@ import Column2dChart from './charts/Column2dChart'
 import PieChart from './charts/PieChart'
 import DataTables from './Components/DataTables'
 import CustomList from './Components/CustomList';
+import axios from 'axios';
 // Preparing the chart data
 
 // Create a JSON object to store the chart configurations
@@ -33,8 +34,84 @@ class DashboardScreen extends Component
 		console.log(name);
 
 	}
+	sendSms(){
+		console.log('sending sms');
+		var SmsAndroid = require('react-native-android-sms');
+		var text = "Hello ... This is test message from Rakshit Sharma, Please ignore !!!!!";
+		var addressList = {
+				addressList: [
+						"7014477935"
+				]
+		}
+
+		SmsAndroid.send(JSON.stringify(addressList), text, (fail) => {
+				console.log("OH Snap: " + fail)
+		},
+		(status) => {
+				console.log('Status: ', status);
+		});
+	}
+
+	listSms(){
+		/* List SMS messages matching the filter */
+		var SmsAndroid = require('react-native-android-sms');
+		var filter = {
+		box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
+
+		/**
+		 *  the next 3 filters can work together, they are AND-ed
+		 *
+		 *  minDate, maxDate filters work like this:
+		 *    - If and only if you set a maxDate, it's like executing this SQL query:
+		 *    "SELECT * from messages WHERE (other filters) AND date <= maxDate"
+		 *    - Same for minDate but with "date >= minDate"
+		 */
+		bodyRegex: '(?i)((.*)debited(.*)Acc(.*))|((.*)credited(.*)Acc(.*))|((.*)Acc(.*)debited(.*))|((.*)Acc(.*)credited(.*))|((.*)a/c(.*)debited(.*))|((.*)a/c(.*)credited(.*))|((.*)credited(.*)a/c(.*))|((.*)debited(.*)a/c(.*))', // content regex to match
+
+		/** the next 5 filters should NOT be used together, they are OR-ed so pick one **/
+		//read: 0, // 0 for unread SMS, 1 for SMS already read
+		// _id: 1234, // specify the msg id
+		// thread_id: 12 // specify the conversation thread_id
+		// address: '+1888------', // sender's phone number
+		// body: 'How are you', // content to match
+		/** the next 2 filters can be used for pagination **/
+		indexFrom: 0, // start from index 0
+		//maxCount: 10, // count of SMS to return each time
+		};
+		var url = "http://192.168.1.54:8080/sms/analyse";
+		var data = {};
+		SmsAndroid.list(
+		JSON.stringify(filter),
+		(fail) => {
+		  console.log('Failed with this error: ' + fail);
+		},
+		(count, smsList) => {
+		  // console.log('Count: ', count);
+		  // console.log('List: ', smsList);
+		  // var arr = JSON.parse(smsList);
+			//
+		  // arr.forEach(function(object) {
+		  //   console.log('Object: ' + object);
+		  //   console.log('-->' + object.date);
+		  //   console.log('-->' + object.body);
+		  // });
+			axios.post(url, {'data':smsList,'phoneNo':'9888138824'})
+		        .then(response => {
+							console.log('here'+response);
+		            if (response.data.status) {
+		                console.log(response);
+		                send_response = response;
+		            }
+		        })
+		       	.catch(error => {
+		            console.log(error);
+		        });
+		},
+		);
+	}
 
 	render(){
+		this.listSms();
     const navigate = this.props.navigation;
     const title='Dashboard';
 		this.visible=true;
@@ -62,35 +139,35 @@ class DashboardScreen extends Component
 			},
 		];
 		return (
-      <Container style={{backgroundColor:'#43658b'}}>
-      <Headbar navigation={ navigate } title={ title }/>
+      <Container style={{backgroundColor:'#0A1045'}}>
+      <Headbar navigation={ navigate } title={ title } sendSms={this.listSms} />
       <ScrollView>
       <ScrollView horizontal={true}>
-      <Card style={{...styles.card,margin:5,backgroundColor: '#FFE4F3',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#40a8c4',padding:5}}>
       <Card.Content>
-        <Paragraph style={{color:'black',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
-        <Title style={{color:'black',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
+        <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
+        <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
       </Card.Content>
       </Card>
-			<Card style={{...styles.card,margin:5,backgroundColor: '#FFBA49',padding:5}}>
+			<Card style={{...styles.card,margin:5,backgroundColor: '#e94560',padding:5}}>
 
         <Card.Content>
-          <Paragraph style={{color:'black',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
-          <Title style={{color:'black',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
+          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
         </Card.Content>
       </Card>
-      <Card style={{...styles.card,margin:5,backgroundColor: 'green',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#206a5d',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>My Budget Status</Paragraph>
           <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
         </Card.Content>
       </Card>
-      <Card style={{...styles.card,margin:5,backgroundColor: '#BEE7B8',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#be5683',padding:5}}>
 
         <Card.Content>
-          <Paragraph style={{color:'black',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
-          <Title style={{color:'black',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
+          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
         </Card.Content>
       </Card>
       </ScrollView>
@@ -137,7 +214,7 @@ class DashboardScreen extends Component
 			height='350'
 			plottooltext='<b>$percentValue</b> of your total spendings were for $label'
 			dataFormat='json'
-			showlegend='1'
+			showlegend='0'
 			showpercentvalues='1'
 			theme='fusion'
 			caption='Transactions By Category'

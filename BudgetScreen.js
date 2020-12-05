@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View,Modal, StyleSheet,TouchableHighlight,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground } from 'react-native';
+import { View,Modal, StyleSheet,TouchableHighlight,TouchableWithoutFeedback,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground } from 'react-native';
 import Headbar from './Components/Headbar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Container, Header, Content, Button, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
@@ -57,12 +57,27 @@ export default class BudgetScreen extends Component {
     console.log('new vis flag',vis);
     this.setState({ addBudgetModal: vis });
   }
+  onClickAction(item){
+    const {budgetsList} = this.state;
 
+    const {newBudgetdetails} = this.state;
+    console.log('here',item);
+    for(var i=0;i<this.state.recommendedBudgetsList.length;i++){
+      if(this.state.recommendedBudgetsList[i].category==item.category){
+        newBudgetdetails.category=item.category;
+        newBudgetdetails.amount=item.amount;
+        this.addNewBudget(true);
+        this.state.recommendedBudgetsList.splice(i,i+1);
+        break;
+      }
+    }
+  }
   _renderItem = ({item, index}) => {
     img_uri={uri:item.image}
     console.log(img_uri)
 
          return (
+           <TouchableWithoutFeedback onPress={ () => this.onClickAction(item)}>
            <View style={{alignItems: 'center',flex:1,margin:10}}>
              <Card style={{height:'80%',width:'100%',margin:7}}>
              <ImageBackground source={img_uri} style={styles.image}>
@@ -74,10 +89,12 @@ export default class BudgetScreen extends Component {
                  </ImageBackground>
              </Card>
              </View>
+             </TouchableWithoutFeedback>
          );
      }
 
-  addNewBudget(){
+  addNewBudget(flag){
+    console.log(flag,'herejhkushfkjefekwhfkjdsbfmdbfiudbfmdsfbmfdsjk')
     const {budgetsList} = this.state;
 
     const {newBudgetdetails} = this.state;
@@ -104,10 +121,12 @@ export default class BudgetScreen extends Component {
     budgetsList.push({category: newBudgetdetails.category,amount:newBudgetdetails.amount,progressValue:
     progressValue,progressColor:progressColor});
     const {recommendedBudgetsList} = this.state;
-    for(var i=0;i<recommendedBudgetsList.length;i++){
-      if(recommendedBudgetsList[i].category==newBudgetdetails.category){
-        recommendedBudgetsList.splice(i,i+1);
-        break;
+    if(flag!=true){
+      for(var i=0;i<recommendedBudgetsList.length;i++){
+        if(recommendedBudgetsList[i].category==newBudgetdetails.category){
+          recommendedBudgetsList.splice(i,i+1);
+          break;
+        }
       }
     }
     this.setState({ budgetsList: budgetsList.slice(0)});
@@ -148,9 +167,10 @@ render() {
     <Container>
     <Headbar navigation={ navigate } title={ title } openAddBudgetModal={this.setModalVisible.bind(this)}/>
         <ScrollView>
-    <View style={{backgroundColor:'#43658b'}}>
+    <View style={{backgroundColor:'#0A1045'}}>
       <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (October)</Text>
     </View>
+
     <Carousel layout={'tinder'}
       ref={(c) => { this._carousel = c; }}
       data={this.state.recommendedBudgetsList}
@@ -158,7 +178,7 @@ render() {
       sliderWidth={410}
       itemWidth={410}
       windowSize={1}
-      style={{backgroundColor:'#43658b'}}
+      style={{backgroundColor:'#0A1045'}}
 
     />
 
@@ -167,7 +187,7 @@ render() {
       <FlatList
         data={this.state.budgetsList}
         renderItem={(item) => (
-          <View style={{backgroundColor:'#43658b'}}>
+          <View style={{backgroundColor:'#0A1045'}}>
             <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>{item.item.category}</Text>
             <View style={{backgroundColor:'white',padding:10}}>
               <View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between' }}>

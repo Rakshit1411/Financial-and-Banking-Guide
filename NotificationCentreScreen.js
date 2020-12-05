@@ -6,6 +6,8 @@ import { ProgressBar, Colors,Card,Paragraph } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import Headbar from './Components/Headbar';
 import CustomList from './Components/CustomList'
+import { FAB} from 'react-native-paper';
+
 export default class NotificationCentreScreen extends Component {
   constructor(props) {
    super(props);
@@ -20,7 +22,7 @@ export default class NotificationCentreScreen extends Component {
      };
   }
   onClickAction(item){
-    console.log(this.props.navigation.navigate('Message Details',{'details':item}));
+    console.log(this.props.navigation.navigate('Chat Screen',{'details':item}));
 
   }
 render() {
@@ -49,7 +51,7 @@ render() {
               <Text style={{color:'white',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,fontSize:16}}>{item.item.merchant}</Text>
             </View>
 
-          </View>: <View style={{backgroundColor:'#43658b',padding:5,flexDirection: 'row',marginLeft:5,marginRight:5,shadowColor: '#000',
+          </View>: <View style={{backgroundColor:'#0A1045',padding:5,flexDirection: 'row',marginLeft:5,marginRight:5,shadowColor: '#000',
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.5,
           shadowRadius: 2,
@@ -72,6 +74,13 @@ render() {
     />
   </SafeAreaView>
   </Content>
+  <FAB
+  style={styles.fab}
+  large
+  icon="chat"
+  color="white"
+  onPress={() => navigate.navigate('Chat Screen')}
+/>
   </Container>
 
   );
@@ -132,5 +141,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom:0,
+    backgroundColor:"#0A1045"
   },
 });

@@ -16,47 +16,47 @@ export const chartData1 = [
   },
   {
     label: "Transport & Car",
-    value: "100000",
+    value: "3000",
     details:"test",
   },
   {
     label: "Bar & Restraunts",
-    value: "100000",
+    value: "4500",
     details:"test",
   },
   {
     label: "Leisure & Entertainment",
-    value: "100000",
+    value: "750",
     details:"test",
   },
   {
     label: "Media & Electronics",
-    value: "100000",
+    value: "2020",
     details:"test",
   },
   {
     label: "Education",
-    value: "100000",
+    value: "10000",
     details:"test",
   },
   {
     label: "Insurance & Finances",
-    value: "100000",
+    value: "2500",
     details:"test",
   },
   {
     label: "Healthcare & Drug Stores",
-    value: "100000",
+    value: "500",
     details:"test",
   },
   {
     label: "Household & Utilities",
-    value: "100000",
+    value: "1500",
     details:"test",
   },
   {
     label: "Sports",
-    value: "100000",
+    value: "800",
     details:"test",
   },
   {

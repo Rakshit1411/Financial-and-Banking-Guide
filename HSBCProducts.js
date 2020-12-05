@@ -25,14 +25,14 @@ render() {
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
   <Content style={{backgroundColor:'white'}}>
-  <Text style={{margin:20,marginBottom:5,fontSize:18,color:'black'}}>You have saved <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#43658b'}}>Rs.1,50,000</Text> in the last <Text style={{margin:20,fontSize:18,fontWeight:'bold',color:'#43658b'}}>3</Text> months
+  <Text style={{margin:20,marginBottom:5,fontSize:18,color:'black'}}>You have saved <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>Rs.1,50,000</Text> in the last <Text style={{margin:20,fontSize:18,fontWeight:'bold',color:'#0A1045'}}>3</Text> months
   with all your money in your savings account.</Text>
-  <Text style={{margin:20,marginTop:0,fontSize:18,color:'black'}}>You earned an interest of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#43658b'}}>Rs.3,750 </Text>on your saved amount at an interest rate of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#43658b'}}>2.5%</Text></Text>
+  <Text style={{margin:20,marginTop:0,fontSize:18,color:'black'}}>You earned an interest of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>Rs.3,750 </Text>on your saved amount at an interest rate of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>2.5%</Text></Text>
   <Text style={{margin:20,marginTop:0,fontSize:15,color:'grey'}}>Invest your money in any of the below HSBC products to earn more interest on your savings.</Text>
 
 
   <Card style={styles.card}>
-    <Text style={{backgroundColor:'#43658b',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Fixed Deposit</Text>
+    <Text style={{backgroundColor:'#0A1045',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Fixed Deposit</Text>
     <Text style={{padding:10,paddingBottom:4,fontSize:10,color:'#78909c'}}>WHERE MONEY IS SAVED</Text>
     <Text style={{padding:10,paddingTop:0,fontSize:15,color:'black'}}>HSBC Fixed Deposit Account</Text>
     <CardAction
@@ -68,7 +68,7 @@ render() {
   <Card style={styles.card}>
 
 
-    <Text style={{backgroundColor:'#43658b',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Mutual Funds</Text>
+    <Text style={{backgroundColor:'#0A1045',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Mutual Funds</Text>
     <Text style={{padding:10,paddingBottom:4,fontSize:10,color:'#78909c'}}>WHERE MONEY IS INVESTED</Text>
     <Text style={{padding:10,paddingTop:0,fontSize:15,color:'black'}}>Indian Mutual Funds</Text>
     <CardAction
@@ -97,7 +97,7 @@ render() {
   <Card style={styles.card}>
 
 
-    <Text style={{backgroundColor:'#43658b',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Demat Account</Text>
+    <Text style={{backgroundColor:'#0A1045',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Demat Account</Text>
     <Text style={{padding:10,paddingBottom:4,fontSize:10,color:'#78909c'}}>WHERE MONEY IS SAVED</Text>
     <Text style={{padding:10,paddingTop:0,fontSize:15,color:'black'}}>HSBC Demat Account</Text>
     <CardAction
@@ -125,7 +125,7 @@ render() {
   </Card>
 
   <Card style={styles.card}>
-    <Text style={{backgroundColor:'#43658b',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Term Insurance</Text>
+    <Text style={{backgroundColor:'#0A1045',padding:10,color:'white',alignSelf:'stretch',fontWeight:'bold'}} >Term Insurance</Text>
     <Text style={{padding:10,paddingBottom:4,fontSize:10,color:'#78909c'}}>WHERE MONEY IS SAVED</Text>
     <Text style={{padding:10,paddingTop:0,fontSize:15,color:'black'}}>iSelect+ Term Plan</Text>
     <CardAction

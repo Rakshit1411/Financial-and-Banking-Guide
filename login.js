@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
 		const title = 'Login';
 		return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container1}>
-				<Text style={styles.title2}>Welcome to Financial Guru</Text>
+				<Text style={styles.title2}>Welcome to SmartSave</Text>
 				<View style={styles.logoContainer}>
 					<Avatar.Image
 						style={styles.logo}
