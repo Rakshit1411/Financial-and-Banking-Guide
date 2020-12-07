@@ -14,6 +14,17 @@ import DataTables from './Components/DataTables'
 import CustomList from './Components/CustomList';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 
 class DashboardScreen extends Component
@@ -96,7 +107,8 @@ class DashboardScreen extends Component
 	render(){
 		//this.listSms();
 		if(this.state.loader==true){
-			return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
+			// return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
+			return (<DotIndicator color='#0A1045'/>)
 		}
     const navigate = this.props.navigation;
     const title='Dashboard';
