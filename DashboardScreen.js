@@ -12,7 +12,10 @@ import Column2dChart from './charts/Column2dChart'
 import PieChart from './charts/PieChart'
 import DataTables from './Components/DataTables'
 import CustomList from './Components/CustomList';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+
+
 // Preparing the chart data
 
 // Create a JSON object to store the chart configurations
@@ -34,26 +37,9 @@ class DashboardScreen extends Component
 		console.log(name);
 
 	}
-	sendSms(){
-		console.log('sending sms');
-		var SmsAndroid = require('react-native-android-sms');
-		var text = "Hello ... This is test message from Rakshit Sharma, Please ignore !!!!!";
-		var addressList = {
-				addressList: [
-						"7014477935"
-				]
-		}
-
-		SmsAndroid.send(JSON.stringify(addressList), text, (fail) => {
-				console.log("OH Snap: " + fail)
-		},
-		(status) => {
-				console.log('Status: ', status);
-		});
-	}
-
-	listSms(){
-		/* List SMS messages matching the filter */
+	extractSms(minDate,phoneNo){
+		console.log('minDate'+minDate);
+		console.log('phone',phoneNo);
 		var SmsAndroid = require('react-native-android-sms');
 		var filter = {
 		box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
@@ -66,6 +52,7 @@ class DashboardScreen extends Component
 		 *    "SELECT * from messages WHERE (other filters) AND date <= maxDate"
 		 *    - Same for minDate but with "date >= minDate"
 		 */
+		minDate: minDate,
 		bodyRegex: '(?i)((.*)debited(.*)Acc(.*))|((.*)credited(.*)Acc(.*))|((.*)Acc(.*)debited(.*))|((.*)Acc(.*)credited(.*))|((.*)a/c(.*)debited(.*))|((.*)a/c(.*)credited(.*))|((.*)credited(.*)a/c(.*))|((.*)debited(.*)a/c(.*))', // content regex to match
 
 		/** the next 5 filters should NOT be used together, they are OR-ed so pick one **/
@@ -95,19 +82,50 @@ class DashboardScreen extends Component
 		  //   console.log('-->' + object.date);
 		  //   console.log('-->' + object.body);
 		  // });
-			axios.post(url, {'data':smsList,'phoneNo':'9888138824'})
+			axios.post(url, {'data':smsList,'phoneNo':phoneNo})
 		        .then(response => {
 							console.log('here'+response);
-		            if (response.data.status) {
+		            if (response) {
 		                console.log(response);
-		                send_response = response;
+		                //send_response = response;
+										var d = new Date();
+										console.log('date to be set',d.getTime());
+										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
+										console.log('Transactions fetched successfully');
 		            }
 		        })
 		       	.catch(error => {
-		            console.log(error);
+		            console.log('Error while fetching the transactions from sms');
 		        });
 		},
 		);
+	}
+
+	listSms(){
+		AsyncStorage.getItem("lastDataSync").then((value) => {
+			if(value==null){
+				var d = new Date();
+				// Set it to one month ago
+				d.setMonth(d.getMonth() - 1);
+
+				// Zero the hours
+				d.setHours(0, 0, 0);
+
+				// Zero the milliseconds
+				d.setMilliseconds(0);
+				value=d.getTime();
+			}
+			AsyncStorage.getItem("phoneNo").then((phoneNo) => {
+				this.extractSms(value,phoneNo);
+			})
+			//this.extractSms(value);
+			console.log('val'+value)
+			})
+			.then(res => {
+			    //do something else
+					console.log('Error while connecting to the cache')
+		});
+
 	}
 
 	render(){
