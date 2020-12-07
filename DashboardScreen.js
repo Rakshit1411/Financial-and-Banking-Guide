@@ -1,4 +1,4 @@
-import { Button, ScrollView, View, StyleSheet, Text } from 'react-native'
+import { Button, ScrollView, View, StyleSheet, Text , ActivityIndicator} from 'react-native'
 import React, { Component } from 'react'
 import { Icon, Container, Header, Content } from 'native-base'
 import Headbar from './Components/Headbar';
@@ -16,16 +16,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 
-// Preparing the chart data
-
-// Create a JSON object to store the chart configurations
-
 class DashboardScreen extends Component
 {
 	constructor(props) {
 		super(props);
 		this.state = {
-				modalVisible: false
+				modalVisible: false,
+				loader:false
 			};
 	}
 	setModalVisible = (visible) => {
@@ -42,28 +39,10 @@ class DashboardScreen extends Component
 		console.log('phone',phoneNo);
 		var SmsAndroid = require('react-native-android-sms');
 		var filter = {
-		box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
-
-		/**
-		 *  the next 3 filters can work together, they are AND-ed
-		 *
-		 *  minDate, maxDate filters work like this:
-		 *    - If and only if you set a maxDate, it's like executing this SQL query:
-		 *    "SELECT * from messages WHERE (other filters) AND date <= maxDate"
-		 *    - Same for minDate but with "date >= minDate"
-		 */
+		box: 'inbox',
 		minDate: minDate,
 		bodyRegex: '(?i)((.*)debited(.*)Acc(.*))|((.*)credited(.*)Acc(.*))|((.*)Acc(.*)debited(.*))|((.*)Acc(.*)credited(.*))|((.*)a/c(.*)debited(.*))|((.*)a/c(.*)credited(.*))|((.*)credited(.*)a/c(.*))|((.*)debited(.*)a/c(.*))', // content regex to match
-
-		/** the next 5 filters should NOT be used together, they are OR-ed so pick one **/
-		//read: 0, // 0 for unread SMS, 1 for SMS already read
-		// _id: 1234, // specify the msg id
-		// thread_id: 12 // specify the conversation thread_id
-		// address: '+1888------', // sender's phone number
-		// body: 'How are you', // content to match
-		/** the next 2 filters can be used for pagination **/
-		indexFrom: 0, // start from index 0
-		//maxCount: 10, // count of SMS to return each time
+		indexFrom: 0,
 		};
 		var url = "http://192.168.1.54:8080/sms/analyse";
 		var data = {};
@@ -73,15 +52,6 @@ class DashboardScreen extends Component
 		  console.log('Failed with this error: ' + fail);
 		},
 		(count, smsList) => {
-		  // console.log('Count: ', count);
-		  // console.log('List: ', smsList);
-		  // var arr = JSON.parse(smsList);
-			//
-		  // arr.forEach(function(object) {
-		  //   console.log('Object: ' + object);
-		  //   console.log('-->' + object.date);
-		  //   console.log('-->' + object.body);
-		  // });
 			axios.post(url, {'data':smsList,'phoneNo':phoneNo})
 		        .then(response => {
 							console.log('here'+response);
@@ -92,6 +62,7 @@ class DashboardScreen extends Component
 										console.log('date to be set',d.getTime());
 										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
 										console.log('Transactions fetched successfully');
+										this.setState({loader:false})
 		            }
 		        })
 		       	.catch(error => {
@@ -101,35 +72,32 @@ class DashboardScreen extends Component
 		);
 	}
 
-	listSms(){
+	componentWillMount(){
+		this.setState({loader:true});
 		AsyncStorage.getItem("lastDataSync").then((value) => {
 			if(value==null){
 				var d = new Date();
-				// Set it to one month ago
 				d.setMonth(d.getMonth() - 1);
-
-				// Zero the hours
 				d.setHours(0, 0, 0);
-
-				// Zero the milliseconds
 				d.setMilliseconds(0);
 				value=d.getTime();
 			}
 			AsyncStorage.getItem("phoneNo").then((phoneNo) => {
 				this.extractSms(value,phoneNo);
 			})
-			//this.extractSms(value);
 			console.log('val'+value)
 			})
 			.then(res => {
-			    //do something else
 					console.log('Error while connecting to the cache')
 		});
 
 	}
 
 	render(){
-		this.listSms();
+		//this.listSms();
+		if(this.state.loader==true){
+			return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
+		}
     const navigate = this.props.navigation;
     const title='Dashboard';
 		this.visible=true;
