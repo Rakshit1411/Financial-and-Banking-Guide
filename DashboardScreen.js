@@ -4,7 +4,6 @@ import { Icon, Container, Header, Content } from 'native-base'
 import Headbar from './Components/Headbar';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import FusionCharts from "react-native-fusioncharts";
-import { chartData } from './Components/chart_components/DATA'
 import { chartData1 } from './Components/chart_components/DATA1'
 import { chartData2 } from './Components/chart_components/DATA2'
 import LineChart from './charts/LineChart'
@@ -33,7 +32,9 @@ class DashboardScreen extends Component
 		super(props);
 		this.state = {
 				modalVisible: false,
-				loader:false
+				loader:false,
+				lineChartData:[],
+				barGraphData:[],
 			};
 	}
 	setModalVisible = (visible) => {
@@ -73,7 +74,8 @@ class DashboardScreen extends Component
 										console.log('date to be set',d.getTime());
 										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
 										console.log('Transactions fetched successfully');
-										this.setState({loader:false})
+										this.getLineChartData(phoneNo);
+										this.getBarGraphData(phoneNo);
 		            }
 		        })
 		       	.catch(error => {
@@ -81,6 +83,38 @@ class DashboardScreen extends Component
 		        });
 		},
 		);
+	}
+
+	getLineChartData(phoneNo){
+		axios.post("http://192.168.1.54:8080/graph/getLineChartData", {'phoneNo':phoneNo})
+					.then(response => {
+						console.log('here'+response);
+							if (response) {
+									console.log('blahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhh',response.data );
+									this.setState({lineChartData:response.data});
+									if(this.state.lineChartData.length > 0 && this.state.lineChartData.length > 0){
+									this.setState({loader:false});}
+							}
+					})
+					.catch(error => {
+							console.log('Error while fetching the transactions from sms');
+					});
+	}
+
+	getBarGraphData(phoneNo){
+		axios.post("http://192.168.1.54:8080/graph/getBarGraphData", {'phoneNo':phoneNo})
+					.then(response => {
+						console.log('here'+response);
+							if (response) {
+									console.log('blahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhh',response);
+									this.setState({barGraphData:response.data});
+									if(this.state.lineChartData.length > 0 && this.state.lineChartData.length > 0){
+									this.setState({loader:false});}
+							}
+					})
+					.catch(error => {
+							console.log('Error while fetching the transactions from sms');
+					});
 	}
 
 	componentWillMount(){
@@ -182,10 +216,9 @@ class DashboardScreen extends Component
             theme='fusion'
             caption='Daily Transactions'
             subCaption='Date vs Amount spent'
-            data={chartData}
+            data={this.state.lineChartData}
           />
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.lineTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-						<DataTables data={chartData} headersForTable={['Country','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.lineTable = ref)}/>
 
 			</Card>
       <Card
@@ -200,11 +233,10 @@ class DashboardScreen extends Component
             caption='Transactions Mode'
             subCaption='Transactions Mode vs amount'
             theme='fusion'
-            data={chartData2}
+            data={this.state.barGraphData}
           />
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-						<DataTables data={chartData2} headersForTable={['Transaction Mode','Amount']} keysForTable={['label','value']} visible={this.state.modalVisible} ref={ref => (this.columnTable = ref)}/>
-          </Card>
+						</Card>
       <Card
         style={{...styles.card,backgroundColor: 'white'}}
       >
@@ -220,7 +252,6 @@ class DashboardScreen extends Component
 			usedataplotcolorforlabels='1'
 			data={chartData1}/>
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-						<DataTables data={chartData1} headersForTable={['details','Category','Amount']} keysForTable={['details','label','value']} visible={this.state.modalVisible} ref={ref => (this.pieTable = ref)}/>
 
 			</Card>
 
