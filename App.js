@@ -20,7 +20,7 @@ class AuthLoadingScreen extends Component{
   }
   _retrieveData = async () => {
     try {
-      const value = await AsyncStorage.getItem('username');
+      const value = await AsyncStorage.getItem('phoneNo');
       if (value != null) {
         this.props.navigation.navigate('DrawerNavigator');
       }

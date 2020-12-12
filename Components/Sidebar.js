@@ -12,6 +12,7 @@ import SpendingsScreen from '../SpendingsScreen'
 import SavingsAndInvestmentsScreen from '../SavingsAndInvestmentsScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import InvestmentsNavigator from '../navigators/InvestmentsNavigator'
+import MessagesNavigator from '../navigators/MessagesNavigator'
 
 
 import {
@@ -91,7 +92,7 @@ export default class Sidebar extends Component {
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
           <Drawer.Screen name="My Spendings" component={SpendingsScreen} />
           <Drawer.Screen name="Savings And Investments" component={InvestmentsNavigator} />
-          <Drawer.Screen name="Notification Centre" component={NotificationCentreScreen} />
+          <Drawer.Screen name="My Messages" component={MessagesNavigator} />
         </Drawer.Navigator>
       </NavigationContainer>
     )

@@ -8,7 +8,7 @@ import { Avatar } from 'react-native-paper'
 
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 
-const userInfo = {fullname:'Anushka', username:'anushka', password:'anushka'};
+const userInfo = {fullname:'Rakshit Sharma', phoneNo:'9888138824', password:'rakshit'};
 
 export default class LoginScreen extends Component {
 	constructor(props)
@@ -16,7 +16,7 @@ export default class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			fullname: '',
-			username: '',
+			phoneNo: '',
 			password: ''
 		}
 	}
@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
 		const title = 'Login';
 		return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container1}>
-				<Text style={styles.title2}>Welcome to Financial Guru</Text>
+				<Text style={styles.title2}>Welcome to SmartSave</Text>
 				<View style={styles.logoContainer}>
 					<Avatar.Image
 						style={styles.logo}
@@ -40,12 +40,12 @@ export default class LoginScreen extends Component {
 
 						<TextInput
 							style={styles.newinput}
-							placeholder="Username"
+							placeholder="Phone Number"
 							placeholderTextColor='rgba(255,255,255,0.7)'
 							returnKeyType = "next"
-							onChangeText = {(text)=>this.setState({username: text})}
+							onChangeText = {(text)=>this.setState({phoneNo: text})}
 							onSubmitEditing={() => this.passwordInput.focus()}
-							value={this.state.username}
+							value={this.state.phoneNo}
 							autoCapitalize="none"
 						/>
 						<TextInput
@@ -69,16 +69,16 @@ export default class LoginScreen extends Component {
 	}
 
 	_login = async() => {
-		if(userInfo.username === this.state.username && userInfo.password === this.state.password)
+		if(userInfo.phoneNo === this.state.phoneNo && userInfo.password === this.state.password)
 		{
 			this.setState({fullname: userInfo.fullname});
-			await AsyncStorage.setItem('username',this.state.username);
+			await AsyncStorage.setItem('phoneNo',this.state.phoneNo);
 			await AsyncStorage.setItem('fullname',this.state.fullname);
 			this.props.navigation.navigate('DrawerNavigator');
 		}
 		else
 		{
-			alert("Incorrect username or password");
+			alert("Incorrect phoneNo or password");
 		}
 	}
 

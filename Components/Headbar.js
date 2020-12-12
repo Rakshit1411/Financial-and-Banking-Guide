@@ -7,13 +7,14 @@ import IconF from "react-native-vector-icons/FontAwesome";
 import { Container, Header, Content, Button, Text, Left, Body, Right, Title, Form, Item, Input, Label } from 'native-base';
 import BudgetScreen from '../BudgetScreen'
 import {notificationManager} from '../src/services/LocalPushIOSController';
-
-export default function Headbar({ navigation, title, openAddBudgetModal}){
+// import Sms from '../src/services/readSms/Sms'
+export default function Headbar({ navigation, title, openAddBudgetModal, sendSms}){
 
 Icon.loadFont();
 let rightIcon;
-let localNotify = notificationManager;
-localNotify.configure()
+// let localNotify = notificationManager;
+// localNotify.configure()
+//localNotify.showNotification(1,"Alert"," Unhealty transaction pattern identified",{},{});
 var modalVisible=true;
 if(title=='My Budget Plan'){
   rightIcon='plus'
@@ -23,7 +24,7 @@ else{
 }
 return (
   <View>
-<Header  style={{backgroundColor:'#43658b'}}>
+<Header  style={{backgroundColor:'#0A1045'}}>
 <Left>
 <Button transparent onPress={() => {  navigation.openDrawer();}}>
 <Icon
@@ -41,7 +42,7 @@ return (
   name={rightIcon}
   color="white"
   size={25}
-  onPress={()=>{if(rightIcon=="plus"){openAddBudgetModal(true)} else{localNotify.showNotification(1,"Budget Updates","Your new Budget has been predicted for you",{},{});}}}
+  onPress={()=>{if(rightIcon=="plus"){openAddBudgetModal(true)} else{sendSms()}}}
 />
 </Right>
 </Header>
