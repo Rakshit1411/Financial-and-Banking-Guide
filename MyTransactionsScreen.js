@@ -6,25 +6,40 @@ import { ProgressBar, Colors,Card,Paragraph } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import Headbar from './Components/Headbar';
 import CustomList from './Components/CustomList'
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+
 export default class MyTransactionScreen extends Component {
   constructor(props) {
    super(props);
-   const transactionsList = [
-       { amount: 1000,date:'08-09-2020',merchant:'Reliance Mart', category: 'Food & Groceries' , image:'https://image.flaticon.com/icons/png/512/128/128940.png'},
-       { amount: 2000,date:'08-09-2020',merchant:'Lifestyle', category: 'Shopping' , image: 'https://image.flaticon.com/icons/png/512/68/68921.png'},
-       { amount: 8000,date:'07-09-2020',merchant:'Public Book Store', category: 'Education', image:'https://image.flaticon.com/icons/png/512/128/128936.png'},
-       { amount: 3000,date:'07-09-2020',merchant:'Make My Trip', category: 'Travel & Holidays', image:'https://image.flaticon.com/icons/png/512/128/128968.png' },
-       { amount: 600,date:'07-09-2020',merchant:'MRF Tyres and repair', category: 'Transport & Car', image:'https://image.flaticon.com/icons/png/512/128/128969.png' },
-       { amount: 5000,date:'07-09-2020',merchant:'Agent Jacks', category: 'Bar & Restraunts', image:'https://image.flaticon.com/icons/png/512/129/129114.png'},
-       { amount: 2000,date:'06-09-2020',merchant:'Imagica Amusement', category: 'Leisure & Entertainment', image:'https://image.flaticon.com/icons/png/512/103/103236.png' },
-       { amount: 20000,date:'06-09-2020',merchant:'LG', category: 'Media & Electronics', image:'https://image.flaticon.com/icons/png/512/129/129552.png' },
-       { amount: 8000,date:'03-09-2020',merchant:'Crossword', category: 'Education', image:'https://image.flaticon.com/icons/png/512/128/128936.png'},
-       { amount: 700,date:'03-09-2020',merchant:'Eat.fit', category: 'Sports', image:'https://image.flaticon.com/icons/png/512/124/124182.png' },
-     ];
+
     this.state = {
-      transactionsList:transactionsList
+      transactionsList:[]
      };
   }
+
+  componentWillMount(){
+    //this.setState({loader:true});
+    var url = "http://192.168.1.54:8080/";
+    AsyncStorage.getItem("phoneNo").then((phoneNo) => {
+      axios.post(url+"graph/getAllTransactions", {'phoneNo':phoneNo})
+            .then(response => {
+              console.log('here'+response);
+                if (response) {
+                    console.log(response);
+                    //send_response = response;
+                    console.log('Transactions fetched successfully');
+                    this.setState({transactionsList:response.data.transactionsList});
+                }
+            })
+            .catch(error => {
+                console.log('Error while fetching the transactions from sms');
+            });
+      }
+    )
+  }
+
+
 render() {
   const navigate = this.props.navigation;
   const title = 'Transactions';
@@ -51,7 +66,7 @@ render() {
            style = {{ width: 40, height: 40,flexDirection: 'column' ,marginTop:10}}
            />
             <View style={{flex:1, flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Text style={{color:'black',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,flex:1,fontSize:16}}>{item.item.merchant}</Text>
+              <Text style={{color:'black',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,flex:1,fontSize:16}}>{item.item.paidTo}</Text>
               <Text style={{color:'grey',marginLeft:15,marginTop:10,fontSize:10}}>{item.item.date}</Text>
             </View>
             <Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>

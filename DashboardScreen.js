@@ -74,8 +74,7 @@ class DashboardScreen extends Component
 										console.log('date to be set',d.getTime());
 										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
 										console.log('Transactions fetched successfully');
-										this.getLineChartData(phoneNo);
-										this.getBarGraphData(phoneNo);
+										this.getAllGraphsData(phoneNo);
 		            }
 		        })
 		       	.catch(error => {
@@ -85,31 +84,16 @@ class DashboardScreen extends Component
 		);
 	}
 
-	getLineChartData(phoneNo){
-		axios.post("http://192.168.1.54:8080/graph/getLineChartData", {'phoneNo':phoneNo})
+	getAllGraphsData(phoneNo){
+		axios.post("http://192.168.1.54:8080/graph/getAllGraphsData", {'phoneNo':phoneNo})
 					.then(response => {
 						console.log('here'+response);
 							if (response) {
 									console.log('blahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhh',response.data );
-									this.setState({lineChartData:response.data});
-									if(this.state.lineChartData.length > 0 && this.state.lineChartData.length > 0){
-									this.setState({loader:false});}
-							}
-					})
-					.catch(error => {
-							console.log('Error while fetching the transactions from sms');
-					});
-	}
-
-	getBarGraphData(phoneNo){
-		axios.post("http://192.168.1.54:8080/graph/getBarGraphData", {'phoneNo':phoneNo})
-					.then(response => {
-						console.log('here'+response);
-							if (response) {
-									console.log('blahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhhblahhhh',response);
-									this.setState({barGraphData:response.data});
-									if(this.state.lineChartData.length > 0 && this.state.lineChartData.length > 0){
-									this.setState({loader:false});}
+									this.setState({lineChartData:response.data.lineChartData});
+									this.setState({barGraphData:response.data.barGraphData});
+									this.setState({pieChartData:response.data.pieChartData});
+									this.setState({loader:false});
 							}
 					})
 					.catch(error => {
@@ -250,7 +234,7 @@ class DashboardScreen extends Component
 			caption='Transactions By Category'
 			legendposition='Bottom'
 			usedataplotcolorforlabels='1'
-			data={chartData1}/>
+			data={this.state.pieChartData}/>
 						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
 
 			</Card>
