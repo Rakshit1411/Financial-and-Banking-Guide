@@ -5,19 +5,19 @@ import DashboardScreen from './DashboardScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import Sidebar from './Components/Sidebar'
 import { Avatar } from 'react-native-paper'
+import axios from 'axios';
 
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 
-const userInfo = {fullname:'Rakshit Sharma', phoneNo:'9888138824', password:'rakshit'};
 
 export default class LoginScreen extends Component {
 	constructor(props)
 	{
 		super(props);
 		this.state = {
-			fullname: '',
-			phoneNo: '',
-			password: ''
+			phoneNumber: '',
+			password: '',
+
 		}
 	}
 	render() {
@@ -43,10 +43,11 @@ export default class LoginScreen extends Component {
 							placeholder="Phone Number"
 							placeholderTextColor='rgba(255,255,255,0.7)'
 							returnKeyType = "next"
-							onChangeText = {(text)=>this.setState({phoneNo: text})}
+							onChangeText = {(text)=>this.setState({phoneNumber: text})}
 							onSubmitEditing={() => this.passwordInput.focus()}
-							value={this.state.phoneNo}
+							value={this.state.phoneNumber}
 							autoCapitalize="none"
+							keyboardType="numeric"
 						/>
 						<TextInput
 							style={styles.newinput}
@@ -69,17 +70,22 @@ export default class LoginScreen extends Component {
 	}
 
 	_login = async() => {
-		if(userInfo.phoneNo === this.state.phoneNo && userInfo.password === this.state.password)
-		{
-			this.setState({fullname: userInfo.fullname});
-			await AsyncStorage.setItem('phoneNo',this.state.phoneNo);
-			await AsyncStorage.setItem('fullname',this.state.fullname);
-			this.props.navigation.navigate('DrawerNavigator');
-		}
-		else
-		{
-			alert("Incorrect phoneNo or password");
-		}
+		axios.post("http://192.168.1.54:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
+					.then(response => {
+						console.log('here'+response);
+							if (response.data) {
+									// this.setState({fullname: userInfo.fullname});
+									AsyncStorage.setItem('phoneNumber',response.data.phoneNumber);
+									AsyncStorage.setItem('fullName',response.data.fullname);
+									AsyncStorage.setItem('username',response.data.username);
+									AsyncStorage.setItem('profileImage',response.data.profileImage);
+									AsyncStorage.setItem('lastDataSync',response.data.dataSyncTime);
+									this.props.navigation.navigate('DrawerNavigator');
+							}
+					})
+					.catch(error => {
+							console.log('Error while fetching the transactions from sms');
+					});
 	}
 
 }

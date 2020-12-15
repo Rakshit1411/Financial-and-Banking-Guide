@@ -9,13 +9,20 @@ import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.example.SmartSave.Model.Transaction;
+import org.example.SmartSave.Model.UserProfile;
+import org.example.SmartSave.Services.Common.EsService;
 import org.example.SmartSave.Services.MachineLearning.BusinessCategoryService;
 import org.example.SmartSave.Services.Sms.SmsService;
+import org.example.SmartSave.Services.UserProfile.UserProfileService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -25,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
+import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.name;
 
@@ -36,13 +44,20 @@ public class SmsController {
     SmsService smsService;
 
     @Autowired
+    UserProfileService userProfileService;
+
+    @Autowired
     BusinessCategoryService businessCategoryService;
+
+    @Autowired
+    EsService esService;
 
     //This function will be called once, when the user runs the app. It will check the latest sms's and update elastic search.
     @PostMapping("/analyse")
     public String analyse(@RequestBody JSONObject params) {
-
-
+        String lastDateSync=null;
+        JSONArray user = JSON.parseArray(userProfileService.get(params.getString("phoneNumber")));
+        lastDateSync = ((JSONArray)user.get(0)).get(1).toString();
         String uselessPhrasesString  = "requested,will be,points,Points,recharging,Recharging,recharge,Recharge";
         String[] uselessPhrases = uselessPhrasesString.split(",");
         JSONArray rawTransactions = params.getJSONArray("data");
@@ -56,9 +71,10 @@ public class SmsController {
                     break;
                 }
             }
-            if(flag==true){
+            if(flag==true || lastDateSync.compareTo(((JSONObject)rawTransactions.get(i)).getString("date_sent").toString())>=0){
                 continue;
             }
+
             Transaction transaction = new Transaction();
             transaction.setId(UUID.randomUUID().toString());
 
@@ -75,13 +91,13 @@ public class SmsController {
                 continue;
             }
             transaction.setType(transaction.getRawBody().contains("debited")?"0":"1");
-            transaction.setAccountNumber(params.getString("phoneNo").toString()+"||"+transaction.getAccountNumber());
+            transaction.setAccountNumber(params.getString("phoneNumber").toString()+"||"+transaction.getAccountNumber());
             transaction.setPaidToCategory(businessCategoryService.predictCategory(transaction.getPaidTo()));
+            lastDateSync = transaction.getDate();
             smsService.save(transaction);
         }
-
-        System.out.println(params);
-        return String.format("Hello1 %s!", params.toString());
+        userProfileService.update(params.getString("phoneNumber"),lastDateSync);
+        return lastDateSync;
     }
 
     @PostMapping("/fetch")
@@ -96,23 +112,6 @@ public class SmsController {
         smsService.remove();
 
         return "SUCCESS";
-    }
-    @PostMapping("/test")
-    public void test(@RequestBody JSONObject oarams){
-        RestClient restClient = RestClient.builder(
-                new HttpHost("localhost", 9200, "http")).build();
-
-        Request request = new Request("POST",  "/_sql");
-        request.setJsonEntity("{\"query\":\"SELECT * FROM transactions where (accountNumber LIKE '9888138824||%') order by date limit 10\"}");
-        Response response = null;
-        try {
-            response = restClient.performRequest(request);
-            String responseBody = EntityUtils.toString(response.getEntity());
-            System.out.println(responseBody);
-            restClient.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

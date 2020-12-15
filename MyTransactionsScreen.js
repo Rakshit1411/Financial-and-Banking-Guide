@@ -21,8 +21,8 @@ export default class MyTransactionScreen extends Component {
   componentWillMount(){
     //this.setState({loader:true});
     var url = "http://192.168.1.54:8080/";
-    AsyncStorage.getItem("phoneNo").then((phoneNo) => {
-      axios.post(url+"graph/getAllTransactions", {'phoneNo':phoneNo})
+    AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+      axios.post(url+"graph/getAllTransactions", {'phoneNumber':phoneNumber})
             .then(response => {
               console.log('here'+response);
                 if (response) {

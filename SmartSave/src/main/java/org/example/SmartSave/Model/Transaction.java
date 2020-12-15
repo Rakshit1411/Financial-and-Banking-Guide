@@ -14,7 +14,7 @@ public class Transaction implements Serializable, Cloneable {
     @Field(type= FieldType.Keyword,fielddata = true)
     private String id;
     @Field(type= FieldType.Keyword)
-    private String accountNumber; //LoggedInUserID||<acc no>(last 4 digits)
+    private String accountNumber; //LoggedInUserID(PHONENO)||<acc no>(last 3 digits)
     @Field(type=FieldType.Double)
     private Double amount;
     private String date;
