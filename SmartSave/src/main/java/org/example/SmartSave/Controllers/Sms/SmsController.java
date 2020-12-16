@@ -61,6 +61,7 @@ public class SmsController {
         String uselessPhrasesString  = "requested,will be,points,Points,recharging,Recharging,recharge,Recharge";
         String[] uselessPhrases = uselessPhrasesString.split(",");
         JSONArray rawTransactions = params.getJSONArray("data");
+        String newLastDateSync = "";
         for(int i=0;i<rawTransactions.size();i++) {
             boolean flag=false;
             String body = ((JSONObject)rawTransactions.get(i)).getString("body").toString();
@@ -71,7 +72,7 @@ public class SmsController {
                     break;
                 }
             }
-            if(flag==true || lastDateSync.compareTo(((JSONObject)rawTransactions.get(i)).getString("date_sent").toString())>=0){
+            if(flag==true || (!lastDateSync.isEmpty() && lastDateSync.compareTo(((JSONObject)rawTransactions.get(i)).getString("date_sent").toString())>=0)){
                 continue;
             }
 
@@ -93,10 +94,12 @@ public class SmsController {
             transaction.setType(transaction.getRawBody().contains("debited")?"0":"1");
             transaction.setAccountNumber(params.getString("phoneNumber").toString()+"||"+transaction.getAccountNumber());
             transaction.setPaidToCategory(businessCategoryService.predictCategory(transaction.getPaidTo()));
-            lastDateSync = transaction.getDate();
+            if(newLastDateSync.compareTo(transaction.getDate())<0){
+                newLastDateSync = transaction.getDate();
+            }
             smsService.save(transaction);
         }
-        userProfileService.update(params.getString("phoneNumber"),lastDateSync);
+        userProfileService.update(params.getString("phoneNumber"),newLastDateSync);
         return lastDateSync;
     }
 
