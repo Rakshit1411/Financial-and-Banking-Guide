@@ -55,14 +55,14 @@ public class BusinessCategoryService {
         return output;
     }
 
-    public String addCategory(JSONObject params){
-        BusinessCategory businessCategory = new BusinessCategory();
-        businessCategory.setId(UUID.randomUUID().toString());
-        businessCategory.setCategory(params.getString("category"));
-        businessCategory.setCategoryImage(params.getString("categoryImage"));
-        businessCategoryRepository.save(businessCategory);
-        return "SUCCESS";
-    }
+//    public String addCategory(JSONObject params){
+//        BusinessCategory businessCategory = new BusinessCategory();
+//        businessCategory.setId(UUID.randomUUID().toString());
+//        businessCategory.setCategory(params.getString("category"));
+//        businessCategory.setCategoryImage(params.getString("categoryImage"));
+//        businessCategoryRepository.save(businessCategory);
+//        return "SUCCESS";
+//    }
 
     public JSONObject getAllCategories(JSONObject params) {
         String query = String.format("\"SELECT * FROM businesscategory\"");
