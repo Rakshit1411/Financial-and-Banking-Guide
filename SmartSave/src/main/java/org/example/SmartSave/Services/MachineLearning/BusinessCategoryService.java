@@ -1,9 +1,11 @@
 package org.example.SmartSave.Services.MachineLearning;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.example.SmartSave.Model.BusinessCategory;
 import org.example.SmartSave.Repository.BusinessCategoryRepository;
+import org.example.SmartSave.Services.Common.EsService;
 import org.example.SmartSave.Services.Common.HttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,10 @@ public class BusinessCategoryService {
 
     @Autowired
     HttpService httpService;
+
+    @Autowired
+    EsService esService;
+
     @Autowired
     public void setBusinessCategoryRepository(BusinessCategoryRepository businessCategoryRepository) {
         this.businessCategoryRepository = businessCategoryRepository;
@@ -49,4 +55,24 @@ public class BusinessCategoryService {
         return output;
     }
 
+    public String addCategory(JSONObject params){
+        BusinessCategory businessCategory = new BusinessCategory();
+        businessCategory.setId(UUID.randomUUID().toString());
+        businessCategory.setCategory(params.getString("category"));
+        businessCategory.setCategoryImage(params.getString("categoryImage"));
+        businessCategoryRepository.save(businessCategory);
+        return "SUCCESS";
+    }
+
+    public JSONObject getAllCategories(JSONObject params) {
+        String query = String.format("\"SELECT * FROM businesscategory\"");
+        String result = esService.getData(query);
+        JSONArray data = JSON.parseObject(result).getJSONArray("rows");
+        JSONObject response = new JSONObject();
+        for (Object item:data) {
+            JSONArray itemArray = (JSONArray)item;
+            response.put(itemArray.get(1).toString(),itemArray.get(2).toString());
+        }
+        return response;
+    }
 }

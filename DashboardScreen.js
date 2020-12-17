@@ -101,7 +101,7 @@ class DashboardScreen extends Component
 					});
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		this.setState({loader:true});
 		AsyncStorage.getItem("lastDataSync").then((value) => {
 			if(value==null){

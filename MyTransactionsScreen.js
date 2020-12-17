@@ -14,11 +14,27 @@ export default class MyTransactionScreen extends Component {
    super(props);
 
     this.state = {
-      transactionsList:[]
+      transactionsList:[],
+      categories:{}
      };
   }
 
-  componentWillMount(){
+getCategories(){
+  var url = "http://192.168.1.54:8080/";
+  axios.post(url+"category/getAllCategories",{})
+    .then(response => {
+      console.log('here'+response);
+        if (response) {
+            this.setState({categories: response.data});
+        }
+    })
+    .catch(error => {
+        console.log('Error while fetching the transactions from sms');
+    });
+
+}
+
+componentDidMount(){
     //this.setState({loader:true});
     var url = "http://192.168.1.54:8080/";
     AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
@@ -28,8 +44,10 @@ export default class MyTransactionScreen extends Component {
                 if (response) {
                     console.log(response);
                     //send_response = response;
+                    this.getCategories();
                     console.log('Transactions fetched successfully');
                     this.setState({transactionsList:response.data.transactionsList});
+
                 }
             })
             .catch(error => {
@@ -38,7 +56,12 @@ export default class MyTransactionScreen extends Component {
       }
     )
   }
-
+checkCategoryImage(category){
+  console.log(category);
+  console.log(this.state.categories[category]);
+      //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
+  return this.state.categories[category];
+}
 
 render() {
   const navigate = this.props.navigation;
@@ -62,8 +85,8 @@ render() {
           shadowRadius: 2,
       		borderRadius: 6,
           elevation: 2}}>
-          <Image source = {{uri:item.item.image}}
-           style = {{ width: 40, height: 40,flexDirection: 'column' ,marginTop:10}}
+          <Image source = {{uri:this.checkCategoryImage(item.item.paidToCategory)}}
+           style = {{ width: 50, height: 50,flexDirection: 'column' ,marginTop:10}}
            />
             <View style={{flex:1, flexDirection: 'column', justifyContent: 'space-between' }}>
               <Text style={{color:'black',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,flex:1,fontSize:16}}>{item.item.paidTo}</Text>

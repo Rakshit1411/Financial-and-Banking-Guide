@@ -1,6 +1,7 @@
 package org.example.SmartSave.Controllers.MachineLearning;
 
 import com.alibaba.fastjson.JSONObject;
+import org.example.SmartSave.Model.BusinessCategory;
 import org.example.SmartSave.Services.MachineLearning.BusinessCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("ml/model")
+@RequestMapping("category")
 public class BusinessCategoryController {
 
     @Autowired
@@ -22,5 +23,15 @@ public class BusinessCategoryController {
     @PostMapping("/update")
     public void updateCategory(@RequestBody JSONObject params){
         businessCategoryService.setCategory(params);
+    }
+
+    @PostMapping("/add")
+    public void addCategory(@RequestBody JSONObject params){
+        businessCategoryService.addCategory(params);
+    }
+
+    @PostMapping("/getAllCategories")
+    public JSONObject getAllCategories(@RequestBody JSONObject params){
+        return businessCategoryService.getAllCategories(params);
     }
 }
