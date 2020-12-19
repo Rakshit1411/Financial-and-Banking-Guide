@@ -11,7 +11,7 @@ export default function TransactionDrawer() {
     <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name="My Transaction Screen" component={MyTransactionScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="Transactions Details" component={TransactionsDetails} options={{title:'Transaction Details'
+        <Stack.Screen name="Transactions Details" component={TransactionsDetails} options={{title:''
       ,headerStyle: {backgroundColor: '#0A1045'},headerTransparent:true}} />
 
       </Stack.Navigator>
