@@ -11,7 +11,7 @@ import DashboardScreen from './DashboardScreen';
 import SettingsScreen from './SettingsScreen';
 import RNUrlPreview from 'react-native-url-preview';
 import { WebView } from 'react-native-webview';
-import WebviewScreen from './WebviewScreen'
+// import WebviewScreen from './WebviewScreen'
 
 export default class HSBCProducts extends Component {
   constructor(props) {

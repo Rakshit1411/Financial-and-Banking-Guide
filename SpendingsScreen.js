@@ -5,6 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Headbar from './Components/Headbar';
 import BudgetScreen from './BudgetScreen';
 import MyTransactionsScreen from './MyTransactionsScreen';
+import TransactionsDetails from './Components/Transactions/TransactionsDetails';
+import TransactionsDrawer from './Components/Transactions/TransactionDrawer';
 import Icon from "react-native-vector-icons/FontAwesome";
 
 function HomeScreen() {
@@ -27,6 +29,7 @@ const Tab = createBottomTabNavigator();
 
 export default function SpendingsScreen({navigation}) {
   Icon.loadFont();
+  //console.log("this is navigation"+navigation);
   return (
     <NavigationContainer independent="true">
     <Tab.Navigator
@@ -51,7 +54,7 @@ export default function SpendingsScreen({navigation}) {
         inactiveTintColor: 'gray',
       }}
     >
-      <Tab.Screen name="Transactions" component={MyTransactionsScreen} />
+      <Tab.Screen name="Transactions" component={TransactionsDrawer}/>
       <Tab.Screen name="My Budget" component={BudgetScreen} />
     </Tab.Navigator>
     </NavigationContainer>

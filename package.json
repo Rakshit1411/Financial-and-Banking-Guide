@@ -18,7 +18,7 @@
     "@react-navigation/bottom-tabs": "^5.10.6",
     "@react-navigation/drawer": "^5.10.6",
     "@react-navigation/native": "^5.8.6",
-    "@react-navigation/stack": "^5.12.3",
+    "@react-navigation/stack": "^5.12.8",
     "axios": "^0.20.0",
     "fusioncharts": "^3.15.3",
     "galio-framework": "^0.7.1",
