@@ -137,8 +137,8 @@ public class GraphService {
             dict.put("type",((JSONArray)data.get(i)).get(9).toString().equals("1")?"Credited":"Debited");
             dict.put("amount",""+((JSONArray)data.get(i)).get(2));
             dict.put("date",formatter.format(calendar.getTime()));
-
-
+            dict.put("rawBody",""+((JSONArray)data.get(i)).get(7));
+            dict.put("id",""+((JSONArray)data.get(i)).get(4));
             response.add(dict);
         }
         return response;

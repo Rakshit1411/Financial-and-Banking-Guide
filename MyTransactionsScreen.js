@@ -65,7 +65,7 @@ checkCategoryImage(category){
       //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
   return this.state.categories[category];
 }
- 
+
 render() {
   const navigate = this.props.navigation;
   const title = 'Transactions';
@@ -79,7 +79,7 @@ render() {
     <FlatList
       data={this.state.transactionsList}
       renderItem={(item) => (
-        <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Transactions Details')}>
+        <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Transactions Details',{transaction:item,categoryImage:this.checkCategoryImage(item.item.paidToCategory),categories:this.state.categories})}>
         <View style={{backgroundColor:'#0A1045'}}>
           <Text style={{margin:0,color:'grey',alignSelf:'center',fontSize:16,height:7}}></Text>
           <View style={{backgroundColor:'white',padding:5,flexDirection: 'row',marginLeft:5,marginRight:5,shadowColor: '#000',
@@ -104,7 +104,7 @@ render() {
         </View>
         </TouchableWithoutFeedback>
       )}
-      keyExtractor={(item) => item.amount}
+      keyExtractor={(item) => item.id}
 
     />
   </SafeAreaView>

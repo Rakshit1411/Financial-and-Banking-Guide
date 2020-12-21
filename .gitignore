@@ -72,3 +72,6 @@ package-lock.json
 SmartSave/target/classes/org/example/SmartSave/Controllers/MachineLearning/BusinessCategoryController.class
 SmartSave/target/classes/org/example/SmartSave/Model/BusinessCategory.class
 SmartSave/target/classes/org/example/SmartSave/Services/MachineLearning/BusinessCategoryService.class
+*.class
+*.class
+SmartSave/target/classes/org/example/SmartSave/Services/Dashboard/GraphService.class
