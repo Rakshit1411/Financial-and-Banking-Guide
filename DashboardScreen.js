@@ -46,9 +46,9 @@ class DashboardScreen extends Component
 		console.log(name);
 
 	}
-	extractSms(minDate,phoneNo){
+	extractSms(minDate,phoneNumber){
 		console.log('minDate'+minDate);
-		console.log('phone',phoneNo);
+		console.log('phone',phoneNumber);
 		var SmsAndroid = require('react-native-android-sms');
 		var filter = {
 		box: 'inbox',
@@ -64,7 +64,7 @@ class DashboardScreen extends Component
 		  console.log('Failed with this error: ' + fail);
 		},
 		(count, smsList) => {
-			axios.post(url, {'data':smsList,'phoneNo':phoneNo})
+			axios.post(url, {'data':smsList,'phoneNumber':phoneNumber})
 		        .then(response => {
 							console.log('here'+response);
 		            if (response) {
@@ -74,7 +74,7 @@ class DashboardScreen extends Component
 										console.log('date to be set',d.getTime());
 										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
 										console.log('Transactions fetched successfully');
-										this.getAllGraphsData(phoneNo);
+										this.getAllGraphsData(phoneNumber);
 		            }
 		        })
 		       	.catch(error => {
@@ -84,8 +84,8 @@ class DashboardScreen extends Component
 		);
 	}
 
-	getAllGraphsData(phoneNo){
-		axios.post("http://192.168.1.54:8080/graph/getAllGraphsData", {'phoneNo':phoneNo})
+	getAllGraphsData(phoneNumber){
+		axios.post("http://192.168.1.54:8080/graph/getAllGraphsData", {'phoneNo':phoneNumber})
 					.then(response => {
 						console.log('here'+response);
 							if (response) {
@@ -101,7 +101,7 @@ class DashboardScreen extends Component
 					});
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		this.setState({loader:true});
 		AsyncStorage.getItem("lastDataSync").then((value) => {
 			if(value==null){
@@ -111,8 +111,8 @@ class DashboardScreen extends Component
 				d.setMilliseconds(0);
 				value=d.getTime();
 			}
-			AsyncStorage.getItem("phoneNo").then((phoneNo) => {
-				this.extractSms(value,phoneNo);
+			AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+				this.extractSms(value,phoneNumber);
 			})
 			console.log('val'+value)
 			})

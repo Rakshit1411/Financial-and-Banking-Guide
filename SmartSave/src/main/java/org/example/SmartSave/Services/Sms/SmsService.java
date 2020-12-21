@@ -2,6 +2,7 @@ package org.example.SmartSave.Services.Sms;
 
 import com.alibaba.fastjson.JSONObject;
 import org.example.SmartSave.Model.Transaction;
+import org.example.SmartSave.Model.UserProfile;
 import org.example.SmartSave.Repository.SmsRepository;
 import org.example.SmartSave.Services.Common.HttpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,12 @@ public class SmsService {
 
     private SmsRepository smsRepository;
 
+
+
     @Autowired
     HttpService httpService;
     @Autowired
-    public void setBookRepository(SmsRepository smsRepository) {
+    public void setSmsRepository(SmsRepository smsRepository) {
         this.smsRepository = smsRepository;
     }
 

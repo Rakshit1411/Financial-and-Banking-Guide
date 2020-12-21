@@ -32,13 +32,6 @@ public class GraphService {
         String query = String.format("\"SELECT sum(amount),type FROM transactions where (accountNumber LIKE '%s||%%' and date > %s) group by type\"",phoneNumber,dateLimit);
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
-//        double credit=0,debit=0;
-//        for(int i=0;i<data.size();i++){
-//            if(((JSONArray)data.get(i)).get(9).equals("0"))
-//                debit+=Double.parseDouble(((JSONArray)data.get(i)).get(2).toString());
-//            else if(((JSONArray)data.get(i)).get(9).equals("1"))
-//                credit+=Double.parseDouble(((JSONArray)data.get(i)).get(2).toString());
-//        }
         JSONObject dict1 = new JSONObject();
         dict1.put("label","Credited");
         dict1.put("Value",""+((JSONArray)data.get(1)).get(0).toString());
@@ -128,7 +121,7 @@ public class GraphService {
     public JSONArray getAllTransactions(JSONObject params) throws ParseException {
         JSONArray response = new JSONArray();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String phoneNumber = params.getString("phoneNo");
+        String phoneNumber = params.getString("phoneNumber");
         String query = String.format("\"SELECT * FROM transactions where (accountNumber LIKE '%s||%%') order by date desc\"",phoneNumber);
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
@@ -144,8 +137,8 @@ public class GraphService {
             dict.put("type",((JSONArray)data.get(i)).get(9).toString().equals("1")?"Credited":"Debited");
             dict.put("amount",""+((JSONArray)data.get(i)).get(2));
             dict.put("date",formatter.format(calendar.getTime()));
-
-
+            dict.put("rawBody",""+((JSONArray)data.get(i)).get(7));
+            dict.put("id",""+((JSONArray)data.get(i)).get(4));
             response.add(dict);
         }
         return response;

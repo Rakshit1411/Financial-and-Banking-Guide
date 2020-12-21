@@ -11,10 +11,18 @@ public class BusinessCategory {
     @Id
     @Field(type= FieldType.Keyword,fielddata = true)
     private String id;
-    @Field(type= FieldType.Keyword)
-    private String name;
     @Field(type=FieldType.Keyword)
     private String category;
+    @Field(type= FieldType.Binary)
+    private String categoryImage;
+
+    public String getCategoryImage() {
+        return categoryImage;
+    }
+
+    public void setCategoryImage(String categoryImage) {
+        this.categoryImage = categoryImage;
+    }
 
     public String getId() {
         return id;
@@ -22,14 +30,6 @@ public class BusinessCategory {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getCategory() {

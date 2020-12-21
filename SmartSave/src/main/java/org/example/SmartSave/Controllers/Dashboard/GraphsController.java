@@ -58,7 +58,7 @@ public class GraphsController {
 
     @PostMapping("/getAllTransactions")
     public JSONObject getAllTransactions(@RequestBody JSONObject params) {
-        JSONObject obj = new JSONObject();
+            JSONObject obj = new JSONObject();
         JSONArray transactions = null;
         try {
             transactions = graphService.getAllTransactions(params);

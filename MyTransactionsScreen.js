@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Image,View,Modal, StyleSheet,TouchableHighlight,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground } from 'react-native';
+import { Image,View,Modal, StyleSheet,TouchableHighlight,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground, TouchableWithoutFeedback} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Container, Header, Content, Button, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 import { ProgressBar, Colors,Card,Paragraph } from 'react-native-paper';
@@ -14,22 +14,43 @@ export default class MyTransactionScreen extends Component {
    super(props);
 
     this.state = {
-      transactionsList:[]
+      transactionsList:[],
+      categories:{},
+      // parentNavigator:props.navigation.parentNavigator,
      };
   }
 
-  componentWillMount(){
+getCategories(){
+  var url = "http://192.168.1.54:8080/";
+  // console.log('TESTING: '+this.state.parentNavigator)
+  axios.post(url+"category/getAllCategories",{})
+    .then(response => {
+      console.log('here'+response);
+        if (response) {
+            this.setState({categories: response.data});
+        }
+    })
+    .catch(error => {
+        console.log('Error while fetching the transactions from sms');
+    });
+
+}
+
+componentDidMount(){
     //this.setState({loader:true});
+    console.log('navigator',this.props.navigation);
     var url = "http://192.168.1.54:8080/";
-    AsyncStorage.getItem("phoneNo").then((phoneNo) => {
-      axios.post(url+"graph/getAllTransactions", {'phoneNo':phoneNo})
+    AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+      axios.post(url+"graph/getAllTransactions", {'phoneNumber':phoneNumber})
             .then(response => {
               console.log('here'+response);
                 if (response) {
-                    console.log(response);
+                    //console.log(response);
                     //send_response = response;
+                    this.getCategories();
                     console.log('Transactions fetched successfully');
                     this.setState({transactionsList:response.data.transactionsList});
+
                 }
             })
             .catch(error => {
@@ -38,7 +59,12 @@ export default class MyTransactionScreen extends Component {
       }
     )
   }
-
+checkCategoryImage(category){
+  //console.log(category);
+  //console.log(this.state.categories[category]);
+      //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
+  return this.state.categories[category];
+}
 
 render() {
   const navigate = this.props.navigation;
@@ -53,6 +79,7 @@ render() {
     <FlatList
       data={this.state.transactionsList}
       renderItem={(item) => (
+        <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Transactions Details',{transaction:item,categoryImage:this.checkCategoryImage(item.item.paidToCategory),categories:this.state.categories})}>
         <View style={{backgroundColor:'#0A1045'}}>
           <Text style={{margin:0,color:'grey',alignSelf:'center',fontSize:16,height:7}}></Text>
           <View style={{backgroundColor:'white',padding:5,flexDirection: 'row',marginLeft:5,marginRight:5,shadowColor: '#000',
@@ -62,8 +89,8 @@ render() {
           shadowRadius: 2,
       		borderRadius: 6,
           elevation: 2}}>
-          <Image source = {{uri:item.item.image}}
-           style = {{ width: 40, height: 40,flexDirection: 'column' ,marginTop:10}}
+          <Image source = {{uri:this.checkCategoryImage(item.item.paidToCategory)}}
+           style = {{ width: 50, height: 50,flexDirection: 'column' ,marginTop:10}}
            />
             <View style={{flex:1, flexDirection: 'column', justifyContent: 'space-between' }}>
               <Text style={{color:'black',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,flex:1,fontSize:16}}>{item.item.paidTo}</Text>
@@ -75,8 +102,9 @@ render() {
 
 
         </View>
+        </TouchableWithoutFeedback>
       )}
-      keyExtractor={(item) => item.amount}
+      keyExtractor={(item) => item.id}
 
     />
   </SafeAreaView>
