@@ -14,8 +14,8 @@ export default function TransactionDrawer() {
         <Stack.Screen name="My Transaction Screen" component={MyTransactionScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Transactions Details" component={TransactionsDetails} options={{title:''
       ,headerStyle: {backgroundColor: '#0A1045'},headerTransparent:true}} />
-      <Stack.Screen name="Transaction Category Update" component={TransactionCategoryUpdate} options={{title:''
-    ,headerStyle: {backgroundColor: '#0A1045'},headerTransparent:true}} />
+      <Stack.Screen name="Transaction Category Update" component={TransactionCategoryUpdate} options={{title:'Update Category'
+    ,headerStyle: {backgroundColor: '#0A1045'},headerTintColor: '#fff'}} />
 
       </Stack.Navigator>
     </NavigationContainer>

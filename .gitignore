@@ -75,3 +75,6 @@ SmartSave/target/classes/org/example/SmartSave/Services/MachineLearning/Business
 *.class
 *.class
 SmartSave/target/classes/org/example/SmartSave/Services/Dashboard/GraphService.class
+*.class
+*.class
+SmartSave/target/classes/org/example/SmartSave/Services/MachineLearning/BusinessCategoryService.class

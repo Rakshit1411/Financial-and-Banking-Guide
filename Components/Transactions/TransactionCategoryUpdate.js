@@ -14,36 +14,45 @@ export default class TransactionCategoryUpdate extends Component {
 	super(props);
 	this.state = {
 		transactionId:props.route.params.id,
-		categories:"["+JSON.stringify(props.route.params.categories)+"]",
+		categories:[],
 	}
-	console.log(this.state.categories);
+	var categoriesArray = [];
+	var categoriesJSON = props.route.params.categories;
+	var keys = Object.keys(categoriesJSON);
+
+	console.log(keys);
+	for(var i = 0;i<keys.length;i++){
+		categoriesArray.push({name:keys[i],code:categoriesJSON[keys[i]]});
+	}
+	this.state = {
+		transactionId:props.route.params.id,
+		categories:categoriesArray,
+	}
+}
+
+	updateCategory(category){
+		console.log("UPDATE");
+		axios.post("http://192.168.1.54:8080/sms/updateCategory", {'id':this.state.transactionId,'category':category})
+					.then(response => {
+						console.log('here'+response);
+							if (response) {
+									//console.log(response);
+									//send_response = response;
+									console.log('Transaction updated successfully');
+
+							}
+					})
+					.catch(error => {
+							console.log('Error while fetching the transactions from sms');
+					});
 	}
 	render() {
 		// const navigation = this.props.navigation;
 
-		const items = [
-    { name: 'TURQUOISE', code: '#1abc9c' },
-    { name: 'EMERALD', code: '#2ecc71' },
-    { name: 'PETER RIVER', code: '#3498db' },
-    { name: 'AMETHYST', code: '#9b59b6' },
-    { name: 'WET ASPHALT', code: '#34495e' },
-    { name: 'GREEN SEA', code: '#16a085' },
-    { name: 'NEPHRITIS', code: '#27ae60' },
-    { name: 'BELIZE HOLE', code: '#2980b9' },
-    { name: 'WISTERIA', code: '#8e44ad' },
-    { name: 'MIDNIGHT BLUE', code: '#2c3e50' },
-    { name: 'SUN FLOWER', code: '#f1c40f' },
-    { name: 'CARROT', code: '#e67e22' },
-    { name: 'ALIZARIN', code: '#e74c3c' },
-    { name: 'CLOUDS', code: '#ecf0f1' },
-    { name: 'CONCRETE', code: '#95a5a6' },
-    { name: 'ORANGE', code: '#f39c12' },
-    { name: 'PUMPKIN', code: '#d35400' },
-    { name: 'POMEGRANATE', code: '#c0392b' },
-    { name: 'SILVER', code: '#bdc3c7' },
-    { name: 'ASBESTOS', code: '#7f8c8d' },
-  ];
+		const items = this.state.categories;
+		console.log(items);
 		return (
+
 			<FlatGrid
       itemDimension={130}
       data={items}
@@ -52,10 +61,18 @@ export default class TransactionCategoryUpdate extends Component {
       // fixed
       spacing={10}
       renderItem={({ item }) => (
-        <View style={[styles.itemContainer]}>
+				<TouchableOpacity onPress={() => this.updateCategory(item.name)}>
+        <View style={styles.itemContainer}>
+				<Image source = {{uri:item.code}}
+style = {styles.itemImage}
+				 />
+				<Text style={styles.itemName}>{item.name}</Text>
+
         </View>
+				</TouchableOpacity>
       )}
     />
+
 		);
 	}
 
@@ -63,23 +80,32 @@ export default class TransactionCategoryUpdate extends Component {
 
 const styles = StyleSheet.create({
   gridView: {
-    marginTop: 10,
     flex: 1,
+		backgroundColor: '#0A1045',
   },
   itemContainer: {
+		alignSelf:'center',
     justifyContent: 'flex-end',
-    borderRadius: 5,
     padding: 10,
-    height: 150,
+    height: 120,
+		width:120,
+		backgroundColor: 'white',
+		borderRadius:500,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.5,
+		shadowRadius: 2,
+		elevation: 10,
   },
   itemName: {
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: '600',
-  },
-  itemCode: {
-    fontWeight: '600',
     fontSize: 12,
-    color: '#fff',
+    color: '#000',
+		alignSelf: 'center',
+		marginBottom:5
   },
+	itemImage: {
+		 width: 70,
+		 height: 70,
+		 alignSelf:'center',
+	}
 });

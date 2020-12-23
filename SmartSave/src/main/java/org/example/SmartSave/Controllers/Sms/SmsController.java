@@ -52,6 +52,9 @@ public class SmsController {
     @Autowired
     EsService esService;
 
+    @Autowired
+    ElasticsearchOperations elasticsearchTemplate;
+
     //This function will be called once, when the user runs the app. It will check the latest sms's and update elastic search.
     @PostMapping("/analyse")
     public String analyse(@RequestBody JSONObject params) {
@@ -115,6 +118,21 @@ public class SmsController {
         smsService.remove();
 
         return "SUCCESS";
+    }
+
+    @PostMapping("/updateCategory")
+    public String updateCategory(@RequestBody JSONObject params) {
+        Query searchQuery = new NativeSearchQueryBuilder()
+                .withFilter(regexpQuery("id", params.getString("id")))
+                .build();
+        SearchHits<Transaction> transactionSearchHits =
+                elasticsearchTemplate.search(searchQuery, Transaction.class);
+        Transaction transaction = transactionSearchHits.getSearchHit(0).getContent();
+        transaction.setPaidToCategory(params.getString("category"));
+        smsService.save(transaction);
+        params.put("paidTo",transaction.getPaidTo());
+        if(transaction.getPaidTo().equalsIgnoreCase("other")){return "SUCCESS";}
+        return businessCategoryService.setCategory(params);
     }
 
 }
