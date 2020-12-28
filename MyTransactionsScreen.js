@@ -105,11 +105,17 @@ render() {
            style = {{ width: 50, height: 50,flexDirection: 'column' ,marginTop:10}}
            />
             <View style={{flex:1, flexDirection: 'column', justifyContent: 'space-between' }}>
+
               <Text style={{color:'black',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,flex:1,fontSize:16}}>{item.item.paidTo}</Text>
               <Text style={{color:'grey',marginLeft:15,marginTop:10,fontSize:10}}>{item.item.date}</Text>
             </View>
-            <Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>
-
+            {
+               item.item.type=="Credited"
+               ? <Text style={{color:'green',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>
+               : (
+                 <Text style={{color:'red',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>
+               )
+             }
           </View>
 
 

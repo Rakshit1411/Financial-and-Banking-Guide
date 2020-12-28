@@ -159,19 +159,6 @@ class DashboardScreen extends Component
       <Headbar navigation={ navigate } title={ title } sendSms={this.listSms} />
       <ScrollView>
       <ScrollView horizontal={true}>
-      <Card style={{...styles.card,margin:5,backgroundColor: '#40a8c4',padding:5}}>
-      <Card.Content>
-        <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Account Balance</Paragraph>
-        <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 30000</Title>
-      </Card.Content>
-      </Card>
-			<Card style={{...styles.card,margin:5,backgroundColor: '#e94560',padding:5}}>
-
-        <Card.Content>
-          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Cash in my pocket</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 4000</Title>
-        </Card.Content>
-      </Card>
       <Card style={{...styles.card,margin:5,backgroundColor: '#206a5d',padding:5}}>
 
         <Card.Content>
@@ -179,13 +166,21 @@ class DashboardScreen extends Component
           <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
         </Card.Content>
       </Card>
-      <Card style={{...styles.card,margin:5,backgroundColor: '#be5683',padding:5}}>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#e94560',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
           <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
         </Card.Content>
       </Card>
+      <Card style={{...styles.card,margin:5,backgroundColor: '#40a8c4',padding:5}}>
+
+        <Card.Content>
+          <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Highest Spent Category</Paragraph>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Shopping</Title>
+        </Card.Content>
+      </Card>
+
       </ScrollView>
       <Card
         style={{...styles.card,backgroundColor: 'white'}}
@@ -202,8 +197,6 @@ class DashboardScreen extends Component
             subCaption='Date vs Amount spent'
             data={this.state.lineChartData}
           />
-						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.lineTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-
 			</Card>
       <Card
         style={{...styles.card,backgroundColor: 'white'}}
@@ -219,7 +212,6 @@ class DashboardScreen extends Component
             theme='fusion'
             data={this.state.barGraphData}
           />
-						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.columnTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
 						</Card>
       <Card
         style={{...styles.card,backgroundColor: 'white'}}
@@ -235,8 +227,6 @@ class DashboardScreen extends Component
 			legendposition='Bottom'
 			usedataplotcolorforlabels='1'
 			data={this.state.pieChartData}/>
-						<Text style={{marginLeft: "auto",padding:10,color:'grey'}} onPress={()=>{this.pieTable.setModalVisible(!this.state.modalVisible)}}>Show Raw Data</Text>
-
 			</Card>
 
 			<Card

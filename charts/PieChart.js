@@ -36,7 +36,7 @@ export default class PieChart extends React.PureComponent {
 
   render() {
     return (
-      <View style={{paddingTop:15}}>
+      <View style={{paddingTop:15,paddingBottom:10}}>
       <FusionCharts
             type='pie2d'
             width={this.state.width}
