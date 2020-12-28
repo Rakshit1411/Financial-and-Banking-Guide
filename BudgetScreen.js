@@ -94,7 +94,6 @@ export default class BudgetScreen extends Component {
      }
 
   addNewBudget(flag){
-    console.log(flag,'herejhkushfkjefekwhfkjdsbfmdbfiudbfmdsfbmfdsjk')
     const {budgetsList} = this.state;
 
     const {newBudgetdetails} = this.state;
@@ -108,14 +107,6 @@ export default class BudgetScreen extends Component {
       progressColor=Colors.yellow800;
     }
     else{
-      progressColor=Colors.red800;
-    }
-    if(newBudgetdetails.category==='Shopping'){
-      progressValue=1
-      progressColor=Colors.green800;
-    }
-    if(newBudgetdetails.category==='Online Gaming'){
-      progressValue=0
       progressColor=Colors.red800;
     }
     budgetsList.push({category: newBudgetdetails.category,amount:newBudgetdetails.amount,progressValue:
@@ -168,7 +159,7 @@ render() {
     <Headbar navigation={ navigate } title={ title } openAddBudgetModal={this.setModalVisible.bind(this)}/>
         <ScrollView>
     <View style={{backgroundColor:'#0A1045'}}>
-      <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (October)</Text>
+      <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (December)</Text>
     </View>
 
     <Carousel layout={'tinder'}
