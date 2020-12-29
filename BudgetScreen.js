@@ -155,9 +155,9 @@ render() {
 
   return (
 
-    <Container>
+    <Container style={{backgroundColor:'#0A1045'}}>
     <Headbar navigation={ navigate } title={ title } openAddBudgetModal={this.setModalVisible.bind(this)}/>
-        <ScrollView>
+    <ScrollView >
     <View style={{backgroundColor:'#0A1045'}}>
       <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (December)</Text>
     </View>
@@ -193,55 +193,17 @@ render() {
         keyExtractor={(item) => item.amount}
 
       />
+
     </SafeAreaView>
 
 
 </ScrollView>
 
+<Button large warning rounded block style={{margin:10}}>
+  <Text >Create a new Budget</Text>
+</Button>
 
 
-
-
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={this.state.addBudgetModal}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Set Budget</Text>
-            <View>
-              <Text style={{margin:5}}>Set Amount Limit</Text>
-              <TextInput style={{margin:5,width:200}} placeholder="Amount"
-                onChangeText={text => this.state.newBudgetdetails.amount=text} />
-              <Text style={{margin:5}}>Category</Text>
-
-              <DropDownPicker
-                style={{margin:5,width:200,flex: 1, zIndex: 999}}
-                items={categories}
-                defaultIndex={0}
-                containerStyle={{height: 40}}
-                onChangeItem={item => (this.state.newBudgetdetails.category=item.label)}
-              />
-            </View>
-            <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "green", zIndex:-999 }}
-              onPress={this.addNewBudget.bind(this)}
-            >
-              <Text style={styles.textStyle}>Add</Text>
-            </TouchableHighlight>
-
-            <Text style={{color:'black',zIndex:-999}} onPress={() => {
-              this.setModalVisible(false);
-            }}>Cancel</Text>
-          </View>
-        </View>
-      </Modal>
-    </View>
     </Container>
 
   );
