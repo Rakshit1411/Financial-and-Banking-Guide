@@ -5,7 +5,7 @@ import { DrawerActions } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Octicons";
 import IconF from "react-native-vector-icons/FontAwesome";
 import { Container, Header, Content, Button, Text, Left, Body, Right, Title, Form, Item, Input, Label } from 'native-base';
-import BudgetScreen from '../BudgetScreen'
+import BudgetScreen from './Budget/BudgetScreen'
 import {notificationManager} from '../src/services/LocalPushIOSController';
 // import Sms from '../src/services/readSms/Sms'
 export default function Headbar({ navigation, title, openAddBudgetModal, sendSms}){
@@ -42,7 +42,6 @@ return (
   name={rightIcon}
   color="white"
   size={25}
-  onPress={()=>{if(rightIcon=="plus"){openAddBudgetModal(true)} else{sendSms()}}}
 />
 </Right>
 </Header>

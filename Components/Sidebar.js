@@ -20,7 +20,7 @@ import {
   DrawerItemList,
   DrawerItem
 } from '@react-navigation/drawer';
-import BudgetScreen from '../BudgetScreen'
+import BudgetScreen from './Budget/BudgetScreen'
 import NotificationCentreScreen from '../NotificationCentreScreen'
 import {
   Avatar,

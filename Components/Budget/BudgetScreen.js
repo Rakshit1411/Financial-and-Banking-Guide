@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import { View,Modal, StyleSheet,TouchableHighlight,TouchableWithoutFeedback,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground } from 'react-native';
-import Headbar from './Components/Headbar';
+import Headbar from '../Headbar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Container, Header, Content, Button, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
-import CustomList from './Components/CustomList'
 import cloneDeep from 'lodash/cloneDeep';
 import { ProgressBar, Colors,Card,Paragraph } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
@@ -158,13 +157,11 @@ render() {
     <Container style={{backgroundColor:'#0A1045'}}>
     <Headbar navigation={ navigate } title={ title } openAddBudgetModal={this.setModalVisible.bind(this)}/>
     <ScrollView >
-    <View style={{backgroundColor:'#0A1045'}}>
-      <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>Budget Recommendation (December)</Text>
-    </View>
+
 
     <Carousel layout={'tinder'}
       ref={(c) => { this._carousel = c; }}
-      data={this.state.recommendedBudgetsList}
+      data={{}}
       renderItem={this._renderItem}
       sliderWidth={410}
       itemWidth={410}
@@ -175,6 +172,13 @@ render() {
 
 
     <SafeAreaView style={styles.container}>
+    {
+       this.state.budgetsList.length == 0
+       ? <Text style={{color:'white',alignSelf:'center',fontSize:40,textAlign:'center',padding:20,marginTop:'40%'}}>You have not created any budget for the month. Create Now</Text>
+       : (
+         <Text >Test</Text>
+       )
+     }
       <FlatList
         data={this.state.budgetsList}
         renderItem={(item) => (
@@ -199,7 +203,8 @@ render() {
 
 </ScrollView>
 
-<Button large warning rounded block style={{margin:10}}>
+<Button large warning rounded block style={{margin:10}}
+onPress={() => this.props.navigation.navigate('New Budget')}>
   <Text >Create a new Budget</Text>
 </Button>
 

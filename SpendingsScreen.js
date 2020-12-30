@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Headbar from './Components/Headbar';
-import BudgetScreen from './BudgetScreen';
+import BudgetDrawer from './Components/Budget/BudgetDrawer';
 import MyTransactionsScreen from './MyTransactionsScreen';
 import TransactionsDetails from './Components/Transactions/TransactionsDetails';
 import TransactionsDrawer from './Components/Transactions/TransactionDrawer';
@@ -55,7 +55,7 @@ export default function SpendingsScreen({navigation}) {
       }}
     >
       <Tab.Screen name="Transactions" component={TransactionsDrawer}/>
-      <Tab.Screen name="My Budget" component={BudgetScreen} />
+      <Tab.Screen name="My Budget" component={BudgetDrawer} />
     </Tab.Navigator>
     </NavigationContainer>
   );
