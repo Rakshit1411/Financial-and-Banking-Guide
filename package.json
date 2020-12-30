@@ -44,6 +44,7 @@
     "react-native-indicators": "^0.17.0",
     "react-native-material-cards": "^1.0.15",
     "react-native-navbar": "^2.1.0",
+    "react-native-option-picker": "^1.1.2",
     "react-native-paper": "^4.3.0",
     "react-native-picker": "^4.3.7",
     "react-native-push-notification": "^5.1.1",

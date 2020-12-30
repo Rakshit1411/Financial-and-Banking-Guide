@@ -78,3 +78,4 @@ SmartSave/target/classes/org/example/SmartSave/Services/Dashboard/GraphService.c
 *.class
 *.class
 SmartSave/target/classes/org/example/SmartSave/Services/MachineLearning/BusinessCategoryService.class
+package-lock.json

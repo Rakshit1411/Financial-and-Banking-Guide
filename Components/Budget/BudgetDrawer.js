@@ -11,7 +11,7 @@ export default function BudgetDrawer() {
     <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name="Budget Screen" component={BudgetScreen} options={{ headerShown: false }}/>
-    <Stack.Screen name="New Budget" component={NewBudget} options={{title:'Update Category'
+    <Stack.Screen name="New Budget" component={NewBudget} options={{title:'New Budget'
   ,headerStyle: {backgroundColor: '#0A1045'},headerTintColor: '#fff'}} />
 
       </Stack.Navigator>
