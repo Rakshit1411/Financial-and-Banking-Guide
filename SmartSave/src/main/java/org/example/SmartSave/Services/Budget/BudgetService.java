@@ -54,6 +54,7 @@ public class BudgetService {
         budget.setId(UUID.randomUUID().toString());
         JSONObject cjson = new JSONObject();
         cjson.put("category",params.getString("category"));
+        //JSONObject out = businessCategoryService.getCategory(cjson);
         JSONObject out = businessCategoryService.getCategory(cjson);
         String cat="";
         for (String s : out.keySet()) {
