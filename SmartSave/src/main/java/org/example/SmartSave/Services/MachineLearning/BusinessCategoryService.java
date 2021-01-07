@@ -78,4 +78,15 @@ public class BusinessCategoryService {
         }
         return response;
     }
+    public JSONObject getCategory(JSONObject params) {
+        String query = String.format("\"SELECT * FROM businesscategory where category = '%s'\"",params.getString("category"));
+        String result = esService.getData(query);
+        JSONArray data = JSON.parseObject(result).getJSONArray("rows");
+        JSONObject response = new JSONObject();
+        for (Object item:data) {
+            JSONArray itemArray = (JSONArray)item;
+            response.put(itemArray.get(3).toString(),itemArray.get(1).toString());
+        }
+        return response;
+    }
 }

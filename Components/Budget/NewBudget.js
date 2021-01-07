@@ -17,7 +17,7 @@ export default class NewBudget extends Component {
 
     this.state = {
       category:'',
-      amount:0,
+      amount:'',
       // parentNavigator:props.navigation.parentNavigator,
      };
   }
@@ -71,11 +71,34 @@ export default class NewBudget extends Component {
 
 
 componentDidMount(){
-    //this.setState({loader:true});
-    console.log('navigator',this.props.navigation);
-     //this.getCategories();
-  }
 
+}
+addBudget(){
+  var url = "http://192.168.1.54:8080/";
+  // console.log('TESTING: '+this.state.parentNavigator)
+  AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+      axios.post(url+"budget/add",{category: this.state.category,amount:this.state.amount,phoneNumber:phoneNumber})
+        .then(response => {
+          console.log('here'+response);
+            if (response) {
+              var item = {category: this.state.category,amount:this.state.amount,progressValue:
+              0,progressColor:'green'};
+              this.props.route.params.addBudget(item);
+              this.props.navigation.navigate("Budget Screen");
+            }
+        })
+        .catch(error => {
+            console.log('Error while fetching the transactions from sms');
+        });
+
+
+    }
+  )
+}
+_onPress(elem){
+  console.log(this);
+  this.setState({category:JSON.stringify(elem)})
+}
 render() {
   return (
 
@@ -86,6 +109,7 @@ render() {
     placeholderTextColor='rgba(0,0,0,0.7)'
     returnKeyType = "go"
     value={this.state.amount}
+    onChangeText = {(text)=>this.setState({amount: text})}
     autoCapitalize="none"
     keyboardType="numeric"
   />
@@ -95,7 +119,12 @@ render() {
           selectedOptionStyle={styles.selectedOptionStyle}
           optionTextStyle={styles.optionTextStyle}
           selectedOptionTextStyle={styles.selectedOptionTextStyle}
+      onPress={(elem) => (this.setState({category:elem['title']}))}
   />
+  <Button large warning rounded block style={{margin:10}}
+  onPress={() => this.addBudget()}>
+    <Text >Add Budget</Text>
+  </Button>
 
   </Container>
 

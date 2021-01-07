@@ -34,4 +34,8 @@ public class BusinessCategoryController {
     public JSONObject getAllCategories(@RequestBody JSONObject params){
         return businessCategoryService.getAllCategories(params);
     }
+    @PostMapping("/getCategory")
+    public JSONObject getCategory(@RequestBody JSONObject params){
+        return businessCategoryService.getCategory(params);
+    }
 }

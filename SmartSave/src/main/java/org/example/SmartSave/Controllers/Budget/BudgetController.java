@@ -1,5 +1,6 @@
 package org.example.SmartSave.Controllers.Budget;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.example.SmartSave.Services.Budget.BudgetService;
 import org.example.SmartSave.Services.UserProfile.UserProfileService;
@@ -29,5 +30,9 @@ public class BudgetController {
     @PostMapping("update")
     public String update(@RequestBody JSONObject params){
         return budgetService.update(params.getString("phoneNo"),params.getString("amountThreshold"));
+    }
+    @PostMapping("getRemainingBudget")
+    public JSONArray getRemainingBudget(@RequestBody JSONObject params){
+        return budgetService.getRemainingBudget(params);
     }
 }
