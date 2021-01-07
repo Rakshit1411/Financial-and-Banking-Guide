@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Image,View,Modal, StyleSheet,TouchableHighlight,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground, TouchableWithoutFeedback} from 'react-native';
+import { RefreshControl,Image,View,Modal, StyleSheet,TouchableHighlight,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground, TouchableWithoutFeedback} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Container, Header, Content, Button, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 import { ProgressBar, Colors,Card,Paragraph } from 'react-native-paper';
@@ -15,7 +15,7 @@ export default class MyTransactionScreen extends Component {
 
     this.state = {
       transactionsList:[],
-      categories:{},
+      categories:{},refreshing: false,
       // parentNavigator:props.navigation.parentNavigator,
      };
   }
@@ -36,28 +36,32 @@ getCategories(){
 
 }
 
+getAllTransactions(){
+  var url = "http://192.168.1.54:8080/";
+  AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+    axios.post(url+"graph/getAllTransactions", {'phoneNumber':phoneNumber})
+          .then(response => {
+            console.log('here'+response);
+              if (response) {
+                  //console.log(response);
+                  //send_response = response;
+                  this.getCategories();
+                  console.log('Transactions fetched successfully');
+                  this.setState({transactionsList:response.data.transactionsList});
+this.setState({refreshing: false});
+              }
+          })
+          .catch(error => {
+              console.log('Error while fetching the transactions from sms');
+          });
+    }
+  )
+}
+
 componentDidMount(){
     //this.setState({loader:true});
     console.log('navigator',this.props.navigation);
-    var url = "http://192.168.1.54:8080/";
-    AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
-      axios.post(url+"graph/getAllTransactions", {'phoneNumber':phoneNumber})
-            .then(response => {
-              console.log('here'+response);
-                if (response) {
-                    //console.log(response);
-                    //send_response = response;
-                    this.getCategories();
-                    console.log('Transactions fetched successfully');
-                    this.setState({transactionsList:response.data.transactionsList});
-
-                }
-            })
-            .catch(error => {
-                console.log('Error while fetching the transactions from sms');
-            });
-      }
-    )
+    this.getAllTransactions();
   }
 checkCategoryImage(category){
   //console.log(category);
@@ -65,7 +69,10 @@ checkCategoryImage(category){
       //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
   return this.state.categories[category];
 }
-
+_onRefresh = () => {
+    this.setState({refreshing: true});
+    this.getAllTransactions();
+  }
 render() {
   const navigate = this.props.navigation;
   const title = 'Transactions';
@@ -74,10 +81,15 @@ render() {
 
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
-  <Content style={{backgroundColor:'#0A1045'}}>
   <SafeAreaView style={{...styles.container}}>
     <FlatList
       data={this.state.transactionsList}
+      refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />
+        }
       renderItem={(item) => (
         <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Transactions Details',{transaction:item,categoryImage:this.checkCategoryImage(item.item.paidToCategory),categories:this.state.categories})}>
         <View style={{backgroundColor:'#0A1045'}}>
@@ -93,11 +105,17 @@ render() {
            style = {{ width: 50, height: 50,flexDirection: 'column' ,marginTop:10}}
            />
             <View style={{flex:1, flexDirection: 'column', justifyContent: 'space-between' }}>
+
               <Text style={{color:'black',marginBottom:10,paddingBottom:10,marginLeft:15,marginTop:10,flex:1,fontSize:16}}>{item.item.paidTo}</Text>
               <Text style={{color:'grey',marginLeft:15,marginTop:10,fontSize:10}}>{item.item.date}</Text>
             </View>
-            <Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>
-
+            {
+               item.item.type=="Credited"
+               ? <Text style={{color:'green',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>
+               : (
+                 <Text style={{color:'red',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1,marginRight:10,fontSize:20}}>Rs.{item.item.amount}</Text>
+               )
+             }
           </View>
 
 
@@ -108,13 +126,15 @@ render() {
 
     />
   </SafeAreaView>
-  </Content>
   </Container>
 
   );
 }
 }
 const styles = StyleSheet.create({
+  container:{
+    marginBottom:56
+  },
   image: {
   flex: 1,
   resizeMode: "cover",

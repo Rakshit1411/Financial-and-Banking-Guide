@@ -37,7 +37,7 @@ export default class Column2dChart extends React.PureComponent
   }
 	render(){
 		return (
-      <View style={{paddingTop:15}}>
+      <View style={{paddingTop:15,paddingBottom:10}}>
       <FusionCharts
             type='column2d'
             width={this.state.width}

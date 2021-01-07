@@ -29,7 +29,7 @@ public class GraphService {
         date.set(Calendar.DAY_OF_MONTH-1, 1);
         String dateLimit = ""+date.getTimeInMillis();
         String phoneNumber = params.getString("phoneNo");
-        String query = String.format("\"SELECT sum(amount),type FROM transactions where (accountNumber LIKE '%s||%%' and date > %s) group by type\"",phoneNumber,dateLimit);
+        String query = String.format("\"SELECT sum(amount),type FROM transactions where (accountNumber LIKE '%s||%%' and date >= %s) group by type\"",phoneNumber,dateLimit);
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
         JSONObject dict1 = new JSONObject();
@@ -48,9 +48,10 @@ public class GraphService {
 
         JSONArray response = new JSONArray();
         Calendar date = Calendar.getInstance();
-        date.set(Calendar.DAY_OF_MONTH, 1);
+        date.set(Calendar.DAY_OF_MONTH-1, 1);
+        date.set(Calendar.HOUR,0);
         String phoneNumber = params.getString("phoneNo");
-        String query = String.format("\"SELECT * FROM transactions where (accountNumber LIKE '%s||%%' and type='0' and date > %s) order by date desc\"",phoneNumber,date.getTimeInMillis());
+        String query = String.format("\"SELECT * FROM transactions where (accountNumber LIKE '%s||%%' and type='0' and date >= %s) order by date desc\"",phoneNumber,date.getTimeInMillis());
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
         JSONObject dict = new JSONObject();
@@ -106,7 +107,7 @@ public class GraphService {
         date.set(Calendar.DAY_OF_MONTH-1, 1);
         String dateLimit = ""+date.getTimeInMillis();
         String phoneNumber = params.getString("phoneNo");
-        String query = String.format("\"SELECT SUM(amount),paidToCategory FROM transactions where (accountNumber LIKE '%s||%%' and date > %s) group by paidToCategory\"",phoneNumber,dateLimit);
+        String query = String.format("\"SELECT SUM(amount),paidToCategory FROM transactions where (accountNumber LIKE '%s||%%' and date >= %s and type='0') group by paidToCategory\"",phoneNumber,dateLimit);
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
         for(int i=0;i<data.size();i++){

@@ -7,6 +7,7 @@ import org.example.SmartSave.Model.BusinessCategory;
 import org.example.SmartSave.Repository.BusinessCategoryRepository;
 import org.example.SmartSave.Services.Common.EsService;
 import org.example.SmartSave.Services.Common.HttpService;
+import org.example.SmartSave.Services.Sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ public class BusinessCategoryService {
     @Autowired
     EsService esService;
 
+
     @Autowired
     public void setBusinessCategoryRepository(BusinessCategoryRepository businessCategoryRepository) {
         this.businessCategoryRepository = businessCategoryRepository;
@@ -50,6 +52,7 @@ public class BusinessCategoryService {
     }
 
     public String setCategory(JSONObject params){
+
         String output = "";
         output = httpService.postRequest("http://127.0.0.1:5000/dataset/update",params).toString();
         return output;
@@ -72,6 +75,17 @@ public class BusinessCategoryService {
         for (Object item:data) {
             JSONArray itemArray = (JSONArray)item;
             response.put(itemArray.get(1).toString(),itemArray.get(2).toString());
+        }
+        return response;
+    }
+    public JSONObject getCategory(JSONObject params) {
+        String query = String.format("\"SELECT * FROM businesscategory where category = '%s'\"",params.getString("category"));
+        String result = esService.getData(query);
+        JSONArray data = JSON.parseObject(result).getJSONArray("rows");
+        JSONObject response = new JSONObject();
+        for (Object item:data) {
+            JSONArray itemArray = (JSONArray)item;
+            response.put(itemArray.get(3).toString(),itemArray.get(1).toString());
         }
         return response;
     }
