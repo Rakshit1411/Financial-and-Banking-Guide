@@ -49,6 +49,7 @@ public class GraphService {
         JSONArray response = new JSONArray();
         Calendar date = Calendar.getInstance();
         date.set(Calendar.DAY_OF_MONTH-1, 1);
+        date.set(Calendar.HOUR,0);
         String phoneNumber = params.getString("phoneNo");
         String query = String.format("\"SELECT * FROM transactions where (accountNumber LIKE '%s||%%' and type='0' and date >= %s) order by date desc\"",phoneNumber,date.getTimeInMillis());
         String result = esService.getData(query);
