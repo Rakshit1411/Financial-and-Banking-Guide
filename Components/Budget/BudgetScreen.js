@@ -187,7 +187,7 @@ const {showAlert} = this.state;
        )
      }
       <FlatList
-        data={this.state.budgetsList}
+        data={this.state.budgetsList.sort((a, b) => a.category.localeCompare(b.category))}
         refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -205,7 +205,7 @@ const {showAlert} = this.state;
                 <Text style={{color:'black',marginBottom:10,paddingBottom:10,flex:1,fontSize:22}}>{item.item.category}</Text>
               </View>
               <ProgressBar progress={item.item.barProgress} color={item.item.progressColor} style={{width:'100%',transform: [{ scaleX: 1.0 }, { scaleY: 5 }]}}/>
-              {item.item.progressValue!=0?<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Rs.{item.item.progressValue} left of Rs.{item.item.amount}</Text>:<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Budget Exceeded</Text>}
+              {item.item.progressValue>=0?<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Rs.{item.item.progressValue} left of Rs.{item.item.amount}</Text>:<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Budget Exceeded</Text>}
 
             </View>
           </View>

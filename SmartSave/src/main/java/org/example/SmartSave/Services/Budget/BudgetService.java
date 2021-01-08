@@ -49,6 +49,13 @@ public class BudgetService {
     }
 
     public String add(JSONObject params){
+        JSONArray remainingBudget = getRemainingBudget(params);
+        for(Object x:remainingBudget){
+            JSONObject y = (JSONObject) x;
+            if(y.getString("category").equals(params.getString("category"))){
+                return "DUPLICATE";
+            }
+        }
         Budget budget = new Budget();
         budget.setAmountThreshold(params.getString("amountThreshold"));
         budget.setId(UUID.randomUUID().toString());
@@ -61,6 +68,7 @@ public class BudgetService {
             cat = s;
         }
         budget.setAmountThreshold(params.getString("amount"));
+
         budget.setCategoryId(cat);
         budget.setUserId(params.getString("phoneNumber"));
         Date today = new Date();
@@ -71,6 +79,10 @@ public class BudgetService {
     }
 
     public JSONArray getRemainingBudget(JSONObject params){
+        if(budgetRepository.findAll().iterator().hasNext()==false){
+            JSONArray data = new JSONArray();
+            return data;
+        }
         String phoneNumber = params.getString("phoneNumber");
         String query = String.format("\"SELECT * FROM budget where (userId = '%s') order by calDate desc\"",phoneNumber);
         String result = esService.getData(query);
