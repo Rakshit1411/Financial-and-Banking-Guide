@@ -3,6 +3,7 @@ package org.example.SmartSave.Services.Dashboard;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ibm.icu.util.TimeZone;
 import org.example.SmartSave.Services.Common.EsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +51,9 @@ public class GraphService {
         Calendar date = Calendar.getInstance();
         date.set(Calendar.DAY_OF_MONTH-1, 1);
         date.set(Calendar.HOUR,0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        //date.setTimeZone(TimeZone.getTimeZone("UTC"));
         String phoneNumber = params.getString("phoneNo");
         String query = String.format("\"SELECT * FROM transactions where (accountNumber LIKE '%s||%%' and type='0' and date >= %s) order by date desc\"",phoneNumber,date.getTimeInMillis());
         String result = esService.getData(query);

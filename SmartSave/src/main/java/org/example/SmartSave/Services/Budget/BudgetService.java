@@ -105,6 +105,7 @@ public class BudgetService {
                     obj.put("amountSpent",((JSONObject)pieChartData.get(i)).getString("value"));
                 }
             }
+            obj.put("id",xarr.get(4));
             response.add(obj);
         }
         return response;
@@ -124,6 +125,10 @@ public class BudgetService {
     }
     public String deleteAll(){
         budgetRepository.deleteAll();
+        return "SUCCESS";
+    }
+    public String delete(JSONObject params){
+        budgetRepository.deleteById(params.getString("id"));
         return "SUCCESS";
     }
 }

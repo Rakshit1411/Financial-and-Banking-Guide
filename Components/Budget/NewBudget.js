@@ -82,7 +82,7 @@ addBudget(){
           console.log('here'+response);
             if (response) {
               var item = {category: this.state.category,amount:this.state.amount,progressValue:
-              0,progressColor:'green'};
+              this.state.amount,barProgress:1,progressColor:'green'};
               this.props.route.params.addBudget(item);
               this.props.navigation.navigate("Budget Screen");
             }
