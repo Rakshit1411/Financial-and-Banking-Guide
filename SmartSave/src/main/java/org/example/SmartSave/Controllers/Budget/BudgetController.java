@@ -27,6 +27,11 @@ public class BudgetController {
         return budgetService.deleteAll();
     }
 
+    @PostMapping("delete")
+    public String delete(@RequestBody JSONObject params){
+        return budgetService.delete(params);
+    }
+
     @PostMapping("update")
     public String update(@RequestBody JSONObject params){
         return budgetService.update(params.getString("phoneNo"),params.getString("amountThreshold"));

@@ -32,6 +32,7 @@
     "react-icons": "^3.11.0",
     "react-native": "0.63.3",
     "react-native-android-sms": "0.0.1",
+    "react-native-awesome-alerts": "^1.4.2",
     "react-native-chart-kit": "^6.9.0",
     "react-native-date-picker": "^3.2.5",
     "react-native-dialogflow": "^3.2.2",

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { RefreshControl,View,Modal, StyleSheet,TouchableHighlight,TouchableWithoutFeedback,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground } from 'react-native';
+import { TouchableOpacity,RefreshControl,View,Modal, StyleSheet,TouchableHighlight,TouchableWithoutFeedback,Picker,TextInput,Text,FlatList, SafeAreaView,ScrollView,ImageBackground } from 'react-native';
 import Headbar from '../Headbar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Container, Header, Content, Button, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
@@ -8,24 +8,38 @@ import { ProgressBar, Colors,Card,Paragraph } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class BudgetScreen extends Component {
 
   constructor(props) {
    super(props);
-   console.log("Conteructor");
    this.newBudgetdetails={
      category: '',
      amount: '',
      progressValue: 0,
      progressColor:Colors.green800,
+     id:'',
    }
     this.state = {
       addBudgetModal: false,
       newBudgetdetails: this.newBudgetdetails,
-      budgetsList:[],refreshing: false,
+      budgetsList:[],refreshing: false,showAlert: false,selectedItem:'',
      };
   }
+
+showAlert(item){
+  console.log('item',item);
+  this.setState({
+    showAlert: true,selectedItem: item,
+  });
+};
+
+hideAlert = () => {
+  this.setState({
+    showAlert: false,selectedItem: '',
+  });
+};
 getBudget(){
   var url = "http://192.168.1.54:8080/";
   // console.log('TESTING: '+this.state.parentNavigator)
@@ -35,6 +49,7 @@ getBudget(){
           console.log('here',response.data);
             if (response.data) {
               var budgetsList = this.state.budgetsList;
+              this.setState({budgetsList:[]});
               for(var i=0;i<response.data.length;i++){
                 if(response.data[i]["amountSpent"]==undefined){
                   response.data[i]["amountSpent"]='0';
@@ -43,9 +58,12 @@ getBudget(){
                   category: response.data[i]["category"],
                   amount: response.data[i]["amountThreshold"],
                   progressValue: response.data[i]["amountSpent"],
+                  id: response.data[i]["id"],
                   progressColor:Colors.green800,
                 };
                 this.setState({newBudgetdetails:budget});
+                this.setState({refreshing: false});
+
                 this.addNewBudget();
               }
             }
@@ -112,7 +130,8 @@ calc(x,y){
       progressColor=Colors.red800;
     }
     budgetsList.push({category: newBudgetdetails.category,amount:newBudgetdetails.amount,progressValue:
-    newBudgetdetails.amount-newBudgetdetails.progressValue,progressColor:progressColor,barProgress:progressValueRatio});
+    newBudgetdetails.amount-newBudgetdetails.progressValue,progressColor:progressColor,barProgress:progressValueRatio,
+  id:newBudgetdetails.id});
     this.setState({ budgetsList: budgetsList.slice(0)});
     console.log(this.state.budgetsList);
 
@@ -126,40 +145,49 @@ _onRefresh = () => {
     this.setState({refreshing: true});
     this.getBudget();
   }
+removeBudget(id){
+  var url = "http://192.168.1.54:8080/";
+  // console.log('TESTING: '+this.state.parentNavigator)
+      axios.post(url+"budget/delete",{id:id})
+        .then(response => {
+          console.log('here',response.data);
+            if (response.data) {
+              console.log(response.data);
+            }
+        })
+        .catch(error => {
+            console.log('Error while fetching the transactions from sms');
+        });
+}
+deleteItemById(){
+    console.log('hereeeee',this.state);
+  const filteredData = this.state.budgetsList.filter(item => item.category !== this.state.selectedItem.category);
+  var toBeDeleted = this.state.selectedItem.id;
+  this.state.selectedItem = '';
+  this.setState({ budgetsList: filteredData });
+  this.removeBudget(toBeDeleted);
+}
 render() {
 
   const navigate = this.props.navigation;
   const title = 'My Budget Plan';
-
+const {showAlert} = this.state;
   return (
 
     <Container style={{backgroundColor:'#0A1045'}}>
     <Headbar navigation={ navigate } title={ title }/>
     <ScrollView >
 
-
-    <Carousel layout={'tinder'}
-      ref={(c) => { this._carousel = c; }}
-      data={{}}
-      renderItem={this._renderItem}
-      sliderWidth={410}
-      itemWidth={410}
-      windowSize={1}
-      style={{backgroundColor:'#0A1045'}}
-
-    />
-
-
     <SafeAreaView style={styles.container}>
     {
        this.state.budgetsList.length == 0
        ? <Text style={{color:'white',alignSelf:'center',fontSize:40,textAlign:'center',padding:20,marginTop:'40%'}}>You have not created any budget for the month. Create Now</Text>
        : (
-         <Text >Test</Text>
+         <Text >Loading</Text>
        )
      }
       <FlatList
-        data={this.state.budgetsList}
+        data={this.state.budgetsList.sort((a, b) => a.category.localeCompare(b.category))}
         refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -167,6 +195,9 @@ render() {
             />
           }
         renderItem={(item) => (
+          <TouchableOpacity
+            onLongPress={this.showAlert.bind(this,item.item)}
+          >
           <View style={{backgroundColor:'#0A1045'}}>
             <Text style={{margin:0,color:'white',alignSelf:'center',fontSize:16,padding:5}}>{item.item.category}</Text>
             <View style={{backgroundColor:'white',padding:10}}>
@@ -174,12 +205,13 @@ render() {
                 <Text style={{color:'black',marginBottom:10,paddingBottom:10,flex:1,fontSize:22}}>{item.item.category}</Text>
               </View>
               <ProgressBar progress={item.item.barProgress} color={item.item.progressColor} style={{width:'100%',transform: [{ scaleX: 1.0 }, { scaleY: 5 }]}}/>
-              {item.item.progressValue!=0?<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Rs.{item.item.progressValue} left of Rs.{item.item.amount}</Text>:<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Budget Exceeded</Text>}
+              {item.item.progressValue>=0?<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Rs.{item.item.progressValue} left of Rs.{item.item.amount}</Text>:<Text style={{color:'grey',textAlign:'right', alignSelf: 'stretch',marginTop:10,flex:1}}>Budget Exceeded</Text>}
 
             </View>
           </View>
+          </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.amount}
+        keyExtractor={(item) => item.category}
 
       />
 
@@ -192,7 +224,26 @@ render() {
 onPress={() => this.props.navigation.navigate('New Budget',{  addBudget: item => this.setState(prevState => ({ budgetsList: prevState.budgetsList.concat([item]) })),})}>
   <Text >Create a new Budget</Text>
 </Button>
-
+<AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title="Action Required"
+          message="Do you want to delete this budget"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText="No, cancel"
+          confirmText="Yes, delete it"
+          confirmButtonColor="#DD6B55"
+          onCancelPressed={() => {
+            this.hideAlert();
+          }}
+          onConfirmPressed={() => {
+            this.hideAlert();
+            this.deleteItemById();
+          }}
+        />
 
     </Container>
 
