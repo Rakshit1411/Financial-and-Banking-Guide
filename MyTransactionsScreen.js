@@ -12,7 +12,7 @@ import axios from 'axios';
 export default class MyTransactionScreen extends Component {
   constructor(props) {
    super(props);
-
+   console.log('testing',this.props.sideNavigation);
     this.state = {
       transactionsList:[],
       categories:{},refreshing: false,
@@ -74,7 +74,7 @@ _onRefresh = () => {
     this.getAllTransactions();
   }
 render() {
-  const navigate = this.props.navigation;
+  const navigate = this.props.sideNavigation;
   const title = 'Transactions';
   const data=[{title:'new payment reminder',description:'Your account will be deducted with Rs. 10000 for your monthly rent to Mr. XYZ',id:'AUTO_PAYMENT'},{title:'Budget recommendation',description:'Click to get the new recommendation details',id:'AUTO_BUDGET'}];
   return (

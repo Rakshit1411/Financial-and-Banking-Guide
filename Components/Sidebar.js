@@ -39,14 +39,16 @@ export default class Sidebar extends Component {
     super(props);
     this.state={
       username: '',
-      fullname: ''
+      fullname: '',
+      profileImage: '',
     };
     this._retrieveData();
   }
   _retrieveData = async () => {
     try {
       this.setState({username: await AsyncStorage.getItem('username')});
-      this.setState({fullname: await AsyncStorage.getItem('fullname')});
+      this.setState({fullname: await AsyncStorage.getItem('fullName')});
+      this.setState({profileImage: await AsyncStorage.getItem('profileImage')});
     } catch (error) {
       console.log(error);
     }
@@ -71,13 +73,13 @@ export default class Sidebar extends Component {
                   <View style={{flexDirection: 'row', margin: 15}}>
                     <Avatar.Image
                       source = {{
-                        uri: 'https://cdn.iconscout.com/icon/free/png-256/avatar-380-456332.png'
+                        uri: this.state.profileImage
                       }}
                       size={50}
                     />
                     <View style={{flexDirection: 'column', marginLeft: 15}}>
                       <Title style={styles.title}>{this.state.fullname}</Title>
-                      <Caption style={styles.caption}>{this.state.username}</Caption>
+                      <Caption style={styles.caption}>User Id: {this.state.username}</Caption>
                     </View>
                   </View>
                 </View>

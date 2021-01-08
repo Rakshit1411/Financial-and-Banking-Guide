@@ -8,11 +8,12 @@ import MyTransactionScreen from '../../MyTransactionsScreen';
 import NewBudget from '../Budget/NewBudget';
 const Stack = createStackNavigator();
 
-export default function TransactionDrawer() {
+export default function TransactionDrawer({sideNavigation}) {
+
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator>
-        <Stack.Screen name="My Transaction Screen" component={MyTransactionScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="My Transaction Screen" component={MyTransactionScreen} options={{ headerShown: false }} sideNavigation={sideNavigation}/>
         <Stack.Screen name="Transactions Details" component={TransactionsDetails} options={{title:''
       ,headerStyle: {backgroundColor: '#0A1045'},headerTransparent:true}} />
       <Stack.Screen name="Transaction Category Update" component={TransactionCategoryUpdate} options={{title:'Update Category'
