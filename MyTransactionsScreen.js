@@ -15,7 +15,7 @@ export default class MyTransactionScreen extends Component {
    console.log('testing',this.props.sideNavigation);
     this.state = {
       transactionsList:[],
-      categories:{},refreshing: false,
+      categories:{},refreshing: false,sideNavigation:'',
       // parentNavigator:props.navigation.parentNavigator,
      };
   }
@@ -60,7 +60,10 @@ this.setState({refreshing: false});
 
 componentDidMount(){
     //this.setState({loader:true});
-    console.log('navigator',this.props.navigation);
+
+    this.setState({sideNavigation: AsyncStorage.getItem('sideNavigation')});
+    console.log('navigation is set now',AsyncStorage.getItem('sideNavigation'));
+    console.log('navigatonjjr',this.props.navigation);
     this.getAllTransactions();
   }
 checkCategoryImage(category){
@@ -68,19 +71,19 @@ checkCategoryImage(category){
   //console.log(this.state.categories[category]);
       //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
   return this.state.categories[category];
-}
+} 
 _onRefresh = () => {
     this.setState({refreshing: true});
     this.getAllTransactions();
   }
 render() {
-  const navigate = this.props.sideNavigation;
+  const navigate = this.props.navigation;
   const title = 'Transactions';
   const data=[{title:'new payment reminder',description:'Your account will be deducted with Rs. 10000 for your monthly rent to Mr. XYZ',id:'AUTO_PAYMENT'},{title:'Budget recommendation',description:'Click to get the new recommendation details',id:'AUTO_BUDGET'}];
   return (
 
   <Container>
-  <Headbar navigation={ navigate } title={ title }/>
+  <Headbar navigation={ this.state.sideNavigation } title={ title }/>
   <SafeAreaView style={{...styles.container}}>
     <FlatList
       data={this.state.transactionsList}

@@ -35,10 +35,16 @@ class DashboardScreen extends Component
 				loader:false,
 				lineChartData:[],
 				barGraphData:[],
+        sideNavigation:'',
+        budgetStatus:'',
+        highestSpentCategory:'',
+        savingsLastMonth:'',
 			};
+    this.setState({sideNavigation:this.props.navigation});
+    AsyncStorage.setItem('sideNavigation',this.props.navigation);
 	}
 	setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
+    this.setState({ modalVisible: visible});
 		console.log(visible);
   };
 	loadModal=(name)=>{
@@ -93,6 +99,9 @@ class DashboardScreen extends Component
 									this.setState({lineChartData:response.data.lineChartData});
 									this.setState({barGraphData:response.data.barGraphData});
 									this.setState({pieChartData:response.data.pieChartData});
+                  this.setState({savingsLastMonth:response.data.savingsLastMonth});
+                  this.setState({budgetStatus:response.data.budgetStatus});
+                  this.setState({highestSpentCategory:response.data.highestSpentCategory});
 									this.setState({loader:false});
 							}
 					})
@@ -103,6 +112,8 @@ class DashboardScreen extends Component
 
 	componentDidMount(){
 		this.setState({loader:true});
+    AsyncStorage.setItem('sideNavigation',this.state.sideNavigation);
+
 		AsyncStorage.getItem("lastDataSync").then((value) => {
 			if(value==null){
 				var d = new Date();
@@ -163,21 +174,21 @@ class DashboardScreen extends Component
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>My Budget Status</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>{this.state.budgetStatus}</Title>
         </Card.Content>
       </Card>
       <Card style={{...styles.card,margin:5,backgroundColor: '#e94560',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>{this.state.savingsLastMonth}</Title>
         </Card.Content>
       </Card>
       <Card style={{...styles.card,margin:5,backgroundColor: '#40a8c4',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Highest Spent Category</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Shopping</Title>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>{this.state.highestSpentCategory}</Title>
         </Card.Content>
       </Card>
 
