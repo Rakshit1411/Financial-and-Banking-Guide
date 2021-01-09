@@ -129,6 +129,9 @@ class DashboardScreen extends Component
     AsyncStorage.setItem('sideNavigation',this.state.sideNavigation);
 
 		AsyncStorage.getItem("lastDataSync").then((value) => {
+
+      console.log('value',value);
+
 			if(value==null){
 				var d = new Date();
 				d.setMonth(d.getMonth() - 1);

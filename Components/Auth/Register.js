@@ -1,43 +1,58 @@
 import React, {Component} from 'react';
 import { TouchableOpacity, StyleSheet, View, Button, TextInput, Image, Text, KeyboardAvoidingView } from 'react-native';
-import Headbar from './Components/Headbar';
-import DashboardScreen from './DashboardScreen'
+import Headbar from '../Headbar';
 import AsyncStorage from '@react-native-community/async-storage';
-import Sidebar from './Components/Sidebar'
 import { Avatar } from 'react-native-paper'
 import axios from 'axios';
-
+import { Dropdown } from 'react-native-material-dropdown-v2-fixed';
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 
 
-export default class LoginScreen extends Component {
-	constructor(props)
+export default class Register extends Component {
+  constructor(props)
 	{
 		super(props);
 		this.state = {
 			phoneNumber: '',
 			password: '',
-
+      fullName: '',
+      confirmPassword: '',
+      primaryBank:'',
 		}
 	}
-	render() {
-		const navigation = this.props.navigation;
-		const title = 'Login';
-		return (
-			<KeyboardAvoidingView behavior="padding" style={styles.container1}>
-				<Text style={styles.title2}>Welcome to SmartSave</Text>
-				<View style={styles.logoContainer}>
-					<Avatar.Image
-						style={styles.logo}
-                      	source={require('./images/logo.jpg')}
-                      size={150}
-                    />
-					<Text style={styles.title}>Becoming rich is hard. Staying broke is hard. Choose your hard.</Text>
-				</View>
+  _register = () => {
+    console.log(this.state);
+  }
+  render() {
+    let data = [{
+      value: 'HSBC',
+    }, {
+      value: 'ICICI',
+    }, {
+      value: 'HDFC',
+    }, {
+      value: 'Punjab National Bank',
+    }, {
+      value: 'Bank of Baroda',
+    }, {
+      value: 'State Bank of India',
+    }];
+    return (
+      <KeyboardAvoidingView behavior="padding" style={styles.container1}>
+				<Text style={styles.title2}>Enter details to Sign Up</Text>
 
 				<View style={styles.formContainer}>
 					<View style={styles.container2}>
 
+          <TextInput
+            style={styles.newinput}
+            placeholder="Full Name"
+            placeholderTextColor='rgba(255,255,255,0.7)'
+            returnKeyType = "next"
+            onChangeText = {(text)=>this.setState({fullName: text})}
+            value={this.state.fullName}
+            autoCapitalize="none"
+          />
 						<TextInput
 							style={styles.newinput}
 							placeholder="Phone Number"
@@ -59,41 +74,42 @@ export default class LoginScreen extends Component {
 							ref={(input) => this.passwordInput = input}
 							secureTextEntry
 						/>
+            <TextInput
+							style={styles.newinput}
+							placeholder="Confirm Password"
+							placeholderTextColor='rgba(255,255,255,0.7)'
+							returnKeyType = "go"
+							onChangeText = {(text)=>this.setState({confirmPassword: text})}
+							value={this.state.confirmPassword}
+							ref={(input) => this.confirmPassword = input}
+							secureTextEntry
+						/>
+            <Dropdown
+              icon='chevron-down'
+              iconColor='black'
+              label='Choose your Primary Bank'
+              textColor='#0A1045'
+              baseColor='#0A1045'
+              itemColor='#0A1045'
+              iconColor='#0A1045'
+              data={data}
+              style={styles.dropdown}
+              onChangeText={(value, index, data)=>{this.setState({primaryBank:value})}}
+            />
 						<TouchableOpacity style={styles.userBtn}>
-							<Text style={styles.btnTxt} onPress={this._login}>Submit</Text>
+							<Text style={styles.btnTxt} onPress={this._register}>Register</Text>
 						</TouchableOpacity>
-						<Text style={styles.registerTxt} onPress={this._register}>Forgot Password</Text>
-							<Text style={styles.registerTxt} onPress={this._register}>Not registered yet?</Text>
+
 
 					</View>
 				</View>
 
 			</KeyboardAvoidingView>
-		);
-	}
-  _register = async() => {
-		this.props.navigation.navigate('Register');
-	}
-	_login = async() => {
-		axios.post("http://192.168.1.54:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
-					.then(response => {
-						console.log('here'+response);
-							if (response.data) {
-									// this.setState({fullname: userInfo.fullname});
-									AsyncStorage.setItem('phoneNumber',response.data.phoneNumber);
-									AsyncStorage.setItem('fullName',response.data.fullname);
-									AsyncStorage.setItem('username',response.data.username);
-									AsyncStorage.setItem('profileImage',response.data.profileImage);
-									AsyncStorage.setItem('lastDataSync',response.data.dataSyncTime);
-									this.props.navigation.navigate('DrawerNavigator');
-							}
-					})
-					.catch(error => {
-							console.log('Error while fetching the transactions from sms');
-					});
-	}
+    )
+  }
 
 }
+
 
 const styles = StyleSheet.create({
 	container1: {
@@ -110,10 +126,16 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "center"
 	},
+  dropdown: {
+		backgroundColor: "rgba(255,255,255,0.7)",
+    width: "100%",
+		padding: 0,
+		marginBottom: 10
+	},
 	userBtn: {
 		backgroundColor: "#2980b9",
 		paddingVertical: 15,
-		height: 60
+		height: 60,
 	},
 	btnTxt: {
 		fontSize: 20,

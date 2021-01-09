@@ -44,6 +44,8 @@
     "react-native-gifted-chat": "^0.16.3",
     "react-native-indicators": "^0.17.0",
     "react-native-material-cards": "^1.0.15",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-material-dropdown-v2-fixed": "^0.11.3",
     "react-native-navbar": "^2.1.0",
     "react-native-option-picker": "^1.1.2",
     "react-native-paper": "^4.3.0",
