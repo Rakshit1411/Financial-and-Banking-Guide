@@ -80,6 +80,7 @@ class DashboardScreen extends Component
 										console.log('date to be set',d.getTime());
 										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
 										console.log('Transactions fetched successfully');
+                    this.updateDataSyncTime(phoneNumber,d.getTime());
 										this.getAllGraphsData(phoneNumber);
 		            }
 		        })
@@ -89,6 +90,19 @@ class DashboardScreen extends Component
 		},
 		);
 	}
+
+  updateDataSyncTime(phoneNumber,lastDataSync){
+    axios.post("http://192.168.1.54:8080/user/update", {'phoneNo':phoneNumber,'lastDataSync':lastDataSync})
+					.then(response => {
+						console.log('here'+response);
+							if (response) {
+                console.log('TIME UPDATED',response.data);
+							}
+					})
+					.catch(error => {
+							console.log('Error while updating lastDataSync');
+					});
+  }
 
 	getAllGraphsData(phoneNumber){
 		axios.post("http://192.168.1.54:8080/graph/getAllGraphsData", {'phoneNo':phoneNumber})
@@ -123,6 +137,7 @@ class DashboardScreen extends Component
 				value=d.getTime();
 			}
 			AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+        console.log(phoneNumber)
 				this.extractSms(value,phoneNumber);
 			})
 			console.log('val'+value)

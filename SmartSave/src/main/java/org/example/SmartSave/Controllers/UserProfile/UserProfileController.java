@@ -27,6 +27,6 @@ public class UserProfileController {
 
     @PostMapping("update")
     public String update(@RequestBody JSONObject params){
-        return userProfileService.update(params.getString("phoneNo"),"TEST");
+        return userProfileService.update(params.getString("phoneNo"),params.getString("lastDataSync"));
     }
 }
