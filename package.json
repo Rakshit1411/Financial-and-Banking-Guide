@@ -48,6 +48,7 @@
     "react-native-material-dropdown-v2-fixed": "^0.11.3",
     "react-native-navbar": "^2.1.0",
     "react-native-option-picker": "^1.1.2",
+    "react-native-otp-textinput": "0.0.7",
     "react-native-paper": "^4.3.0",
     "react-native-picker": "^4.3.7",
     "react-native-push-notification": "^5.1.1",

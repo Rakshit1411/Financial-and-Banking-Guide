@@ -19,10 +19,40 @@ public class UserProfile implements Serializable, Cloneable {
     @Field(type= FieldType.Keyword)
     private String password;
     @Field(type= FieldType.Keyword)
+    private String email;
+    @Field(type= FieldType.Keyword)
+    private String primaryBank;
+    @Field(type= FieldType.Keyword)
     private String fullName;
     private String dataSyncTime;
     @Field(type= FieldType.Binary)
     private String profileImage;
+    @Field(type= FieldType.Boolean)
+    private Boolean isVerified;
+
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public String getPrimaryBank() {
+        return primaryBank;
+    }
+
+    public void setPrimaryBank(String primaryBank) {
+        this.primaryBank = primaryBank;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getDataSyncTime() {
         return dataSyncTime;

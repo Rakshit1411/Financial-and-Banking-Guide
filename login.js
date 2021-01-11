@@ -62,7 +62,6 @@ export default class LoginScreen extends Component {
 						<TouchableOpacity style={styles.userBtn}>
 							<Text style={styles.btnTxt} onPress={this._login}>Submit</Text>
 						</TouchableOpacity>
-						<Text style={styles.registerTxt} onPress={this._register}>Forgot Password</Text>
 							<Text style={styles.registerTxt} onPress={this._register}>Not registered yet?</Text>
 
 					</View>
@@ -111,14 +110,14 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	},
 	userBtn: {
-		backgroundColor: "#2980b9",
+		backgroundColor: "#f0ad4e",
 		paddingVertical: 15,
 		height: 60
 	},
 	btnTxt: {
 		fontSize: 20,
 		textAlign: 'center',
-		color: "white",
+		color: "black",
 		fontWeight: '700'
 	},
 	registerTxt: {

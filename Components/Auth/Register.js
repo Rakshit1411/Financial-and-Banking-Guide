@@ -18,11 +18,34 @@ export default class Register extends Component {
       fullName: '',
       confirmPassword: '',
       primaryBank:'',
+      email:'',
 		}
 	}
   _register = () => {
     console.log(this.state);
+    axios.post("http://192.168.1.54:8080/user/add", {'params':this.state})
+					.then(response => {
+							if (response.data) {
+									// this.setState({fullname: userInfo.fullname});
+                  console.log(response.data);
+                  this.props.navigation.navigate('OtpConfirmation',{
+                          phoneNumber: this.state.phoneNumber,
+                          hex: response.data,
+                        });
+							}
+					})
+					.catch(error => {
+							console.log('Error while fetching the transactions from sms');
+					});
+
   }
+
+
+  _login = () => {
+    console.log(this.state);
+    this.props.navigation.navigate('LoginScreen');
+  }
+
   render() {
     let data = [{
       value: 'HSBC',
@@ -64,6 +87,17 @@ export default class Register extends Component {
 							autoCapitalize="none"
 							keyboardType="numeric"
 						/>
+            <TextInput
+							style={styles.newinput}
+							placeholder="Email ID"
+							placeholderTextColor='rgba(255,255,255,0.7)'
+							returnKeyType = "go"
+							onChangeText = {(text)=>this.setState({email: text})}
+							value={this.state.email}
+							ref={(input) => this.email = input}
+							secureTextEntry
+              keyboardType="email-address"
+						/>
 						<TextInput
 							style={styles.newinput}
 							placeholder="Password"
@@ -99,7 +133,7 @@ export default class Register extends Component {
 						<TouchableOpacity style={styles.userBtn}>
 							<Text style={styles.btnTxt} onPress={this._register}>Register</Text>
 						</TouchableOpacity>
-
+            <Text style={styles.loginBtnTxt} onPress={this._login}>Click to Login</Text>
 
 					</View>
 				</View>
@@ -133,16 +167,22 @@ const styles = StyleSheet.create({
 		marginBottom: 10
 	},
 	userBtn: {
-		backgroundColor: "#2980b9",
+		backgroundColor: "#f0ad4e",
 		paddingVertical: 15,
 		height: 60,
 	},
 	btnTxt: {
 		fontSize: 20,
 		textAlign: 'center',
-		color: "white",
+		color: "black",
 		fontWeight: '700'
 	},
+  loginBtnTxt: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: "white",
+    marginTop:5
+  },
 	registerTxt: {
 		marginTop: 5,
 		fontSize: 15,

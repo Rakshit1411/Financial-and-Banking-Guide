@@ -46,28 +46,17 @@ public class MailService {
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("rakshitsharma82@gmail.com", "");
+                return new PasswordAuthentication("rakshitsharma82@gmail.com", "pass");
             }
         });
         Message msg = new MimeMessage(session);
 
         msg.setFrom(new InternetAddress(from,from,from));
-//        new InternetAddress("","");
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         msg.setSubject(subject);
         msg.setContent(body, "text/html");
         msg.setSentDate(new Date());
 
-//        MimeBodyPart messageBodyPart = new MimeBodyPart();
-//        messageBodyPart.setContent("Tutorials point email", "text/html");
-
-//        Multipart multipart = new MimeMultipart();
-//        multipart.addBodyPart(messageBodyPart);
-//        MimeBodyPart attachPart = new MimeBodyPart();
-//
-//        attachPart.attachFile("/var/tmp/image19.png");
-//        multipart.addBodyPart(attachPart);
-//        msg.setContent(multipart);
         Transport.send(msg);
     }
 

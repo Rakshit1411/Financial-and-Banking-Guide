@@ -29,4 +29,9 @@ public class UserProfileController {
     public String update(@RequestBody JSONObject params){
         return userProfileService.update(params.getString("phoneNo"),params.getString("lastDataSync"));
     }
+    @PostMapping("verify")
+    public Boolean verify(@RequestBody JSONObject params){
+        return userProfileService.verifyOtp(params.getString("phoneNumber"),params.getString("number")
+                ,params.getString("hex"));
+    }
 }

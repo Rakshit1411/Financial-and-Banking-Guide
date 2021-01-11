@@ -33,4 +33,6 @@ public class LoginController {
         response.put("dataSyncTime",((JSONArray)data.get(0)).get(1));
         return response.toString();
     }
+
+
 }
