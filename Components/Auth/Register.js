@@ -6,7 +6,17 @@ import { Avatar } from 'react-native-paper'
 import axios from 'axios';
 import { Dropdown } from 'react-native-material-dropdown-v2-fixed';
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
-
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 export default class Register extends Component {
   constructor(props)
@@ -19,10 +29,13 @@ export default class Register extends Component {
       confirmPassword: '',
       primaryBank:'',
       email:'',
+      loader:false,
 		}
 	}
   _register = () => {
     console.log(this.state);
+
+    this.setState({loader:true});
     axios.post("http://192.168.1.54:8080/user/add", {'params':this.state})
 					.then(response => {
 							if (response.data) {
@@ -47,6 +60,10 @@ export default class Register extends Component {
   }
 
   render() {
+    if(this.state.loader==true){
+      // return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
+      return (<MaterialIndicator color='white' style={{backgroundColor:"#0A1045"}}/>)
+    }
     let data = [{
       value: 'HSBC',
     }, {

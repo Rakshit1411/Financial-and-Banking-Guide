@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.primitives.Bytes;
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.Encoder;
 import org.apache.commons.codec.binary.Hex;
 import org.example.SmartSave.Model.UserProfile;
 import org.example.SmartSave.Repository.SmsRepository;
@@ -24,8 +25,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 
@@ -113,16 +113,20 @@ public class UserProfileService {
     }
     private String generateOtp(int otp,String phoneNumber){
         String input = otp+phoneNumber;
-        MessageDigest md = null;
         try {
-            byte[] hash = input.getBytes("UTF-8");
-            BigInteger number = new BigInteger(1, hash);
-            StringBuilder hexString = new StringBuilder(number.toString(16));
+//            new String(Base64.decodeBase64(Base64.encodeBase64(hash)));
+//            byte[] bytes = input.getBytes("UTF-8");
+//            byte[] encoded = Base64.encodeBase64(bytes);
+//            List<String> output = new ArrayList<String>();
+//            for(byte b:encoded){
+//                output.add(""+b);
+//            }
+            Base64.Encoder encoder = Base64.getEncoder();
+            String originalString = input;
+            String encodedString = encoder.encodeToString(originalString.getBytes());
 
-            while (hexString.length() < 32) {
-                hexString.insert(0, '0');
-            }
-            return hexString.toString();
+            System.out.println(encodedString);
+            return encodedString;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,11 +136,12 @@ public class UserProfileService {
     }
     public boolean verifyOtp(String phoneNumber,String number,String hex){
         String input = number+phoneNumber;
-        byte[] bytes = new byte[0];
         try {
-            bytes = Hex.decodeHex(hex.toCharArray());
-            System.out.println(new String(bytes, "UTF-8"));
-            if(input.equals(new String(bytes, "UTF-8"))) {
+            Base64.Decoder decoder = Base64.getDecoder();
+            byte[] bytes = decoder.decode(hex);
+
+            System.out.println(new String(bytes));
+            if(input.equals(new String(bytes))) {
                 return true;
             }
         } catch (Exception e) {
