@@ -103,7 +103,7 @@ public class UserProfileService {
         String hashedOtp = generateOtp(number,phoneNumber);
         String body = "Your OTP for email verification is : "+number;
         try {
-            mailService.sendMail("no-reply@smartsave.com",email,subject,body);
+            mailService.sendMail(email,subject,body);
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (IOException e) {

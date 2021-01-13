@@ -9,6 +9,7 @@ import org.example.SmartSave.Services.Common.EsService;
 import org.example.SmartSave.Services.Common.HttpService;
 import org.example.SmartSave.Services.Sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSender;
@@ -32,11 +33,18 @@ public class MailService {
 
     private MailSender mailSender;
 
+    @Value( "${mail.email}" )
+    String email;
+    @Value( "${mail.password}" )
+    String password;
+    @Value( "${mail.sender}" )
+    String sender;
+
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    public void sendMail(String from, String to, String subject, String body) throws MessagingException, IOException {
+    public void sendMail(String to, String subject, String body) throws MessagingException, IOException {
         //creating message
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -46,12 +54,12 @@ public class MailService {
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("rakshitsharma82@gmail.com", "pass");
+                return new PasswordAuthentication(email, password);
             }
         });
         Message msg = new MimeMessage(session);
 
-        msg.setFrom(new InternetAddress(from,from,from));
+        msg.setFrom(new InternetAddress(sender,sender,sender));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         msg.setSubject(subject);
         msg.setContent(body, "text/html");

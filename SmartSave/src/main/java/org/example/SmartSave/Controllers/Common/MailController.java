@@ -27,7 +27,7 @@ public class MailController {
     @PostMapping("/send")
     public void sendMail(@RequestBody JSONObject params){
         try {
-            mailService.sendMail(params.getString("from"),params.getString("to"),params.getString("subject"),params.getString("body"));
+            mailService.sendMail(params.getString("to"),params.getString("subject"),params.getString("body"));
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (IOException e) {
