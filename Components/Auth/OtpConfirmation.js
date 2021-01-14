@@ -64,8 +64,8 @@ export default class OtpConfirmation extends Component {
                       tintColor='#f0ad4e'
                     />
 
-						<TouchableOpacity style={styles.userBtn}>
-							<Text style={styles.btnTxt} onPress={this._verify}>Verify</Text>
+						<TouchableOpacity style={styles.userBtn} onPress={this._verify}>
+							<Text style={styles.btnTxt} >Verify</Text>
 						</TouchableOpacity>
             <Text style={styles.loginBtnTxt} onPress={this._login}>Click to Login</Text>
 

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, StyleSheet, View, Button, TextInput, Image, Text, KeyboardAvoidingView } from 'react-native';
+import { TouchableOpacity,TouchableHighlight,TouchableWithoutFeedback, StyleSheet, View, Button, TextInput, Image, Text, KeyboardAvoidingView } from 'react-native';
 import Headbar from './Components/Headbar';
 import DashboardScreen from './DashboardScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import Sidebar from './Components/Sidebar'
 import { Avatar } from 'react-native-paper'
 import axios from 'axios';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 
@@ -16,7 +17,7 @@ export default class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			phoneNumber: '',
-			password: '',
+			password: '',showAlert:false,
 
 		}
 	}
@@ -59,14 +60,27 @@ export default class LoginScreen extends Component {
 							ref={(input) => this.passwordInput = input}
 							secureTextEntry
 						/>
-						<TouchableOpacity style={styles.userBtn}>
-							<Text style={styles.btnTxt} onPress={this._login}>Submit</Text>
+						<TouchableOpacity style={styles.userBtn} onPress={this._login}>
+							<Text style={styles.btnTxt} >Submit</Text>
 						</TouchableOpacity>
 							<Text style={styles.registerTxt} onPress={this._register}>Not registered yet?</Text>
 
 					</View>
 				</View>
-
+				<AwesomeAlert
+				  show={this.state.showAlert}
+				  showProgress={false}
+				  title="Login Error"
+				  message="Invalid Credentials"
+				  closeOnTouchOutside={true}
+				  closeOnHardwareBackPress={false}
+				  showConfirmButton={true}
+				  confirmText="Try Again"
+				  confirmButtonColor="#DD6B55"
+				  onConfirmPressed={() => {
+				    this.setState({showAlert:false})
+				  }}
+				/>
 			</KeyboardAvoidingView>
 		);
 	}
@@ -78,16 +92,16 @@ export default class LoginScreen extends Component {
 					.then(response => {
 						console.log('here'+response);
 							if (response.data && response.data!="ERROR") {
-									// this.setState({fullname: userInfo.fullname});
+									// this.setState({fullName: userInfo.fullName});
 									AsyncStorage.setItem('phoneNumber',response.data.phoneNumber);
-									AsyncStorage.setItem('fullName',response.data.fullname);
+									AsyncStorage.setItem('fullName',response.data.fullName);
 									AsyncStorage.setItem('username',response.data.username);
 									AsyncStorage.setItem('profileImage',response.data.profileImage);
 									AsyncStorage.setItem('lastDataSync',response.data.dataSyncTime);
 									this.props.navigation.navigate('DrawerNavigator');
 							}
 							else if(response.data=="ERROR"){
-
+								this.setState({showAlert:true})
 							}
 					})
 					.catch(error => {

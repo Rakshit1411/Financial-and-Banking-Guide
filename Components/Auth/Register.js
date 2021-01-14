@@ -147,8 +147,8 @@ export default class Register extends Component {
               style={styles.dropdown}
               onChangeText={(value, index, data)=>{this.setState({primaryBank:value})}}
             />
-						<TouchableOpacity style={styles.userBtn}>
-							<Text style={styles.btnTxt} onPress={this._register}>Register</Text>
+						<TouchableOpacity style={styles.userBtn} onPress={this._register}>
+							<Text style={styles.btnTxt} >Register</Text>
 						</TouchableOpacity>
             <Text style={styles.loginBtnTxt} onPress={this._login}>Click to Login</Text>
 
