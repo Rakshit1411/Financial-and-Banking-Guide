@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Dropdown } from 'react-native-material-dropdown-v2-fixed';
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
 import OTPTextView from 'react-native-otp-textinput';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class OtpConfirmation extends Component {
   constructor(props)
@@ -15,20 +16,23 @@ export default class OtpConfirmation extends Component {
 		this.state = {
 			phoneNumber: '',
       number:'',
-      hex:'',
+      hex:'',showAlert:false,
 		}
     console.log('these are props',props.navigation.state.params.hex)
 	}
   _verify = () => {
     console.log(this.state);
     axios.post("http://192.168.1.54:8080/user/verify", {'phoneNumber':this.state.phoneNumber,'hex':this.state.hex,
-  'number':this.state.number})
+  'number':this.state.number,'params':this.props.navigation.state.params})
 					.then(response => {
 						console.log('here'+response);
-							if (response.data) {
+							if (response.data==true) {
 									// this.setState({fullname: userInfo.fullname});x
 									this.props.navigation.navigate('LoginScreen');
 							}
+              else{
+                this.setState({showAlert:true})
+              }
 					})
 					.catch(error => {
 							console.log('Error while fetching the transactions from sms');
@@ -71,7 +75,20 @@ export default class OtpConfirmation extends Component {
 
 					</View>
 				</View>
-
+        <AwesomeAlert
+          show={this.state.showAlert}
+          showProgress={false}
+          title="Verification Error"
+          message="Invalid OTP"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Try Again"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            this.setState({showAlert:false})
+          }}
+        />
 			</KeyboardAvoidingView>
     )
   }

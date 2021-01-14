@@ -17,6 +17,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class Register extends Component {
   constructor(props)
@@ -29,7 +30,7 @@ export default class Register extends Component {
       confirmPassword: '',
       primaryBank:'',
       email:'',
-      loader:false,
+      loader:false,showAlert:false,errorMessage:'',
 		}
 	}
   _register = () => {
@@ -38,14 +39,23 @@ export default class Register extends Component {
     this.setState({loader:true});
     axios.post("http://192.168.1.54:8080/user/add", {'params':this.state})
 					.then(response => {
-							if (response.data) {
+            console.log('this is',response.data);
+							if (response.data!="FAILED:USER ALREADY EXISTS") {
 									// this.setState({fullname: userInfo.fullname});
                   console.log(response.data);
                   this.props.navigation.navigate('OtpConfirmation',{
                           phoneNumber: this.state.phoneNumber,
                           hex: response.data,
+                          password:this.state.password,
+                          fullName:this.state.fullName,
+                          primaryBank:this.state.primaryBank,
+                          email:this.state.email,
                         });
 							}
+              else if(response.data=="FAILED:USER ALREADY EXISTS"){
+                console.log("Here");
+                this.setState({errorMessage:response.data,loader:false,showAlert:true})
+              }
 					})
 					.catch(error => {
 							console.log('Error while fetching the transactions from sms');
@@ -154,7 +164,20 @@ export default class Register extends Component {
 
 					</View>
 				</View>
-
+        <AwesomeAlert
+          show={this.state.showAlert}
+          showProgress={false}
+          title="Error"
+          message={this.state.errorMessage}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Try Again"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            this.setState({showAlert:false})
+          }}
+        />
 			</KeyboardAvoidingView>
     )
   }

@@ -59,21 +59,23 @@ public class UserProfileService {
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
         if(data.size()>0){
-            return "FAILED:USER_ALREADY_EXISTS";
+            return "FAILED:USER ALREADY EXISTS";
         }
+        return sentOtp(params.getJSONObject("params").getString("email"),params.getJSONObject("params").getString("phoneNumber"));
+    }
+    public void createUser(JSONObject params){
         UserProfile userProfile = new UserProfile();
         userProfile.setId(UUID.randomUUID().toString());
-        userProfile.setFullName(params.getJSONObject("params").getString("fullName"));
-        userProfile.setPhoneNumber(params.getJSONObject("params").getString("phoneNumber"));
-        userProfile.setUsername(params.getJSONObject("params").getString("phoneNumber"));
-        userProfile.setProfileImage(params.getJSONObject("params").getString("profileImage"));
-        userProfile.setEmail(params.getJSONObject("params").getString("email"));
+        userProfile.setFullName(params.getString("fullName"));
+        userProfile.setPhoneNumber(params.getString("phoneNumber"));
+        userProfile.setUsername(params.getString("phoneNumber"));
+        userProfile.setProfileImage(params.getString("profileImage"));
+        userProfile.setEmail(params.getString("email"));
         userProfile.setDataSyncTime("");
-        userProfile.setPassword(params.getJSONObject("params").getString("password"));
-        userProfile.setPrimaryBank(params.getJSONObject("params").getString("primaryBank"));
-        userProfile.setIsVerified(false);
+        userProfile.setPassword(params.getString("password"));
+        userProfile.setPrimaryBank(params.getString("primaryBank"));
+        userProfile.setIsVerified(true);
         userProfileRepo.save(userProfile);
-        return sentOtp(userProfile.getEmail(),userProfile.getPhoneNumber());
     }
 
     public String get(String phoneNumber){
@@ -162,7 +164,7 @@ public class UserProfileService {
         return "";
 
     }
-    public boolean verifyOtp(String phoneNumber,String number,String hex){
+    public boolean verifyOtp(String phoneNumber,String number,String hex,JSONObject params){
         String input = number+phoneNumber;
         try {
             Base64.Decoder decoder = Base64.getDecoder();
@@ -170,6 +172,7 @@ public class UserProfileService {
 
             System.out.println(new String(bytes));
             if(input.equals(new String(bytes))) {
+                createUser(params);
                 return true;
             }
         } catch (Exception e) {

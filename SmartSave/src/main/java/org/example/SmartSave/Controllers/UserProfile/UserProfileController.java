@@ -31,7 +31,6 @@ public class UserProfileController {
     }
     @PostMapping("verify")
     public Boolean verify(@RequestBody JSONObject params){
-        return userProfileService.verifyOtp(params.getString("phoneNumber"),params.getString("number")
-                ,params.getString("hex"));
+        return userProfileService.verifyOtp(params.getString("phoneNumber"),params.getString("number"),params.getString("hex"),params.getJSONObject("params"));
     }
 }
