@@ -140,7 +140,7 @@ class DashboardScreen extends Component
 				value=d.getTime();
 			}
 			AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
-        console.log(phoneNumber)
+        console.log(phoneNumber);
 				this.extractSms(value,phoneNumber);
 			})
 			console.log('val'+value)

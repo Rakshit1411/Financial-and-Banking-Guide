@@ -3,21 +3,30 @@ package org.example.SmartSave.Services.UserProfile;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.primitives.Bytes;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.Encoder;
 import org.apache.commons.codec.binary.Hex;
+import org.elasticsearch.index.Index;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.example.SmartSave.Model.UserProfile;
 import org.example.SmartSave.Repository.SmsRepository;
 import org.example.SmartSave.Repository.UserProfileRepository;
 import org.example.SmartSave.Services.Common.EsService;
 import org.example.SmartSave.Services.Common.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -75,10 +84,29 @@ public class UserProfileService {
     }
 
     public String get(String phoneNumber,String password){
-        String query = String.format("\"SELECT * FROM userprofile where (phoneNumber = '%s' and password = '%s')\"",phoneNumber,password);
-        String result = esService.getData(query);
-        JSONArray data = JSON.parseObject(result).getJSONArray("rows");
-        return data.toString();
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        BoolQueryBuilder bq = QueryBuilders.boolQuery() ;
+        bq.must(QueryBuilders.termQuery("phoneNumber", phoneNumber)) ;
+        bq.must(QueryBuilders.termQuery("password", password)) ;
+        boolQueryBuilder.must(bq);
+        NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder) ;
+        Page<UserProfile> users = userProfileRepo.search(searchQueryBuilder.build());
+        // 总条数
+        for (UserProfile user : users) {
+            System.out.println(user);
+        }
+        if(users.getContent()==null || users.getContent().size()==0){
+            return "ERROR";
+        }
+        UserProfile user = users.getContent().get(0);
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "ERROR";
     }
 
     public String update(String phoneNumber,String lastDateSync){

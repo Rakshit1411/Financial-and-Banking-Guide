@@ -77,7 +77,7 @@ export default class LoginScreen extends Component {
 		axios.post("http://192.168.1.54:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
 					.then(response => {
 						console.log('here'+response);
-							if (response.data) {
+							if (response.data && response.data!="ERROR") {
 									// this.setState({fullname: userInfo.fullname});
 									AsyncStorage.setItem('phoneNumber',response.data.phoneNumber);
 									AsyncStorage.setItem('fullName',response.data.fullname);
@@ -85,6 +85,9 @@ export default class LoginScreen extends Component {
 									AsyncStorage.setItem('profileImage',response.data.profileImage);
 									AsyncStorage.setItem('lastDataSync',response.data.dataSyncTime);
 									this.props.navigation.navigate('DrawerNavigator');
+							}
+							else if(response.data=="ERROR"){
+
 							}
 					})
 					.catch(error => {
