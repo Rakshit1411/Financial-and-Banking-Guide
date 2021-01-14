@@ -9,7 +9,17 @@ import axios from 'axios';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
-
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 export default class LoginScreen extends Component {
 	constructor(props)
@@ -17,11 +27,15 @@ export default class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			phoneNumber: '',
-			password: '',showAlert:false,
+			password: '',showAlert:false,loader:false,
 
 		}
 	}
 	render() {
+		if(this.state.loader==true){
+			// return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
+			return (<MaterialIndicator color='white' style={{backgroundColor:"#0A1045"}}/>)
+		}
 		const navigation = this.props.navigation;
 		const title = 'Login';
 		return (
@@ -88,6 +102,7 @@ export default class LoginScreen extends Component {
 		this.props.navigation.navigate('Register');
 	}
 	_login = async() => {
+		this.setState({loader:true});
 		axios.post("http://192.168.1.54:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
 					.then(response => {
 						console.log('here'+response);
@@ -101,7 +116,7 @@ export default class LoginScreen extends Component {
 									this.props.navigation.navigate('DrawerNavigator');
 							}
 							else if(response.data=="ERROR"){
-								this.setState({showAlert:true})
+								this.setState({showAlert:true,loader:false})
 							}
 					})
 					.catch(error => {
