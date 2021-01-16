@@ -37,7 +37,7 @@ export default class Register extends Component {
     console.log(this.state);
 
     this.setState({loader:true});
-    axios.post("http://192.168.1.54:8080/user/add", {'params':this.state})
+    axios.post("http://35.208.8.124:8080/user/add", {'params':this.state})
 					.then(response => {
             console.log('this is',response.data);
 							if (response.data!="FAILED:USER ALREADY EXISTS") {

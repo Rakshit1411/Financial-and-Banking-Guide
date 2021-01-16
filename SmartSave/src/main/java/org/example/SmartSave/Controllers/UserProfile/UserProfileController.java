@@ -33,4 +33,8 @@ public class UserProfileController {
     public Boolean verify(@RequestBody JSONObject params){
         return userProfileService.verifyOtp(params.getString("phoneNumber"),params.getString("number"),params.getString("hex"),params.getJSONObject("params"));
     }
+    @PostMapping("create")
+    public void create(@RequestBody JSONObject params){
+        userProfileService.createUser(params);
+    }
 }

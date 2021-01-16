@@ -22,7 +22,7 @@ export default class OtpConfirmation extends Component {
 	}
   _verify = () => {
     console.log(this.state);
-    axios.post("http://192.168.1.54:8080/user/verify", {'phoneNumber':this.state.phoneNumber,'hex':this.state.hex,
+    axios.post("http://35.208.8.124:8080/user/verify", {'phoneNumber':this.state.phoneNumber,'hex':this.state.hex,
   'number':this.state.number,'params':this.props.navigation.state.params})
 					.then(response => {
 						console.log('here'+response);

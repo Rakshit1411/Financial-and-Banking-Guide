@@ -32,7 +32,7 @@ export default class TransactionCategoryUpdate extends Component {
 
 	updateCategory(category){
 		console.log("UPDATE");
-		axios.post("http://192.168.1.54:8080/sms/updateCategory", {'id':this.state.transactionId,'category':category})
+		axios.post("http://35.208.8.124:8080/sms/updateCategory", {'id':this.state.transactionId,'category':category})
 					.then(response => {
 						console.log('here'+response);
 							if (response) {

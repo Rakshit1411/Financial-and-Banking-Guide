@@ -21,7 +21,7 @@ export default class MyTransactionScreen extends Component {
   }
 
 getCategories(){
-  var url = "http://192.168.1.54:8080/";
+  var url = "http://35.208.8.124:8080/";
   // console.log('TESTING: '+this.state.parentNavigator)
   axios.post(url+"category/getAllCategories",{})
     .then(response => {
@@ -37,7 +37,7 @@ getCategories(){
 }
 
 getAllTransactions(){
-  var url = "http://192.168.1.54:8080/";
+  var url = "http://35.208.8.124:8080/";
   AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
     axios.post(url+"graph/getAllTransactions", {'phoneNumber':phoneNumber})
           .then(response => {
@@ -71,7 +71,7 @@ checkCategoryImage(category){
   //console.log(this.state.categories[category]);
       //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
   return this.state.categories[category];
-} 
+}
 _onRefresh = () => {
     this.setState({refreshing: true});
     this.getAllTransactions();
