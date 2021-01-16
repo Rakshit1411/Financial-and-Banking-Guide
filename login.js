@@ -103,7 +103,7 @@ export default class LoginScreen extends Component {
 	}
 	_login = async() => {
 		this.setState({loader:true});
-		axios.post("http://192.168.1.54:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
+		axios.post("http://35.208.8.124:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
 					.then(response => {
 						console.log('here'+response);
 							if (response.data && response.data!="ERROR") {

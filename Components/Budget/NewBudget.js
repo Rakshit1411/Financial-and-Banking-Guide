@@ -22,7 +22,7 @@ export default class NewBudget extends Component {
   }
 
 addBudget(){
-  var url = "http://192.168.1.54:8080/";
+  var url = "http://35.208.8.124:8080/";
   // console.log('TESTING: '+this.state.parentNavigator)
   AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
       axios.post(url+"budget/add",{category: this.state.category,amount:this.state.amount,phoneNumber:phoneNumber})
