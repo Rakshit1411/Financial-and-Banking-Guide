@@ -56,11 +56,11 @@ public class UserProfileService {
 
     public String add(JSONObject params){
         String query = String.format("\"SELECT * FROM userprofile where (phoneNumber = '%s')\"",params.getJSONObject("params").getString("phoneNumber"));
-        String result = esService.getData(query);
-        JSONArray data = JSON.parseObject(result).getJSONArray("rows");
-        if(data.size()>0){
-            return "FAILED:USER ALREADY EXISTS";
-        }
+//        String result = esService.getData(query);
+//        JSONArray data = JSON.parseObject(result).getJSONArray("rows");
+//        if(data.size()>0){
+//            return "FAILED:USER ALREADY EXISTS";
+//        }
         return sentOtp(params.getJSONObject("params").getString("email"),params.getJSONObject("params").getString("phoneNumber"));
     }
     public void createUser(JSONObject params){
