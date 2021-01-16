@@ -225,25 +225,25 @@ onPress={() => this.props.navigation.navigate('New Budget',{  addBudget: item =>
   <Text >Create a new Budget</Text>
 </Button>
 <AwesomeAlert
-          show={showAlert}
-          showProgress={false}
-          title="Action Required"
-          message="Do you want to delete this budget"
-          closeOnTouchOutside={true}
-          closeOnHardwareBackPress={false}
-          showCancelButton={true}
-          showConfirmButton={true}
-          cancelText="No, cancel"
-          confirmText="Yes, delete it"
-          confirmButtonColor="#DD6B55"
-          onCancelPressed={() => {
-            this.hideAlert();
-          }}
-          onConfirmPressed={() => {
-            this.hideAlert();
-            this.deleteItemById();
-          }}
-        />
+  show={showAlert}
+  showProgress={false}
+  title="Action Required"
+  message="Do you want to delete this budget"
+  closeOnTouchOutside={true}
+  closeOnHardwareBackPress={false}
+  showCancelButton={true}
+  showConfirmButton={true}
+  cancelText="No, cancel"
+  confirmText="Yes, delete it"
+  confirmButtonColor="#DD6B55"
+  onCancelPressed={() => {
+    this.hideAlert();
+  }}
+  onConfirmPressed={() => {
+    this.hideAlert();
+    this.deleteItemById();
+  }}
+/>
 
     </Container>
 

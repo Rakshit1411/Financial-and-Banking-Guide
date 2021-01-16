@@ -15,13 +15,7 @@ let rightIcon;
 // let localNotify = notificationManager;
 // localNotify.configure()
 //localNotify.showNotification(1,"Alert"," Unhealty transaction pattern identified",{},{});
-var modalVisible=true;
-if(title=='My Budget Plan'){
-  rightIcon='plus'
-}
-else{
-  rightIcon='refresh'
-}
+
 return (
   <View>
 <Header  style={{backgroundColor:'#0A1045'}}>

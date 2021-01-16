@@ -12,10 +12,10 @@ import axios from 'axios';
 export default class MyTransactionScreen extends Component {
   constructor(props) {
    super(props);
-
+   console.log('testing',this.props.sideNavigation);
     this.state = {
       transactionsList:[],
-      categories:{},refreshing: false,
+      categories:{},refreshing: false,sideNavigation:'',
       // parentNavigator:props.navigation.parentNavigator,
      };
   }
@@ -60,7 +60,10 @@ this.setState({refreshing: false});
 
 componentDidMount(){
     //this.setState({loader:true});
-    console.log('navigator',this.props.navigation);
+
+    this.setState({sideNavigation: AsyncStorage.getItem('sideNavigation')});
+    console.log('navigation is set now',AsyncStorage.getItem('sideNavigation'));
+    console.log('navigatonjjr',this.props.navigation);
     this.getAllTransactions();
   }
 checkCategoryImage(category){
@@ -68,7 +71,7 @@ checkCategoryImage(category){
   //console.log(this.state.categories[category]);
       //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
   return this.state.categories[category];
-}
+} 
 _onRefresh = () => {
     this.setState({refreshing: true});
     this.getAllTransactions();
@@ -80,7 +83,7 @@ render() {
   return (
 
   <Container>
-  <Headbar navigation={ navigate } title={ title }/>
+  <Headbar navigation={ this.state.sideNavigation } title={ title }/>
   <SafeAreaView style={{...styles.container}}>
     <FlatList
       data={this.state.transactionsList}

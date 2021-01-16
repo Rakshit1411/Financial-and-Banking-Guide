@@ -64,7 +64,7 @@ public class SmsController {
         String uselessPhrasesString  = "requested,will be,points,Points,recharging,Recharging,recharge,Recharge";
         String[] uselessPhrases = uselessPhrasesString.split(",");
         JSONArray rawTransactions = params.getJSONArray("data");
-        String newLastDateSync = "";
+        String newLastDateSync = lastDateSync;
         for(int i=0;i<rawTransactions.size();i++) {
             boolean flag=false;
             String body = ((JSONObject)rawTransactions.get(i)).getString("body").toString();
@@ -97,6 +97,7 @@ public class SmsController {
             transaction.setType(transaction.getRawBody().contains("debited")?"0":"1");
             transaction.setAccountNumber(params.getString("phoneNumber").toString()+"||"+transaction.getAccountNumber());
             transaction.setPaidToCategory(businessCategoryService.predictCategory(transaction.getPaidTo()));
+            newLastDateSync= transaction.getDate();
             if(newLastDateSync.compareTo(transaction.getDate())<0){
                 newLastDateSync = transaction.getDate();
             }

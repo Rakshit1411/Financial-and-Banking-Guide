@@ -29,6 +29,7 @@ const Tab = createBottomTabNavigator();
 
 export default function SpendingsScreen({navigation}) {
   Icon.loadFont();
+  var sideNavigation = navigation;
   //console.log("this is navigation"+navigation);
   return (
     <NavigationContainer independent="true">
@@ -54,7 +55,7 @@ export default function SpendingsScreen({navigation}) {
         inactiveTintColor: 'gray',
       }}
     >
-      <Tab.Screen name="Transactions" component={TransactionsDrawer}/>
+      <Tab.Screen name="Transactions" component={TransactionsDrawer} sideNavigation={sideNavigation}/>
       <Tab.Screen name="My Budget" component={BudgetDrawer} />
     </Tab.Navigator>
     </NavigationContainer>

@@ -1,14 +1,25 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, StyleSheet, View, Button, TextInput, Image, Text, KeyboardAvoidingView } from 'react-native';
+import { TouchableOpacity,TouchableHighlight,TouchableWithoutFeedback, StyleSheet, View, Button, TextInput, Image, Text, KeyboardAvoidingView } from 'react-native';
 import Headbar from './Components/Headbar';
 import DashboardScreen from './DashboardScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import Sidebar from './Components/Sidebar'
 import { Avatar } from 'react-native-paper'
 import axios from 'axios';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { Container, Header, Content, Left, Body, Right, Icon, Title, Form, Item, Input, Label } from 'native-base';
-
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 export default class LoginScreen extends Component {
 	constructor(props)
@@ -16,11 +27,15 @@ export default class LoginScreen extends Component {
 		super(props);
 		this.state = {
 			phoneNumber: '',
-			password: '',
+			password: '',showAlert:false,loader:false,
 
 		}
 	}
 	render() {
+		if(this.state.loader==true){
+			// return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
+			return (<MaterialIndicator color='white' style={{backgroundColor:"#0A1045"}}/>)
+		}
 		const navigation = this.props.navigation;
 		const title = 'Login';
 		return (
@@ -59,28 +74,49 @@ export default class LoginScreen extends Component {
 							ref={(input) => this.passwordInput = input}
 							secureTextEntry
 						/>
-						<TouchableOpacity style={styles.userBtn}>
-							<Text style={styles.btnTxt} onPress={this._login}>Submit</Text>
+						<TouchableOpacity style={styles.userBtn} onPress={this._login}>
+							<Text style={styles.btnTxt} >Submit</Text>
 						</TouchableOpacity>
+							<Text style={styles.registerTxt} onPress={this._register}>Not registered yet?</Text>
+
 					</View>
 				</View>
-
+				<AwesomeAlert
+				  show={this.state.showAlert}
+				  showProgress={false}
+				  title="Login Error"
+				  message="Invalid Credentials"
+				  closeOnTouchOutside={true}
+				  closeOnHardwareBackPress={false}
+				  showConfirmButton={true}
+				  confirmText="Try Again"
+				  confirmButtonColor="#DD6B55"
+				  onConfirmPressed={() => {
+				    this.setState({showAlert:false})
+				  }}
+				/>
 			</KeyboardAvoidingView>
 		);
 	}
-
+  _register = async() => {
+		this.props.navigation.navigate('Register');
+	}
 	_login = async() => {
+		this.setState({loader:true});
 		axios.post("http://192.168.1.54:8080/login/check", {'phoneNumber':this.state.phoneNumber,'password':this.state.password})
 					.then(response => {
 						console.log('here'+response);
-							if (response.data) {
-									// this.setState({fullname: userInfo.fullname});
+							if (response.data && response.data!="ERROR") {
+									// this.setState({fullName: userInfo.fullName});
 									AsyncStorage.setItem('phoneNumber',response.data.phoneNumber);
-									AsyncStorage.setItem('fullName',response.data.fullname);
+									AsyncStorage.setItem('fullName',response.data.fullName);
 									AsyncStorage.setItem('username',response.data.username);
 									AsyncStorage.setItem('profileImage',response.data.profileImage);
 									AsyncStorage.setItem('lastDataSync',response.data.dataSyncTime);
 									this.props.navigation.navigate('DrawerNavigator');
+							}
+							else if(response.data=="ERROR"){
+								this.setState({showAlert:true,loader:false})
 							}
 					})
 					.catch(error => {
@@ -93,7 +129,7 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
 	container1: {
 		flex: 1,
-		backgroundColor: '#3498db'
+		backgroundColor: '#0A1045'
 	},
 	input: {
 		width: "90%",
@@ -106,15 +142,21 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	},
 	userBtn: {
-		backgroundColor: "#2980b9",
+		backgroundColor: "#f0ad4e",
 		paddingVertical: 15,
 		height: 60
 	},
 	btnTxt: {
 		fontSize: 20,
 		textAlign: 'center',
-		color: "white",
+		color: "black",
 		fontWeight: '700'
+	},
+	registerTxt: {
+		marginTop: 5,
+		fontSize: 15,
+		textAlign: 'center',
+		color: "white",
 	},
 	welcome: {
 		fontSize: 30,

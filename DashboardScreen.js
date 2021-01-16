@@ -35,10 +35,16 @@ class DashboardScreen extends Component
 				loader:false,
 				lineChartData:[],
 				barGraphData:[],
+        sideNavigation:'',
+        budgetStatus:'',
+        highestSpentCategory:'',
+        savingsLastMonth:'',
 			};
+    this.setState({sideNavigation:this.props.navigation});
+    AsyncStorage.setItem('sideNavigation',this.props.navigation);
 	}
 	setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
+    this.setState({ modalVisible: visible});
 		console.log(visible);
   };
 	loadModal=(name)=>{
@@ -74,6 +80,7 @@ class DashboardScreen extends Component
 										console.log('date to be set',d.getTime());
 										AsyncStorage.setItem('lastDataSync',JSON.stringify(d.getTime()));
 										console.log('Transactions fetched successfully');
+                    this.updateDataSyncTime(phoneNumber,d.getTime());
 										this.getAllGraphsData(phoneNumber);
 		            }
 		        })
@@ -84,6 +91,19 @@ class DashboardScreen extends Component
 		);
 	}
 
+  updateDataSyncTime(phoneNumber,lastDataSync){
+    axios.post("http://192.168.1.54:8080/user/update", {'phoneNo':phoneNumber,'lastDataSync':lastDataSync})
+					.then(response => {
+						console.log('here'+response);
+							if (response) {
+                console.log('TIME UPDATED',response.data);
+							}
+					})
+					.catch(error => {
+							console.log('Error while updating lastDataSync');
+					});
+  }
+
 	getAllGraphsData(phoneNumber){
 		axios.post("http://192.168.1.54:8080/graph/getAllGraphsData", {'phoneNo':phoneNumber})
 					.then(response => {
@@ -93,6 +113,9 @@ class DashboardScreen extends Component
 									this.setState({lineChartData:response.data.lineChartData});
 									this.setState({barGraphData:response.data.barGraphData});
 									this.setState({pieChartData:response.data.pieChartData});
+                  this.setState({savingsLastMonth:response.data.savingsLastMonth});
+                  this.setState({budgetStatus:response.data.budgetStatus});
+                  this.setState({highestSpentCategory:response.data.highestSpentCategory});
 									this.setState({loader:false});
 							}
 					})
@@ -103,7 +126,12 @@ class DashboardScreen extends Component
 
 	componentDidMount(){
 		this.setState({loader:true});
+    AsyncStorage.setItem('sideNavigation',this.state.sideNavigation);
+
 		AsyncStorage.getItem("lastDataSync").then((value) => {
+
+      console.log('value',value);
+
 			if(value==null){
 				var d = new Date();
 				d.setMonth(d.getMonth() - 1);
@@ -112,6 +140,7 @@ class DashboardScreen extends Component
 				value=d.getTime();
 			}
 			AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+        console.log(phoneNumber);
 				this.extractSms(value,phoneNumber);
 			})
 			console.log('val'+value)
@@ -124,9 +153,9 @@ class DashboardScreen extends Component
 
 	render(){
 		//this.listSms();
-		if(this.state.loader==true){
+    if(this.state.loader==true){
 			// return (<ActivityIndicator size='large' color="#0A1045" style={{flex: 1,justifyContent: "center",flexDirection: "row",justifyContent: "space-around",padding: 10}}/>);
-			return (<DotIndicator color='#0A1045'/>)
+			return (<MaterialIndicator color='white' style={{backgroundColor:"#0A1045"}}/>)
 		}
     const navigate = this.props.navigation;
     const title='Dashboard';
@@ -163,21 +192,21 @@ class DashboardScreen extends Component
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>My Budget Status</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Good</Title>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>{this.state.budgetStatus}</Title>
         </Card.Content>
       </Card>
       <Card style={{...styles.card,margin:5,backgroundColor: '#e94560',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Savings Last Month</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Rs. 10000</Title>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>{this.state.savingsLastMonth}</Title>
         </Card.Content>
       </Card>
       <Card style={{...styles.card,margin:5,backgroundColor: '#40a8c4',padding:5}}>
 
         <Card.Content>
           <Paragraph style={{color:'white',marginTop:-8,textAlign:'center'}}>Highest Spent Category</Paragraph>
-          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>Shopping</Title>
+          <Title style={{color:'white',fontSize:30,textAlign:'center',marginTop:8}}>{this.state.highestSpentCategory}</Title>
         </Card.Content>
       </Card>
 

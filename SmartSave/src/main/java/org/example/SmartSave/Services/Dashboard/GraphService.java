@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ibm.icu.util.TimeZone;
+import org.example.SmartSave.Services.Budget.BudgetService;
 import org.example.SmartSave.Services.Common.EsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +22,18 @@ public class GraphService {
 
     @Autowired
     EsService esService;
+    @Autowired
+    BudgetService budgetService;
 
     public JSONArray getBarGraphData(JSONObject params) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         JSONArray response = new JSONArray();
         Calendar date = Calendar.getInstance();
-        date.set(Calendar.DAY_OF_MONTH-1, 1);
+        date.set(Calendar.DAY_OF_MONTH, date.getActualMinimum(Calendar.DAY_OF_MONTH));
+        date.set(Calendar.HOUR,0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
         String dateLimit = ""+date.getTimeInMillis();
         String phoneNumber = params.getString("phoneNo");
         String query = String.format("\"SELECT sum(amount),type FROM transactions where (accountNumber LIKE '%s||%%' and date >= %s) group by type\"",phoneNumber,dateLimit);
@@ -49,7 +55,7 @@ public class GraphService {
 
         JSONArray response = new JSONArray();
         Calendar date = Calendar.getInstance();
-        date.set(Calendar.DAY_OF_MONTH-1, 1);
+        date.set(Calendar.DAY_OF_MONTH, date.getActualMinimum(Calendar.DAY_OF_MONTH));
         date.set(Calendar.HOUR,0);
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);
@@ -108,7 +114,10 @@ public class GraphService {
 
         JSONArray response = new JSONArray();
         Calendar date = Calendar.getInstance();
-        date.set(Calendar.DAY_OF_MONTH-1, 1);
+        date.set(Calendar.DAY_OF_MONTH, date.getActualMinimum(Calendar.DAY_OF_MONTH));
+        date.set(Calendar.HOUR,0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
         String dateLimit = ""+date.getTimeInMillis();
         String phoneNumber = params.getString("phoneNo");
         String query = String.format("\"SELECT SUM(amount),paidToCategory FROM transactions where (accountNumber LIKE '%s||%%' and date >= %s and type='0') group by paidToCategory\"",phoneNumber,dateLimit);
@@ -147,5 +156,39 @@ public class GraphService {
             response.add(dict);
         }
         return response;
+    }
+    public JSONObject getHighlights(JSONObject params){
+        params.put("phoneNumber",params.getString("phoneNo"));
+        JSONArray budgets = budgetService.getRemainingBudget(params);
+        Double totalAmount = 0.0;
+        Double amountSpent = 0.0;
+        Double highestSpent = 0.0;
+        String highestSpentCategory = "";
+        for(Object budget:budgets) {
+            JSONObject json = (JSONObject) budget;
+            totalAmount += Double.parseDouble(json.getString("amountThreshold"));
+            Double currentAmountSpent = Double.parseDouble(json.getString("amountSpent")==null?"0":json.getString("amountSpent"));
+            amountSpent += currentAmountSpent;
+            if(currentAmountSpent > highestSpent){
+                highestSpent = currentAmountSpent;
+                highestSpentCategory=json.getString("category");
+            }
+        }
+        Double ratio = (Double) (totalAmount - amountSpent)/totalAmount;
+        String budgetStatus = "";
+        if(ratio>=0.7) {
+            budgetStatus = "Good";
+        }
+        else if(ratio>0.4  && ratio<0.7) {
+            budgetStatus = "Moderate";
+        }
+        else {
+            budgetStatus = "Risk";
+        }
+        JSONObject output = new JSONObject();
+        output.put("budgetStatus",""+budgetStatus);
+        output.put("highestSpentCategory",""+highestSpentCategory);
+        output.put("savingsLastMonth","Rs.20000");
+        return output;
     }
 }

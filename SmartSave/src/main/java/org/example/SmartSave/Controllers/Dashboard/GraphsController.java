@@ -49,9 +49,11 @@ public class GraphsController {
         JSONArray lineChartData = graphService.getLineChartData(params);
         JSONArray barGraphData = graphService.getBarGraphData(params);
         JSONArray pieChartData = graphService.getPieChartData(params);
+        JSONObject highlights = graphService.getHighlights(params);
         obj.put("lineChartData",lineChartData);
         obj.put("barGraphData",barGraphData);
         obj.put("pieChartData",pieChartData);
+        obj.putAll(highlights);
         return obj;
     }
 

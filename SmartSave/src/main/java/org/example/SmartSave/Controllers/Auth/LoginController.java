@@ -21,16 +21,21 @@ public class LoginController {
     public String check(@RequestBody JSONObject params){
 
         String user = userProfileService.get(params.getString("phoneNumber"),params.getString("password"));
-        JSONArray data = JSON.parseArray(user);
+        if(user.equals("ERROR")){
+            return "ERROR";
+        }
+        JSONObject data = JSON.parseObject(user);
         if(data.size() == 0){
             return data.toString();
         }
-        JSONObject response = new JSONObject();
-        response.put("username",((JSONArray)data.get(0)).get(7));
-        response.put("fullname",((JSONArray)data.get(0)).get(2));
-        response.put("phoneNumber",((JSONArray)data.get(0)).get(5));
-        response.put("profileImage",((JSONArray)data.get(0)).get(6));
-        response.put("dataSyncTime",((JSONArray)data.get(0)).get(1));
-        return response.toString();
+//        JSONObject response = new JSONObject();
+//        response.put("username",((JSONArray)data.get(0)).get(7));
+//        response.put("fullname",((JSONArray)data.get(0)).get(2));
+//        response.put("phoneNumber",((JSONArray)data.get(0)).get(5));
+//        response.put("profileImage",((JSONArray)data.get(0)).get(6));
+//        response.put("dataSyncTime",((JSONArray)data.get(0)).get(1));
+        return data.toString();
     }
+
+
 }
