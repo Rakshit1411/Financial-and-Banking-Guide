@@ -1,0 +1,55 @@
+Manifest-Version: 1.0
+Main-Class: org.example.SmartSave.Application
+Class-Path: spring-boot-starter-json-2.3.3.RELEASE.jar jackson-datatype-
+ jdk8-2.11.2.jar elasticsearch-rest-client-7.6.2.jar reindex-client-7.6.
+ 2.jar spring-boot-autoconfigure-2.3.3.RELEASE.jar selenium-opera-driver
+ -3.141.59.jar classgraph-4.8.60.jar guava-25.0-jre.jar jackson-annotati
+ ons-2.11.2.jar netty-handler-4.1.51.Final.jar logback-core-1.2.3.jar sp
+ ring-beans-5.2.8.RELEASE.jar percolator-client-7.6.2.jar spring-boot-st
+ arter-2.3.3.RELEASE.jar jna-4.5.1.jar spring-data-commons-2.3.3.RELEASE
+ .jar spring-data-elasticsearch-4.1.1.jar spring-boot-starter-web-2.3.3.
+ RELEASE.jar jopt-simple-5.0.2.jar jakarta.annotation-api-1.3.5.jar elas
+ ticsearch-secure-sm-7.6.2.jar jackson-databind-2.11.2.jar commons-codec
+ -1.14.jar selenium-remote-driver-3.141.59.jar httpclient-4.5.12.jar luc
+ ene-spatial3d-8.4.0.jar spring-boot-starter-logging-2.3.3.RELEASE.jar e
+ lasticsearch-cli-7.6.2.jar t-digest-3.2.jar httpcore-nio-4.4.13.jar spr
+ ing-core-5.2.8.RELEASE.jar lucene-spatial-extras-8.4.0.jar byte-buddy-1
+ .10.14.jar logback-classic-1.2.3.jar selenium-ie-driver-3.141.59.jar sp
+ ring-boot-devtools-2.3.3.RELEASE.jar lucene-misc-8.4.0.jar lucene-core-
+ 8.4.0.jar univocity-parsers-2.8.4.jar commons-math3-3.6.1.jar RoaringBi
+ tmap-0.8.12.jar jackson-core-2.11.2.jar lucene-backward-codecs-8.4.0.ja
+ r httpasyncclient-4.1.4.jar log4j-api-2.13.3.jar lucene-queries-8.4.0.j
+ ar lucene-suggest-8.4.0.jar shims-0.8.12.jar micrometer-core-1.5.4.jar 
+ elasticsearch-core-7.6.2.jar error_prone_annotations-2.1.3.jar lucene-s
+ andbox-8.4.0.jar netty-buffer-4.1.51.Final.jar elasticsearch-x-content-
+ 7.6.2.jar jsr305-1.3.9.jar spring-boot-actuator-2.3.3.RELEASE.jar netty
+ -common-4.1.51.Final.jar snakeyaml-1.26.jar lang-mustache-client-7.6.2.
+ jar okio-1.14.0.jar rank-eval-client-7.6.2.jar lucene-memory-8.4.0.jar 
+ joda-time-2.10.4.jar jul-to-slf4j-1.7.30.jar selenium-support-3.141.59.
+ jar spring-boot-actuator-autoconfigure-2.3.3.RELEASE.jar spring-jcl-5.2
+ .8.RELEASE.jar elasticsearch-7.6.2.jar selenium-java-3.141.59.jar selen
+ ium-firefox-driver-3.141.59.jar elasticsearch-rest-high-level-client-7.
+ 6.2.jar jackson-datatype-jsr310-2.11.2.jar jackson-dataformat-smile-2.1
+ 1.2.jar HdrHistogram-2.1.12.jar spring-aop-5.2.8.RELEASE.jar transport-
+ 7.6.2.jar selenium-api-3.141.59.jar hppc-0.8.1.jar compiler-0.9.6.jar s
+ pring-expression-5.2.8.RELEASE.jar elasticsearch-ssl-config-7.6.2.jar s
+ pring-context-5.2.8.RELEASE.jar icu4j-65.1.jar spring-webmvc-5.2.8.RELE
+ ASE.jar httpcore-4.4.13.jar lucene-highlighter-8.4.0.jar jsoup-1.13.1.j
+ ar transport-netty4-client-7.6.2.jar jackson-module-parameter-names-2.1
+ 1.2.jar spring-boot-starter-mail-2.4.1.jar selenium-chrome-driver-3.141
+ .59.jar netty-codec-http-4.1.51.Final.jar selenium-edge-driver-3.141.59
+ .jar animal-sniffer-annotations-1.14.jar lucene-spatial-8.4.0.jar netty
+ -resolver-4.1.51.Final.jar fastjson-1.2.75.jar mapper-extras-client-7.6
+ .2.jar commons-exec-1.3.jar spring-boot-2.3.3.RELEASE.jar j2objc-annota
+ tions-1.1.jar okhttp-3.14.9.jar elasticsearch-geo-7.6.2.jar spring-web-
+ 5.2.8.RELEASE.jar fastutil-8.3.0.jar LatencyUtils-2.0.3.jar spring-tx-5
+ .2.8.RELEASE.jar parent-join-client-7.6.2.jar aggs-matrix-stats-client-
+ 7.6.2.jar spring-boot-starter-actuator-2.3.3.RELEASE.jar netty-codec-4.
+ 1.51.Final.jar slf4j-api-1.7.30.jar spring-context-support-5.2.8.RELEAS
+ E.jar checker-compat-qual-2.0.0.jar lucene-join-8.4.0.jar lucene-analyz
+ ers-common-8.4.0.jar tablesaw-core-0.38.1.jar jackson-dataformat-cbor-2
+ .11.2.jar jackson-dataformat-yaml-2.11.2.jar selenium-safari-driver-3.1
+ 41.59.jar jakarta.activation-1.2.2.jar lucene-queryparser-8.4.0.jar luc
+ ene-grouping-8.4.0.jar log4j-to-slf4j-2.13.3.jar jakarta.mail-1.6.5.jar
+  netty-transport-4.1.51.Final.jar
+

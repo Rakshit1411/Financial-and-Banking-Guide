@@ -33,7 +33,7 @@ public class EsService {
     UserProfileService userProfileService;
     public String getData(String query){
         RestClient restClient = RestClient.builder(
-                new HttpHost("localhost", 9200, "http")).build();
+                new HttpHost("35.208.8.124", 9200, "http")).build();
 
         Request request = new Request("POST",  "/_sql");
         request.setJsonEntity("{\"query\":"+query+"}");
