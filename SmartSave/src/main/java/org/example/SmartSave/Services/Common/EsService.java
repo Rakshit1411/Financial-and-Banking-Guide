@@ -10,6 +10,7 @@ import org.elasticsearch.client.RestClient;
 import org.example.SmartSave.Model.UserProfile;
 import org.example.SmartSave.Services.UserProfile.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.client.reactive.ReactiveElasticsearchClient;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ReactiveElasticsearchOperations;
@@ -31,9 +32,11 @@ public class EsService {
     ElasticsearchOperations elasticsearchTemplate;
     @Autowired
     UserProfileService userProfileService;
+    @Value( "${spring.data.elasticsearch.cluster-nodes}" )
+    String esUrl;
     public String getData(String query){
         RestClient restClient = RestClient.builder(
-                new HttpHost("35.208.8.124", 9200, "http")).build();
+                new HttpHost(esUrl.substring(0,esUrl.indexOf(":")), 9200, "http")).build();
 
         Request request = new Request("POST",  "/_sql");
         request.setJsonEntity("{\"query\":"+query+"}");

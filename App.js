@@ -13,7 +13,8 @@ import Register from './Components/Auth/Register'
 import OtpConfirmation from './Components/Auth/OtpConfirmation'
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import * as configData from "./Config/Dev/config.json";
+global.SERVER_URL = configData.BACKEND.SERVER_URL;
 class AuthLoadingScreen extends Component{
   constructor(props)
   {

@@ -62,7 +62,8 @@ class DashboardScreen extends Component
 		bodyRegex: '(?i)((.*)debited(.*)Acc(.*))|((.*)credited(.*)Acc(.*))|((.*)Acc(.*)debited(.*))|((.*)Acc(.*)credited(.*))|((.*)a/c(.*)debited(.*))|((.*)a/c(.*)credited(.*))|((.*)credited(.*)a/c(.*))|((.*)debited(.*)a/c(.*))', // content regex to match
 		indexFrom: 0,
 		};
-		var url = "http://192.168.1.54:8080/sms/analyse";
+		var url = "http://"+SERVER_URL+":8080/sms/analyse";
+    console.log('URL IS ',url);
 		var data = {};
 		SmsAndroid.list(
 		JSON.stringify(filter),
@@ -92,7 +93,7 @@ class DashboardScreen extends Component
 	}
 
   updateDataSyncTime(phoneNumber,lastDataSync){
-    axios.post("http://192.168.1.54:8080/user/update", {'phoneNo':phoneNumber,'lastDataSync':lastDataSync})
+    axios.post("http://"+SERVER_URL+":8080/user/update", {'phoneNo':phoneNumber,'lastDataSync':lastDataSync})
 					.then(response => {
 						console.log('here'+response);
 							if (response) {
@@ -105,7 +106,7 @@ class DashboardScreen extends Component
   }
 
 	getAllGraphsData(phoneNumber){
-		axios.post("http://192.168.1.54:8080/graph/getAllGraphsData", {'phoneNo':phoneNumber})
+		axios.post("http://"+SERVER_URL+":8080/graph/getAllGraphsData", {'phoneNo':phoneNumber})
 					.then(response => {
 						console.log('here'+response);
 							if (response) {
