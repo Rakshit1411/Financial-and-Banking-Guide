@@ -42,7 +42,7 @@ public class MailController {
     @PostMapping("/test")
     public void test(@RequestBody JSONObject params){
 
-            webScrape.read();
+            webScrape.read("","");
     }
 
 }

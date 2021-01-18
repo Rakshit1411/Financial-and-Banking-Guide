@@ -10,14 +10,15 @@ import java.io.IOException;
 
 @Service
 public class WebScrape {
-    public void read(){
+    public void read(String url,String query){
         Document doc = null;
         try {
-            doc = Jsoup.connect("https://www.bankbazaar.com/fixed-deposit/sbi-fixed-deposit-rate.html").get();
+            doc = Jsoup.connect(url).get();
             Elements links = doc.select("a[href]");
             Elements media = doc.select("[src]");
             Elements imports = doc.select("link[href]");
-            Element data = doc.select("div.hungry-table").get(0);
+            //"div.hungry-table"
+            Element data = doc.select(query).get(0);
         } catch (IOException e) {
             e.printStackTrace();
         }

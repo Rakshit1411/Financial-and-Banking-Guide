@@ -91,7 +91,7 @@ render() {
       />
       <CardButton
         onPress={() => {navigate.navigate('HSBC Products')}}
-        title="Explore HSBC products"
+        title="Explore Banking products"
         color="#0A1045"
         titleStyle={{fontSize:10}}
       />
