@@ -24,7 +24,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 class DashboardScreen extends Component
 {
@@ -38,20 +38,26 @@ class DashboardScreen extends Component
         sideNavigation:'',
         budgetStatus:'',
         highestSpentCategory:'',
-        savingsLastMonth:'',
+        savingsLastMonth:'',showAlert: false
 			};
     this.setState({sideNavigation:this.props.navigation});
     AsyncStorage.setItem('sideNavigation',this.props.navigation);
 	}
-	setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible});
-		console.log(visible);
+
+  showAlert(){
+    console.log('item');
+    this.setState({
+      showAlert: true,loader:false
+    });
+
   };
-	loadModal=(name)=>{
 
-		console.log(name);
-
-	}
+  hideAlert = () => {
+    this.setState({
+      showAlert: false,selectedItem: '',
+    });
+this.props.navigation.navigate('LoginScreen');
+  };
 	extractSms(minDate,phoneNumber){
 		console.log('minDate'+minDate);
 		console.log('phone',phoneNumber);
@@ -74,7 +80,7 @@ class DashboardScreen extends Component
 			axios.post(url, {'data':smsList,'phoneNumber':phoneNumber})
 		        .then(response => {
 							console.log('here'+response);
-		            if (response) {
+		            if (response && response.data!="FAILED") {
 		                console.log(response);
 		                //send_response = response;
 										var d = new Date();
@@ -84,6 +90,9 @@ class DashboardScreen extends Component
                     this.updateDataSyncTime(phoneNumber,d.getTime());
 										this.getAllGraphsData(phoneNumber);
 		            }
+                else if(response && response.data=="FAILED"){
+                  this.showAlert();
+                }
 		        })
 		       	.catch(error => {
 		            console.log('Error while fetching the transactions from sms');
@@ -265,7 +274,21 @@ class DashboardScreen extends Component
 			<Text style={styles.cardTitle}>Recurring Transactions</Text>
 			<CustomList data={recurring_transactions}/>
 			</Card>
-
+      <AwesomeAlert
+        show={this.state.showAlert}
+        showProgress={false}
+        title="Connection Error"
+        message="Try to login again"
+        closeOnTouchOutside={false}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={true}
+        confirmText="Login"
+        confirmButtonColor="#DD6B55"
+        onConfirmPressed={() => {
+          this.hideAlert();
+        }}
+      />
 			</ScrollView>
       </Container>
 

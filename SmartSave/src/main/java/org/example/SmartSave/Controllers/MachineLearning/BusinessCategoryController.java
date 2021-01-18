@@ -24,11 +24,11 @@ public class BusinessCategoryController {
     public void updateCategory(@RequestBody JSONObject params){
         businessCategoryService.setCategory(params);
     }
-//
-//    @PostMapping("/add")
-//    public void addCategory(@RequestBody JSONObject params){
-//        return businessCategoryService.addCategory(params);
-//    }
+
+    @PostMapping("/add")
+    public void addCategory(@RequestBody JSONObject params){
+        businessCategoryService.addCategory(params);
+    }
 
     @PostMapping("/getAllCategories")
     public JSONObject getAllCategories(@RequestBody JSONObject params){

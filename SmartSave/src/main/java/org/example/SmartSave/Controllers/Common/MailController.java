@@ -3,6 +3,7 @@ package org.example.SmartSave.Controllers.Common;
 import com.alibaba.fastjson.JSONObject;
 import org.example.SmartSave.Model.BusinessCategory;
 import org.example.SmartSave.Services.Common.MailService;
+import org.example.SmartSave.Services.Common.WebScrape;
 import org.example.SmartSave.Services.MachineLearning.BusinessCategoryService;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class MailController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private WebScrape webScrape;
+
     @PostMapping("/send")
     public void sendMail(@RequestBody JSONObject params){
         try {
@@ -33,6 +37,12 @@ public class MailController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @PostMapping("/test")
+    public void test(@RequestBody JSONObject params){
+
+            webScrape.read();
     }
 
 }

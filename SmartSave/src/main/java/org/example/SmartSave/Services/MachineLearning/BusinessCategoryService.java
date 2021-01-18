@@ -9,6 +9,7 @@ import org.example.SmartSave.Services.Common.EsService;
 import org.example.SmartSave.Services.Common.HttpService;
 import org.example.SmartSave.Services.Sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class BusinessCategoryService {
     @Autowired
     EsService esService;
 
+    @Value("${model.url}")
+    String modelUrl;
 
     @Autowired
     public void setBusinessCategoryRepository(BusinessCategoryRepository businessCategoryRepository) {
@@ -47,25 +50,25 @@ public class BusinessCategoryService {
         String output = "";
         JSONObject params = new JSONObject();
         params.put("paidTo",paidTo);
-        output = httpService.postRequest("http://127.0.0.1:5000/predict/svc",params).getJSONArray("category").get(0).toString();
+        output = httpService.postRequest("http://"+modelUrl+"/predict/svc",params).getJSONArray("category").get(0).toString();
         return output;
     }
 
     public String setCategory(JSONObject params){
 
         String output = "";
-        output = httpService.postRequest("http://127.0.0.1:5000/dataset/update",params).toString();
+        output = httpService.postRequest("http://"+modelUrl+"/dataset/update",params).toString();
         return output;
     }
 
-//    public String addCategory(JSONObject params){
-//        BusinessCategory businessCategory = new BusinessCategory();
-//        businessCategory.setId(UUID.randomUUID().toString());
-//        businessCategory.setCategory(params.getString("category"));
-//        businessCategory.setCategoryImage(params.getString("categoryImage"));
-//        businessCategoryRepository.save(businessCategory);
-//        return "SUCCESS";
-//    }
+    public String addCategory(JSONObject params){
+        BusinessCategory businessCategory = new BusinessCategory();
+        businessCategory.setId(UUID.randomUUID().toString());
+        businessCategory.setCategory(params.getString("category"));
+        businessCategory.setCategoryImage(params.getString("categoryImage"));
+        businessCategoryRepository.save(businessCategory);
+        return "SUCCESS";
+    }
 
     public JSONObject getAllCategories(JSONObject params) {
         String query = String.format("\"SELECT * FROM businesscategory\"");
