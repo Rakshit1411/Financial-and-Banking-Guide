@@ -16,13 +16,13 @@ export default class NewBudget extends Component {
    super(props);
 
     this.state = {
-      category:'',
+      category:'Entertainment',
       amount:'',
      };
   }
 
 addBudget(){
-  var url = "http://35.208.8.124:8080/";
+  var url = "http://"+SERVER_URL+":8080/";
   // console.log('TESTING: '+this.state.parentNavigator)
   AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
       axios.post(url+"budget/add",{category: this.state.category,amount:this.state.amount,phoneNumber:phoneNumber})

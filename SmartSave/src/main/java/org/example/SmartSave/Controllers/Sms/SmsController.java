@@ -59,52 +59,57 @@ public class SmsController {
     @PostMapping("/analyse")
     public String analyse(@RequestBody JSONObject params) {
         String lastDateSync=null;
-        JSONArray user = JSON.parseArray(userProfileService.get(params.getString("phoneNumber")));
-        lastDateSync = ((JSONArray)user.get(0)).get(1).toString();
-        String uselessPhrasesString  = "requested,will be,points,Points,recharging,Recharging,recharge,Recharge";
-        String[] uselessPhrases = uselessPhrasesString.split(",");
-        JSONArray rawTransactions = params.getJSONArray("data");
-        String newLastDateSync = lastDateSync;
-        for(int i=0;i<rawTransactions.size();i++) {
-            boolean flag=false;
-            String body = ((JSONObject)rawTransactions.get(i)).getString("body").toString();
-            for(String phrase:uselessPhrases) {
-                if(body.contains(phrase)) {
-                    System.out.println("Useless Phrase"+body);
-                    flag=true;
-                    break;
+        try {
+            JSONArray user = JSON.parseArray(userProfileService.get(params.getString("phoneNumber")));
+            lastDateSync = ((JSONArray) user.get(0)).get(1).toString();
+            String uselessPhrasesString = "requested,will be,points,Points,recharging,Recharging,recharge,Recharge";
+            String[] uselessPhrases = uselessPhrasesString.split(",");
+            JSONArray rawTransactions = params.getJSONArray("data");
+            String newLastDateSync = lastDateSync;
+            for (int i = 0; i < rawTransactions.size(); i++) {
+                boolean flag = false;
+                String body = ((JSONObject) rawTransactions.get(i)).getString("body").toString();
+                for (String phrase : uselessPhrases) {
+                    if (body.contains(phrase)) {
+                        System.out.println("Useless Phrase" + body);
+                        flag = true;
+                        break;
+                    }
                 }
-            }
-            if(flag==true || (!lastDateSync.isEmpty() && lastDateSync.compareTo(((JSONObject)rawTransactions.get(i)).getString("date_sent").toString())>=0)){
-                continue;
-            }
+                if (flag == true || (!lastDateSync.isEmpty() && lastDateSync.compareTo(((JSONObject) rawTransactions.get(i)).getString("date_sent").toString()) >= 0)) {
+                    continue;
+                }
 
-            Transaction transaction = new Transaction();
-            transaction.setId(UUID.randomUUID().toString());
+                Transaction transaction = new Transaction();
+                transaction.setId(UUID.randomUUID().toString());
 
-            transaction.setDate(((JSONObject)rawTransactions.get(i)).getString("date_sent").toString());
-            transaction.setRawBody(body);
-            transaction.setSender(((JSONObject)rawTransactions.get(i)).getString("address").toString());
-            transaction.setAmount(smsService.parseAmount(body));
-            if(transaction.getAmount().equals(-1)){
-                continue;
-            }
-            transaction.setAccountNumber(smsService.parseAccountNumber(body));
-            transaction.setPaidTo(smsService.parsePaidTo(body));
-            if(transaction.getAccountNumber().isEmpty()){
-                continue;
-            }
-            transaction.setType(transaction.getRawBody().contains("debited")?"0":"1");
-            transaction.setAccountNumber(params.getString("phoneNumber").toString()+"||"+transaction.getAccountNumber());
-            transaction.setPaidToCategory(businessCategoryService.predictCategory(transaction.getPaidTo()));
-            newLastDateSync= transaction.getDate();
-            if(newLastDateSync.compareTo(transaction.getDate())<0){
+                transaction.setDate(((JSONObject) rawTransactions.get(i)).getString("date_sent").toString());
+                transaction.setRawBody(body);
+                transaction.setSender(((JSONObject) rawTransactions.get(i)).getString("address").toString());
+                transaction.setAmount(smsService.parseAmount(body));
+                if (transaction.getAmount().equals(-1)) {
+                    continue;
+                }
+                transaction.setAccountNumber(smsService.parseAccountNumber(body));
+                transaction.setPaidTo(smsService.parsePaidTo(body));
+                if (transaction.getAccountNumber().isEmpty()) {
+                    continue;
+                }
+                transaction.setType(transaction.getRawBody().contains("debited") ? "0" : "1");
+                transaction.setAccountNumber(params.getString("phoneNumber").toString() + "||" + transaction.getAccountNumber());
+                transaction.setPaidToCategory(businessCategoryService.predictCategory(transaction.getPaidTo()));
                 newLastDateSync = transaction.getDate();
+                if (newLastDateSync.compareTo(transaction.getDate()) < 0) {
+                    newLastDateSync = transaction.getDate();
+                }
+                smsService.save(transaction);
             }
-            smsService.save(transaction);
+            userProfileService.update(params.getString("phoneNumber"), newLastDateSync);
+            return lastDateSync;
         }
-        userProfileService.update(params.getString("phoneNumber"),newLastDateSync);
-        return lastDateSync;
+        catch(Exception e){
+            return "FAILED";
+        }
     }
 
     @PostMapping("/fetch")

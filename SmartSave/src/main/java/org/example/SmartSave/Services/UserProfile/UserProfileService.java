@@ -97,7 +97,7 @@ public class UserProfileService {
         for (UserProfile user : users) {
             System.out.println(user);
         }
-        if(users.getContent()==null || users.getContent().size()==0 || users.getContent().size()>1){
+        if(users.getContent()==null || users.getContent().size()==0){
             return "ERROR";
         }
         UserProfile user = users.getContent().get(0);

@@ -20,7 +20,7 @@ export default class HSBCProducts extends Component {
 
 render() {
   const navigate = this.props.navigation;
-  const title = 'HSBC Products';
+  const title = 'Banking Products';
   return (
   <Container>
   <Headbar navigation={ navigate } title={ title }/>

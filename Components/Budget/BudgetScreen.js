@@ -41,7 +41,7 @@ hideAlert = () => {
   });
 };
 getBudget(){
-  var url = "http://35.208.8.124:8080/";
+  var url = "http://"+SERVER_URL+":8080/";
   // console.log('TESTING: '+this.state.parentNavigator)
   AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
       axios.post(url+"budget/getRemainingBudget",{phoneNumber:phoneNumber})
@@ -146,7 +146,7 @@ _onRefresh = () => {
     this.getBudget();
   }
 removeBudget(id){
-  var url = "http://35.208.8.124:8080/";
+  var url = "http://"+SERVER_URL+":8080/";
   // console.log('TESTING: '+this.state.parentNavigator)
       axios.post(url+"budget/delete",{id:id})
         .then(response => {

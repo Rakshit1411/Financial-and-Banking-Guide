@@ -6,6 +6,7 @@ import { Root } from "native-base";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import DashboardScreen from '../DashboardScreen'
+import DrawerNavigator from '../DrawerNavigator'
 import SettingsScreen from '../SettingsScreen'
 import LoginScreen from '../login'
 import SpendingsScreen from '../SpendingsScreen'
@@ -95,6 +96,8 @@ export default class Sidebar extends Component {
           <Drawer.Screen name="My Spendings" component={SpendingsScreen} />
           <Drawer.Screen name="Savings And Investments" component={InvestmentsNavigator} />
           <Drawer.Screen name="My Messages" component={MessagesNavigator} />
+          <Drawer.Screen name="LoginScreen" options={() => ({drawerLabel: () => null})} component={LoginScreen} />
+          <Drawer.Screen name="DrawerNavigator" options={() => ({drawerLabel: () => null})} component={DrawerNavigator} />
         </Drawer.Navigator>
       </NavigationContainer>
     )
