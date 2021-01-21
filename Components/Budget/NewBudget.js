@@ -16,7 +16,7 @@ export default class NewBudget extends Component {
    super(props);
 
     this.state = {
-      category:'',
+      category:'Entertainment',
       amount:'',
      };
   }

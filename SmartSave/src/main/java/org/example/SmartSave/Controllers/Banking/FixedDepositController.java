@@ -22,4 +22,9 @@ public class FixedDepositController {
         String query = params.getString("query");
         fixedDepositService.addFd(bank,url,query);
     }
+    @PostMapping("/remove")
+    public String deleteById(@RequestBody JSONObject params){
+        String output = fixedDepositService.deleteById(params.getString("id"));
+        return output;
+    }
 }
