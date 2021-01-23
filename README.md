@@ -17,7 +17,7 @@ Screenshots with the Realtime Data and some design changes:
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611251-1fa39500-5dda-11eb-9940-39aab4efbd22.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611269-4235ae00-5dda-11eb-864c-854e40951009.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611278-4feb3380-5dda-11eb-95c6-9efddabce912.jpeg">
-<img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611289-5e394f80-5dda-11eb-94f0-f9e8dae113ba.jpeg">
+<img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611454-7f4e7000-5ddb-11eb-944b-371f33366508.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611293-672a2100-5dda-11eb-925b-94b4e780a159.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611302-70b38900-5dda-11eb-8072-794bb1c75fde.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611312-7b6e1e00-5dda-11eb-9fe6-9bf12e8f0c08.jpeg">
