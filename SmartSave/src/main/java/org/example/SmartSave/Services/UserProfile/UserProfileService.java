@@ -82,7 +82,22 @@ public class UserProfileService {
         String query = String.format("\"SELECT * FROM userprofile where (phoneNumber = '%s')\"",phoneNumber);
         String result = esService.getData(query);
         JSONArray data = JSON.parseObject(result).getJSONArray("rows");
+//        Query searchQuery = new NativeSearchQueryBuilder()
+//                .withFilter(regexpQuery("phoneNumber", phoneNumber))
+//                .build();
+//        SearchHits<UserProfile> users =
+//                elasticsearchTemplate.search(searchQuery, UserProfile.class);
+//        UserProfile user = users.getSearchHit(0).getContent();
         return data.toString();
+    }
+    public UserProfile getUserProfile(String phoneNumber){
+        Query searchQuery = new NativeSearchQueryBuilder()
+                .withFilter(regexpQuery("phoneNumber", phoneNumber))
+                .build();
+        SearchHits<UserProfile> users =
+                elasticsearchTemplate.search(searchQuery, UserProfile.class);
+        UserProfile user = users.getSearchHit(0).getContent();
+        return user;
     }
 
     public String get(String phoneNumber,String password){
@@ -122,6 +137,8 @@ public class UserProfileService {
         userProfileRepo.save(user);
         return "SUCCESS";
     }
+
+
     public String deleteAll(){
         userProfileRepo.deleteAll();
         return "SUCCESS";

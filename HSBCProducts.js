@@ -16,7 +16,37 @@ import { WebView } from 'react-native-webview';
 export default class HSBCProducts extends Component {
   constructor(props) {
    super(props);
+   this.state = {
+     savings: 1000,
+     duration: 1,
+     interestGained: 200,
+     primaryBank: 'HSBC',
+     primaryBankInterestRate: 2.5,
+     products: [],
+   }
   }
+componentDidMount(){
+  var url = "http://"+SERVER_URL+":8080/insights/general";
+  AsyncStorage.getItem("phoneNumber").then((phoneNumber) => {
+    console.log(phoneNumber);
+    axios.post(url, {'phoneNumber':phoneNumber})
+          .then(response => {
+            console.log('here'+response);
+              if (response && response.data!="FAILED") {
+                  console.log(response.data);
+                  this.setState({savings:response.data.savings, duration:response.data.duration,interestGained:response.data.interestGained,
+                    primaryBank:response.data.primaryBank,primaryBankInterestRate:response.data.primaryBankInterestRate})
+              }
+              else if(response && response.data=="FAILED"){
+                console.log("FAILED to get general insights")
+              }
+          })
+          .catch(error => {
+              console.log('Error while fetching the transactions from sms');
+          });
+  })
+
+}
 
 render() {
   const navigate = this.props.navigation;
@@ -25,10 +55,10 @@ render() {
   <Container>
   <Headbar navigation={ navigate } title={ title }/>
   <Content style={{backgroundColor:'white'}}>
-  <Text style={{margin:20,marginBottom:5,fontSize:18,color:'black'}}>You have saved <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>Rs.1,50,000</Text> in the last <Text style={{margin:20,fontSize:18,fontWeight:'bold',color:'#0A1045'}}>3</Text> months
+  <Text style={{margin:20,marginBottom:5,fontSize:18,color:'black'}}>You have saved <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>Rs.{this.state.savings}</Text> in the last <Text style={{margin:20,fontSize:18,fontWeight:'bold',color:'#0A1045'}}>{this.state.duration}</Text> months
   with all your money in your savings account.</Text>
-  <Text style={{margin:20,marginTop:0,fontSize:18,color:'black'}}>You earned an interest of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>Rs.3,750 </Text>on your saved amount at an interest rate of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>2.5%</Text></Text>
-  <Text style={{margin:20,marginTop:0,fontSize:15,color:'grey'}}>Invest your money in any of the below HSBC products to earn more interest on your savings.</Text>
+  <Text style={{margin:20,marginTop:0,fontSize:18,color:'black'}}>You earned an interest of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>Rs.{this.state.interestGained} </Text>on your saved amount at an interest rate of <Text style={{margin:20,fontSize:22,fontWeight:'bold',color:'#0A1045'}}>{this.state.primaryBankInterestRate}%</Text></Text>
+  <Text style={{margin:20,marginTop:0,fontSize:15,color:'grey'}}>Invest your money in any of the below products to earn more interest on your savings.</Text>
 
 
   <Card style={styles.card}>

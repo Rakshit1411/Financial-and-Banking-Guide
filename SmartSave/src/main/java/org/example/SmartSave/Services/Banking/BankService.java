@@ -3,6 +3,7 @@ package org.example.SmartSave.Services.Banking;
 import com.alibaba.fastjson.JSONObject;
 import org.example.SmartSave.Model.Bank;
 import org.example.SmartSave.Model.FixedDeposit;
+import org.example.SmartSave.Model.UserProfile;
 import org.example.SmartSave.Repository.BankRepository;
 import org.example.SmartSave.Repository.FixedDepositRepository;
 import org.jsoup.Jsoup;
@@ -11,11 +12,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
+
+import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 
 @Service
 public class BankService {
@@ -27,6 +33,16 @@ public class BankService {
     @Autowired
     public void setBankRepository(BankRepository bankRepository) {
         this.bankRepository = bankRepository;
+    }
+
+    public Bank getBank(String bankName){
+        Query searchQuery = new NativeSearchQueryBuilder()
+                .withFilter(regexpQuery("name", ".*"+bankName+".*"))
+                .build();
+        SearchHits<Bank> banks =
+                elasticsearchTemplate.search(searchQuery, Bank.class);
+        Bank bank = banks.getSearchHit(0).getContent();
+        return bank;
     }
 
     public void addBank(JSONObject params){
@@ -74,7 +90,7 @@ public class BankService {
                         FixedDeposit fd = fdService.findByBank(bank.getName());
                         if(fd!=null)
                             bank.setFdId(fd.getId());
-                        
+
                     }
                 }
                 data.add(rowMap);
