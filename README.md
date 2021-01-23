@@ -9,11 +9,12 @@ Screenshots of the initial prototype:
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/92155349-e081a100-ee44-11ea-85af-9bfb51d0e792.png">
 
 Screenshots with the Realtime Data and some design changes:
+
+[](url)
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611327-8e80ee00-5dda-11eb-9bc6-51233d0dc3e8.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611328-8fb21b00-5dda-11eb-96c8-36b8f6487957.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611325-8c1e9400-5dda-11eb-9c40-bb4d8c4e1475.jpeg">
-<img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611251-1fa39500-5dda-11eb-9940-39aab4efbd22.jpeg)
-">
+<img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611251-1fa39500-5dda-11eb-9940-39aab4efbd22.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611269-4235ae00-5dda-11eb-864c-854e40951009.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611278-4feb3380-5dda-11eb-95c6-9efddabce912.jpeg">
 <img width="200" alt="Screenshot 2020-09-04 at 12 18 17 AM" src="https://user-images.githubusercontent.com/26486434/105611289-5e394f80-5dda-11eb-94f0-f9e8dae113ba.jpeg">
